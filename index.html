@@ -408,6 +408,104 @@
   .role-title { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
   .role-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 
+  /* ── INSURANCE TAB ── */
+  .ins-tab { display: none; flex: 1; }
+  .ins-tab.show { display: flex; }
+
+  .ins-layout { display: flex; flex: 1; }
+
+  .ins-sidebar {
+    width: 255px; flex-shrink: 0;
+    background: var(--sidebar);
+    padding: 18px 14px;
+    position: sticky; top: 97px;
+    height: calc(100vh - 97px);
+    overflow-y: auto;
+  }
+
+  .ins-search-wrap { position: relative; margin-bottom: 14px; }
+  .ins-search {
+    width: 100%; background: #1E293B; border: 1px solid #334155;
+    color: #CBD5E1; border-radius: 8px; padding: 9px 10px 9px 34px;
+    font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
+    transition: border-color 0.15s;
+  }
+  .ins-search:focus { border-color: #3B82F6; }
+  .ins-search::placeholder { color: #475569; }
+  .ins-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 15px; pointer-events: none; }
+
+  .ins-type-btns { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .ins-type-btn {
+    display: flex; align-items: center; gap: 9px;
+    background: #1E293B; border: 1px solid #334155;
+    border-radius: 6px; padding: 8px 11px;
+    cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
+    color: #94A3B8; font-size: 13px; font-weight: 500;
+  }
+  .ins-type-btn:hover { background: #263348; color: #CBD5E1; }
+  .ins-type-btn.active { color: white; }
+  .ins-type-btn.active.all  { background: #1E3A5F; border-color: #3B82F6; }
+  .ins-type-btn.active.md   { background: #7F1D1D; border-color: #EF4444; }
+  .ins-type-btn.active.np   { background: #1E3A5F; border-color: #3B82F6; }
+  .ins-type-btn.active.cn   { background: #3B0764; border-color: #8B5CF6; }
+  .ins-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ins-dot.all { background: #94A3B8; }
+  .ins-dot.md  { background: #EF4444; }
+  .ins-dot.np  { background: #3B82F6; }
+  .ins-dot.cn  { background: #8B5CF6; }
+
+  .ins-reset {
+    width: 100%; background: transparent; border: 1px dashed #334155;
+    color: #475569; border-radius: 6px; padding: 8px;
+    font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .ins-reset:hover { border-color: #64748B; color: #94A3B8; }
+
+  .ins-main { flex: 1; padding: 18px 22px; overflow-y: auto; }
+  .ins-results-line { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+  .ins-results-line strong { color: var(--text); }
+
+  .ins-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+
+  .ins-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 10px; box-shadow: var(--shadow);
+    overflow: hidden; transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .ins-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .ins-card.hidden { display: none; }
+
+  .ins-card-head { padding: 13px 15px 10px; border-bottom: 1px solid var(--border); }
+  .ins-card-name { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .ins-card-body { padding: 12px 15px; display: flex; flex-direction: column; gap: 9px; }
+
+  .ins-role-section { }
+  .ins-role-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+  }
+  .ins-role-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .ins-role-dot.md  { background: #EF4444; }
+  .ins-role-dot.np  { background: #3B82F6; }
+  .ins-role-dot.cn  { background: #8B5CF6; }
+  .ins-role-dot.sw  { background: #10B981; }
+  .ins-plans { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ins-plan-tag {
+    font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    font-weight: 500; border: 1px solid;
+  }
+  .ins-plan-tag.md  { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+  .ins-plan-tag.np  { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
+  .ins-plan-tag.cn  { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
+  .ins-plan-tag.sw  { background: #ECFDF5; color: #047857; border-color: #A7F3D0; }
+
+  .ins-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); display: none; }
+  .ins-empty.show { display: block; }
+  .ins-empty-icon { font-size: 36px; margin-bottom: 10px; opacity: 0.4; }
+  .ins-empty-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .ins-empty-sub { font-size: 13px; }
+
   /* ══════════ RESPONSIVE — TABLETS & MOBILE ══════════ */
   .mobile-filter-toggle { display: none; }
 
@@ -514,6 +612,7 @@
 <nav class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('schedule', this)">📅 Schedule & Providers</button>
   <button class="tab-btn" onclick="switchTab('info', this)">🏢 Office Info & Protocols</button>
+  <button class="tab-btn" onclick="switchTab('insurance', this)">🛡️ Insurance Plans</button>
 </nav>
 
 <!-- SCHEDULE TAB -->
@@ -1160,6 +1259,40 @@
   </div>
 </div>
 
+<!-- INSURANCE TAB -->
+<div class="ins-tab" id="tab-insurance">
+  <div class="ins-layout">
+
+    <aside class="ins-sidebar">
+      <div class="filter-label">Search insurance</div>
+      <div class="ins-search-wrap">
+        <span class="ins-search-icon">🔍</span>
+        <input type="text" class="ins-search" id="insSearch" placeholder="e.g. Aetna, BCBS, Cigna..." oninput="filterInsurance()">
+      </div>
+
+      <div class="filter-label" style="margin-top:4px;">Filter by provider type</div>
+      <div class="ins-type-btns">
+        <div class="ins-type-btn all active" data-instype="all" onclick="setInsType(this)"><span class="ins-dot all"></span>All Types</div>
+        <div class="ins-type-btn md" data-instype="md" onclick="setInsType(this)"><span class="ins-dot md"></span>MD — Medical Director</div>
+        <div class="ins-type-btn np" data-instype="np" onclick="setInsType(this)"><span class="ins-dot np"></span>NP — Nurse Practitioner</div>
+        <div class="ins-type-btn cn" data-instype="cn" onclick="setInsType(this)"><span class="ins-dot cn"></span>Counselor / Therapist</div>
+      </div>
+      <button class="ins-reset" onclick="resetInsurance()">↺ Reset filters</button>
+    </aside>
+
+    <main class="ins-main">
+      <div class="ins-results-line" id="insResultsLine"></div>
+      <div class="ins-cards" id="insCards"></div>
+      <div class="ins-empty" id="insEmpty">
+        <div class="ins-empty-icon">🔍</div>
+        <div class="ins-empty-title">No insurance plans found</div>
+        <div class="ins-empty-sub">Try a different search term or reset the filters.</div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
 <script>
 // ── FONT SIZE ──
 let currentFs = 14;
@@ -1175,7 +1308,9 @@ function switchTab(tab, btn) {
   btn.classList.add('active');
   document.getElementById('tab-schedule').classList.toggle('hidden', tab !== 'schedule');
   document.getElementById('tab-info').classList.toggle('show', tab === 'info');
+  document.getElementById('tab-insurance').classList.toggle('show', tab === 'insurance');
   document.getElementById('topStats').style.display = tab === 'schedule' ? 'flex' : 'none';
+  if (tab === 'insurance') renderInsurance();
 }
 
 // ── PROVIDER DATA for quick lookup ──
@@ -1549,6 +1684,220 @@ function applyFilters() {
 }
 
 applyFilters();
+
+// ── INSURANCE DATA ──
+const INSURANCE_DATA = [
+  {
+    name: "Aetna",
+    md:  ["Commercial PPO","HMO","Manage Choice","EPO","Medicare HMO","Medicare PPO"],
+    np:  ["Commercial PPO","HMO","Manage Choice","EPO","EAP","Medicare HMO","Medicare PPO"],
+    cn:  ["Commercial PPO","HMO","Manage Choice","EPO","EAP","Medicare HMO","Medicare PPO"],
+    sw:  ["Commercial PPO","HMO","Manage Choice","EPO","EAP","Medicare HMO","Medicare PPO"]
+  },
+  {
+    name: "ABH TX (Aetna Better Health TX)",
+    md:  ["TX CHIP","TX Medicaid Bexar County","TX Perinate Bexar County"],
+    np:  ["TX STAR Kids","TX CHIP","TX Medicaid","TX Perinate Tarrant County","TX Tarrant Bexar County"],
+    cn:  ["TX CHIP Bexar County","TX STAR Kids","TX Perinate Tarrant County","TX CHIP Tarrant County","TX Medicaid Bexar County"],
+    sw:  ["TX CHIP Tarrant County","TX Medicaid Tarrant County","TX STAR Kids","TX Perinate Tarrant County","TX Perinate Bexar County","TX Medicaid Bexar County","TX CHIP Bexar County"]
+  },
+  {
+    name: "Wellpoint",
+    md:  ["Medicaid","Texas CHIP","Texas CHIP Perinatal","Texas STAR (Medicaid RSA)","Texas STAR (Medicaid)","Texas STAR Kids","Texas STAR+PLUS","Medical (Individual & Families)","Wellpoint Texas Essential","Wellpoint Texas Essential with Dental","Medicare Individual","Wellpoint Chronic Care (HMO-POS C-SNP)","Wellpoint Dual Advantage (HMO D-SNP)","Wellpoint Full Dual Advantage (HMO D-SNP)","Wellpoint Select (HMO-POS)"],
+    np:  ["Medicaid","Texas CHIP","Texas STAR (Medicaid RSA)","Texas STAR (Medicaid)","Texas STAR Kids","Texas STAR+PLUS","Medical (Individual & Families)","Wellpoint Texas Essential","Medicare Individual","Wellpoint Dual Advantage (HMO D-SNP)","Wellpoint Full Dual Advantage (HMO D-SNP)","Wellpoint Select (HMO-POS)"],
+    cn:  ["Medicaid","Texas CHIP","Texas CHIP Perinatal","Texas STAR (Medicaid RSA)","Texas STAR (Medicaid)","Texas STAR Kids","Texas STAR+PLUS","Medical (Individual & Families)","Wellpoint Texas Essential","Medicare Individual","Wellpoint Dual Advantage (HMO D-SNP)","Wellpoint Full Dual Advantage (HMO D-SNP)","Wellpoint Select (HMO-POS)"],
+    sw:  ["Medicaid","Texas CHIP","Texas CHIP Perinatal","Texas STAR (Medicaid RSA)","Texas STAR (Medicaid)","Texas STAR Kids","Texas STAR+PLUS","Medical (Individual & Families)","Wellpoint Texas Essential","Medicare Individual","Wellpoint Chronic Care (HMO-POS C-SNP)","Wellpoint Dual Advantage (HMO D-SNP)","Wellpoint Full Dual Advantage (HMO D-SNP)","Wellpoint Select (HMO-POS)"]
+  },
+  {
+    name: "BCBS TX (Blue Cross Blue Shield Texas)",
+    md:  ["Blue Access Choice","Blue Advantage HMO","Blue Choice PPO","Blue Essentials HMO","Blue High Performance Network","Blue Open Access POS","Blue Premier Access","Blue Premier","Blue Value","BlueChoice Advantage Open Access","BlueChoice Open Access POS","Blueprint Health","Network Blue","Preferred Care Blue","Select PPO","Tandem PPO","65 Plus Medicare Advantage Plan (PPO)","Blue Cross Group Medicare Advantage (PPO)","Blue Cross Group Medicare Advantage HMO","Texas STAR Kids - Central SA","Texas STAR Kids - Travis SA","Blue Cross Medicare Advantage (HMO)","Blue Cross Medicare Advantage (PPO)","Blue Cross Medicare Advantage Dual Care (HMO SNP)","Blue Advantage HMO (Bronze/Silver/Gold)","Blue Advantage Plus","MyBlue Health"],
+    np:  ["Blue Access Choice","Blue Advantage HMO","Blue Choice PPO","Blue Essentials HMO","Blue High Performance Network","Blue Open Access POS","Blue Premier Access","Blue Premier","Blue Value","BlueChoice Advantage Open Access","BlueChoice Open Access POS","Blueprint Health","Network Blue","Preferred Care Blue","Select PPO","Tandem PPO","65 Plus Medicare Advantage Plan (PPO)","Blue Cross Group Medicare Advantage (PPO)","Blue Cross Group Medicare Advantage HMO","Blue Cross Medicare Advantage (HMO)","Blue Cross Medicare Advantage (PPO)","Blue Cross Medicare Advantage Dual Care (HMO SNP)","Blue Advantage HMO (Bronze/Silver/Gold)","Blue Advantage Plus","MyBlue Health"],
+    cn:  ["Blue Access Choice","Blue Advantage HMO","Blue Choice PPO","Blue Essentials HMO","Blue High Performance Network","Blue Open Access POS","Blue Premier Access","Blue Premier","Blue Value","BlueChoice Advantage Open Access","BlueChoice Open Access POS","Blueprint Health","Network Blue","Preferred Care Blue","Select PPO","Tandem PPO","65 Plus Medicare Advantage Plan (PPO)","Blue Cross Group Medicare Advantage (PPO)","Blue Cross Group Medicare Advantage HMO","Blue Cross Medicare Advantage (HMO)","Blue Cross Medicare Advantage (PPO)","Blue Cross Medicare Advantage Dual Care (HMO SNP)","Blue Advantage HMO (Bronze/Silver/Gold)","Blue Advantage Plus","MyBlue Health"],
+    sw:  ["Blue Access Choice","Blue Advantage HMO","Blue Choice PPO","Blue Essentials HMO","Blue High Performance Network","Blue Open Access POS","Blue Premier Access","Blue Premier","Blue Value","BlueChoice Advantage Open Access","BlueChoice Open Access POS","Blueprint Health","Network Blue","Preferred Care Blue","Select PPO","Tandem PPO","65 Plus Medicare Advantage Plan (PPO)","Blue Cross Group Medicare Advantage (PPO)","Blue Cross Group Medicare Advantage HMO","Blue Cross Medicare Advantage (HMO)","Blue Cross Medicare Advantage (PPO)","Blue Cross Medicare Advantage Dual Care (HMO SNP)","Blue Advantage HMO (Bronze/Silver/Gold)","Blue Advantage Plus","MyBlue Health"]
+  },
+  {
+    name: "Molina Healthcare",
+    md:  ["CHIP Perinate","CHIP Perinate RSA","CHIP RSA","CHIP TDI","Molina Marketplace","Molina Medicare Complete Care (HMO D-SNP)","Molina Medicare Complete Care Plus (HMO D-SNP)","Texas STAR","Texas STAR+PLUS"],
+    np:  ["CHIP Perinate","CHIP Perinate RSA","CHIP RSA","CHIP TDI","Molina Marketplace","Molina Medicare Complete Care (HMO D-SNP)","Molina Medicare Complete Care Plus (HMO D-SNP)","Texas STAR","Texas STAR+PLUS"],
+    cn:  ["CHIP Perinate","CHIP Perinate RSA","CHIP RSA","CHIP TDI","Molina Marketplace","Molina Medicare Complete Care (HMO D-SNP)","Texas STAR","Texas STAR+PLUS"],
+    sw:  ["CHIP Perinate","CHIP Perinate RSA","CHIP RSA","CHIP TDI","Molina Marketplace","Molina Medicare Complete Care (HMO D-SNP)","Molina Medicare Complete Care Plus (HMO D-SNP)","Texas STAR","Texas STAR+PLUS"]
+  },
+  {
+    name: "Carelone",
+    md:  ["New York State Empire Plan","Beacon Health Options Medicare Advantage","Amble Health Non-HMO","Beacon Health Options Inc","Cooks Children Health Plan","Parkland Community Health Plan","UniCare Commercial","Providence Plans Partner Commercial","Providence Plans Partners Medicare"],
+    np:  ["New York State Empire Plan","Beacon Health Options Medicare Advantage","Amble Health Non-HMO","Beacon Health Options Inc","UniCare Commercial","Providence Plans Partner Commercial","Providence Plans Partners Medicare"],
+    cn:  ["New York State Empire Plan","Beacon Health Options Medicare Advantage","Amble Health Non-HMO","Beacon Health Options Inc","UniCare Commercial","Providence Plans Partner Commercial","Providence Plans Partners Medicare"],
+    sw:  ["New York State Empire Plan","Beacon Health Options Medicare Advantage","Amble Health Non-HMO","Beacon Health Options Inc","UniCare Commercial","Providence Plans Partner Commercial","Providence Plans Partners Medicare"]
+  },
+  {
+    name: "Optum BH",
+    md:  ["Medicare","Oklahoma Exchange","Oscar Health Plan","TX DSNP","TX STAR Kids","Texas Exchange","Texas Star","Texas Star Plus","UBH General"],
+    np:  ["Medicare","Oklahoma Exchange","Oscar Health Plan","TX DSNP","Texas Exchange","UBH General"],
+    cn:  ["Medicare","Oklahoma Exchange","Oscar Health Plan","TX DSNP","Texas Exchange","UBH General"],
+    sw:  ["Medicare","Oklahoma Exchange","Oscar Health Plan","TX DSNP","Texas Exchange","UBH General"]
+  },
+  {
+    name: "Humana",
+    md:  ["Employer HMO","Gold Plus HMO and SNP H0028","Gold Plus HMO and SNP H4461","HumanaGoldChoice Ntwk PFFS","Medicare PPO","Natl Medicare HMO/SNP-Travel","Humana Direct Choice Giveback (PPO)","Humana Gold Plus - Diabetes and Heart (HMO C-SNP)","Humana Gold Plus H0028-042 (HMO)","Humana Gold Plus H0028-043 (HMO)","Humana Gold Plus H0028-059 (HMO)","Humana Gold Plus H0028-072 (HMO)","Humana Gold Plus H4461-050 (HMO)","Humana Gold Plus H4461-057 (HMO)","Humana Gold Plus H4461-062 (HMO)","Humana Gold Plus SNP-DE H0028-032 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-071 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-072 (HMO D-SNP)","Humana Together in Health (PPO I-SNP)","Humana Total Complete H4461-049 (HMO)","Humana USAA Honor Giveback (PPO)","Humana Value Choice H5216-352 (PPO)","HumanaChoice H5216-042 (PPO)","HumanaChoice H5216-043 (PPO)","HumanaChoice R4182-001 (Regional PPO)"],
+    np:  ["Employer HMO","Gold Plus HMO and SNP H0028","Gold Plus HMO and SNP H4461","HumanaGoldChoice Ntwk PFFS","Medicare PPO","Natl Medicare HMO/SNP-Travel","Humana Direct Choice Giveback (PPO)","Humana Gold Plus - Diabetes and Heart (HMO C-SNP)","Humana Gold Plus H0028-042 (HMO)","Humana Gold Plus H0028-043 (HMO)","Humana Gold Plus H0028-059 (HMO)","Humana Gold Plus H4461-050 (HMO)","Humana Gold Plus H4461-057 (HMO)","Humana Gold Plus H4461-062 (HMO)","Humana Gold Plus SNP-DE H0028-032 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-071 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-072 (HMO D-SNP)","Humana Together in Health (PPO I-SNP)","Humana Total Complete H4461-049 (HMO)","Humana USAA Honor Giveback (PPO)","Humana Value Choice H5216-352 (PPO)","HumanaChoice H5216-042 (PPO)","HumanaChoice H5216-043 (PPO)","HumanaChoice R4182-001 (Regional PPO)"],
+    cn:  ["Employer HMO","Gold Plus HMO and SNP H0028","Gold Plus HMO and SNP H4461","HumanaGoldChoice Ntwk PFFS","Medicare PPO","Natl Medicare HMO/SNP-Travel","Humana Direct Choice Giveback (PPO)","Humana Gold Plus - Diabetes and Heart (HMO C-SNP)","Humana Gold Plus H0028-041 (HMO)","Humana Gold Plus H0028-042 (HMO)","Humana Gold Plus H0028-043 (HMO)","Humana Gold Plus H4461-050 (HMO)","Humana Gold Plus H4461-057 (HMO)","Humana Gold Plus SNP-DE H0028-032 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-071 (HMO D-SNP)","Humana Together in Health (PPO I-SNP)","Humana Total Complete H4461-049 (HMO)","HumanaChoice H5216-042 (PPO)","HumanaChoice R4182-001 (Regional PPO)"],
+    sw:  ["Employer HMO","Gold Plus HMO and SNP H0028","Gold Plus HMO and SNP H4461","HumanaGoldChoice Ntwk PFFS","Medicare PPO","Natl Medicare HMO/SNP-Travel","Humana Direct Choice Giveback (PPO)","Humana Gold Plus - Diabetes and Heart (HMO C-SNP)","Humana Gold Plus H0028-042 (HMO)","Humana Gold Plus H0028-043 (HMO)","Humana Gold Plus H0028-059 (HMO)","Humana Gold Plus H0028-072 (HMO)","Humana Gold Plus H4461-050 (HMO)","Humana Gold Plus H4461-057 (HMO)","Humana Gold Plus H4461-062 (HMO)","Humana Gold Plus SNP-DE H0028-032 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-071 (HMO D-SNP)","Humana Gold Plus SNP-DE H4461-072 (HMO D-SNP)","Humana Together in Health (PPO I-SNP)","Humana Total Complete H4461-049 (HMO)","Humana USAA Honor Giveback (PPO)","Humana Value Choice H5216-352 (PPO)","HumanaChoice H5216-042 (PPO)","HumanaChoice H5216-043 (PPO)","HumanaChoice R4182-001 (Regional PPO)"]
+  },
+  {
+    name: "Multiplan / PHCS",
+    md:  ["Multiplan","PHCS"],
+    np:  ["Multiplan","PHCS"],
+    cn:  ["Multiplan","PHCS"],
+    sw:  ["Multiplan","PHCS"]
+  },
+  {
+    name: "Health Smart",
+    md:  ["Health Smart Network Solutions"],
+    np:  ["Health Smart Network Solutions"],
+    cn:  ["Health Smart Network Solutions"],
+    sw:  ["Health Smart Network Solutions"]
+  },
+  {
+    name: "Cigna / EverNorth",
+    md:  ["Commercial PPO","OAP","HMO","POS","Medicare HMO","Medicare PPO"],
+    np:  ["Commercial PPO","OAP","HMO","POS","Medicare HMO","Medicare PPO"],
+    cn:  ["Commercial PPO","OAP","HMO","POS","EAP","Medicare HMO","Medicare PPO"],
+    sw:  ["Commercial PPO","OAP","HMO","POS","EAP","Medicare HMO","Medicare PPO"]
+  },
+  {
+    name: "Cigna Health Spring",
+    md:  ["Medicare Advantage Plan"],
+    np:  ["Medicare Advantage Plan"],
+    cn:  ["Medicare Advantage Plan"],
+    sw:  ["Medicare Advantage Plan"]
+  },
+  {
+    name: "Magellan Behavioral Health",
+    md:  ["HMO","Medicaid","StarPlus","Texas CHIP","Clinical HMO","Medicare Plans"],
+    np:  ["Summit Non-HMO","Medicaid","StarPlus","Texas CHIP","Clinical HMO","Medicare"],
+    cn:  ["Summit Non-HMO","Summit Non-HMO EAP","EAP Special Criteria","Medicaid","StarPlus","Texas CHIP","Clinical HMO","Medicare"],
+    sw:  ["Summit Non-HMO","Summit Non-HMO Manage Care","StarPlus","Texas CHIP","Clinical HMO","Medicare"]
+  },
+  {
+    name: "CCHP (Cook Children\'s Health Plan)",
+    md:  ["CHIP","STAR","STAR Kids"],
+    np:  ["CHIP","STAR","STAR Kids"],
+    cn:  ["CHIP","STAR","STAR Kids"],
+    sw:  ["CHIP","STAR","STAR Kids"]
+  },
+  {
+    name: "Scott & White Health Plan (BSW)",
+    md:  ["BSW Plus HMO-Group","BSW Plus HMO-Individual/Family","BSW Plus PPO-Group","BSW Plus PPO-Individual/Family","BSW Access PPO","BSW Premier HMO-Individual/Family","BSW Premier HMO-Group","BSW Premier PPO","PHCS/Capital RX PPO Network","BSW SeniorCare Advantage HMO","BSW SeniorCare Advantage PPO","BSWH Employee Network Premium (PPO)/HDHP","BSWH Employee Network (SEQA & EQA)"],
+    np:  ["BSW Plus HMO-Group","BSW Plus HMO-Individual/Family","BSW Plus PPO-Group","BSW Plus PPO-Individual/Family","BSW Access PPO","BSW Premier HMO-Individual/Family","BSW Premier HMO-Group","BSW Premier PPO","PHCS/Capital RX PPO Network","BSW SeniorCare Advantage HMO","BSW SeniorCare Advantage PPO","BSWH Employee Network Premium (PPO)/HDHP","BSWH Employee Network (SEQA & EQA)"],
+    cn:  ["BSW Plus HMO-Group","BSW Plus HMO-Individual/Family","BSW Plus PPO-Group","BSW Plus PPO-Individual/Family","BSW Access PPO","BSW Premier HMO-Individual/Family","BSW Premier HMO-Group","BSW Premier PPO","BSW SeniorCare Advantage HMO","BSW SeniorCare Advantage PPO","BSWH Employee Network Premium (PPO)/HDHP","BSWH Employee Network (SEQA & EQA)"],
+    sw:  ["BSW Plus HMO-Group","BSW Plus HMO-Individual/Family","BSW Plus PPO-Group","BSW Plus PPO-Individual/Family","BSW Access PPO","BSW Premier HMO-Individual/Family","BSW Premier HMO-Group","BSW Premier PPO","PHCS/Capital RX PPO Network","BSW SeniorCare Advantage HMO","BSW SeniorCare Advantage PPO","BSWH Employee Network Premium (PPO)/HDHP","BSWH Employee Network (SEQA & EQA)"]
+  },
+  {
+    name: "TRICARE West Region",
+    md:  ["All TriWest Networks"],
+    np:  ["All TriWest Networks"],
+    cn:  ["All TriWest Networks"],
+    sw:  ["All TriWest Networks"]
+  },
+  {
+    name: "Superior / Ambetter / WellCare",
+    md:  ["Premier","Solutions","TXSMP","Value"],
+    np:  ["Premier","TXSMP"],
+    cn:  ["Premier","TXSMP"],
+    sw:  ["Premier","Solutions","TXSMP"]
+  },
+  {
+    name: "PCHP (Parkland Community Health Plan)",
+    md:  ["CHIP","STAR"],
+    np:  ["CHIP","STAR"],
+    cn:  ["CHIP","STAR"],
+    sw:  ["CHIP","STAR"]
+  }
+];
+
+let insTypeFilter = 'all';
+let insRendered = false;
+
+function renderInsurance() {
+  if (insRendered) { filterInsurance(); return; }
+  insRendered = true;
+  filterInsurance();
+}
+
+function setInsType(btn) {
+  document.querySelectorAll('.ins-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  insTypeFilter = btn.dataset.instype;
+  filterInsurance();
+}
+
+function resetInsurance() {
+  document.getElementById('insSearch').value = '';
+  insTypeFilter = 'all';
+  document.querySelectorAll('.ins-type-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.ins-type-btn.all').classList.add('active');
+  filterInsurance();
+}
+
+function filterInsurance() {
+  const query = (document.getElementById('insSearch').value || '').toLowerCase().trim();
+  const container = document.getElementById('insCards');
+  const empty = document.getElementById('insEmpty');
+  const resultsLine = document.getElementById('insResultsLine');
+  container.innerHTML = '';
+  let count = 0;
+
+  const typeLabels = { md: 'MD — Medical Director', np: 'NP — Nurse Practitioner', cn: 'Counselor / Therapist', sw: 'Social Worker' };
+  const showTypes = insTypeFilter === 'all' ? ['md','np','cn','sw'] : [insTypeFilter];
+
+  INSURANCE_DATA.forEach(ins => {
+    let anyMatch = false;
+    const sections = [];
+    const nameMatch = ins.name.toLowerCase().includes(query);
+
+    showTypes.forEach(t => {
+      const plans = ins[t] || [];
+      let display;
+      if (!query) {
+        display = plans;
+      } else if (nameMatch) {
+        display = plans;
+      } else {
+        display = plans.filter(p => p.toLowerCase().includes(query));
+      }
+      if (display.length > 0) {
+        anyMatch = true;
+        sections.push({ type: t, label: typeLabels[t], plans: display });
+      }
+    });
+
+    if (!anyMatch) return;
+    count++;
+
+    const card = document.createElement('div');
+    card.className = 'ins-card';
+
+    let html = '<div class="ins-card-head"><div class="ins-card-name">' + ins.name + '</div></div><div class="ins-card-body">';
+    sections.forEach(function(s) {
+      html += '<div class="ins-role-section"><div class="ins-role-label"><span class="ins-role-dot ' + s.type + '"></span>' + s.label + '</div><div class="ins-plans">';
+      s.plans.forEach(function(p) {
+        const isHighlighted = query && !nameMatch && p.toLowerCase().includes(query);
+        const style = isHighlighted ? ' style="background:#FEF9C3;border-color:#FDE047;color:#713F12;"' : '';
+        html += '<span class="ins-plan-tag ' + s.type + '"' + style + '>' + p + '</span>';
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+    card.innerHTML = html;
+    container.appendChild(card);
+  });
+
+  empty.classList.toggle('show', count === 0);
+  const typeStr = insTypeFilter === 'all' ? 'all types' : typeLabels[insTypeFilter];
+  const queryStr = query ? ' matching "<strong>' + query + '</strong>"' : '';
+  resultsLine.innerHTML = 'Showing <strong>' + count + '</strong> insurance plan' + (count !== 1 ? 's' : '') + queryStr + ' — ' + typeStr;
+}
+
 </script>
 <footer style="text-align:center;padding:10px;font-size:11px;color:#94A3B8;background:#0F172A;border-top:1px solid #1E293B;">Created by Khizar Babar - ID: 1531</footer>
 </body>
