@@ -601,7 +601,12 @@
     <div style="width:1px;height:28px;background:#1E293B;"></div>
     <div class="dob-ctrl">
       <span class="font-ctrl-label">Pt. DOB</span>
-      <input type="date" class="dob-input" id="dobInput" onchange="onDobChange(this)" title="Enter patient date of birth to filter providers by age requirement">
+      <input type="text" class="dob-input" id="dobInput"
+        placeholder="MM/DD/YYYY"
+        oninput="onDobInput(this)"
+        onpaste="onDobPaste(event)"
+        maxlength="10"
+        title="Enter or paste date of birth — accepts MM/DD/YYYY, MM-DD-YYYY, or MMDDYYYY">
       <button class="dob-reset-btn" onclick="resetDob()" title="Clear date of birth">✕</button>
       <span class="dob-age-badge" id="dobAgeBadge"></span>
     </div>
@@ -1533,38 +1538,88 @@ function resetDob() {
   state.age = null;
   applyFilters();
 }
-function onDobChange(input) {
+// ── DOB HELPERS ──
+function parseDob(raw) {
+  // Accepted formats: MM/DD/YYYY  MM-DD-YYYY  MM.DD.YYYY  MMDDYYYY  YYYY-MM-DD
+  if (!raw) return null;
+  const s = raw.trim().replace(/\s+/g, '');
+
+  let m, d, y;
+
+  // YYYY-MM-DD  (ISO, browser internal)
+  let iso = s.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+  if (iso) { y = +iso[1]; m = +iso[2]; d = +iso[3]; }
+
+  // MM/DD/YYYY or MM-DD-YYYY or MM.DD.YYYY
+  if (!iso) {
+    let mdy = s.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+    if (mdy) { m = +mdy[1]; d = +mdy[2]; y = +mdy[3]; }
+  }
+
+  // MMDDYYYY  (8 digits, no separator)
+  if (!iso && s.match(/^\d{8}$/)) {
+    m = +s.slice(0,2); d = +s.slice(2,4); y = +s.slice(4);
+  }
+
+  if (!y) return null;
+  if (m < 1 || m > 12 || d < 1 || d > 31 || y < 1900) return null;
+
+  const dt = new Date(y, m - 1, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d) return null;
+  if (dt > new Date()) return null;
+  return dt;
+}
+
+function calcAge(dob) {
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const mo = today.getMonth() - dob.getMonth();
+  if (mo < 0 || (mo === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+function applyDob(raw) {
+  const badge = document.getElementById('dobAgeBadge');
+  const dob = parseDob(raw);
+  if (!raw || raw.trim() === '') {
+    state.age = null;
+    badge.textContent = '';
+    badge.style.color = '#64748B';
+  } else if (!dob) {
+    state.age = null;
+    badge.textContent = '⚠ Invalid';
+    badge.style.color = '#EF4444';
+  } else {
+    const age = calcAge(dob);
+    state.age = age;
+    badge.textContent = `Age: ${age}`;
+    badge.style.color = '#10B981';
+  }
+  applyFilters();
+}
+
+function onDobInput(input) {
+  // Auto-insert slashes while typing MM/DD/YYYY
+  let v = input.value.replace(/[^0-9\/\-\.]/g, '');
+  // Auto-format only when user is typing (not pasting full string)
+  input.value = v;
   document.getElementById('providerSelect').value = '';
   document.getElementById('providerInfoBox').classList.remove('show');
   document.querySelectorAll('.pcard').forEach(c => c.classList.remove('spotlight'));
-  const badge = document.getElementById('dobAgeBadge');
+  applyDob(v);
+}
 
-  if (!input.value) {
-    state.age = null;
-    badge.textContent = '';
-    applyFilters();
-    return;
-  }
-
-  const dob = new Date(input.value + 'T00:00:00');
-  const today = new Date();
-
-  if (isNaN(dob.getTime()) || dob > today) {
-    state.age = null;
-    badge.textContent = '⚠ Invalid DOB';
-    badge.style.color = '#EF4444';
-    applyFilters();
-    return;
-  }
-
-  let age = today.getFullYear() - dob.getFullYear();
-  const m = today.getMonth() - dob.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-
-  state.age = age;
-  badge.textContent = `Age: ${age}`;
-  badge.style.color = '#10B981';
-  applyFilters();
+function onDobPaste(e) {
+  e.preventDefault();
+  const pasted = (e.clipboardData || window.clipboardData).getData('text');
+  const input = document.getElementById('dobInput');
+  // Clean and auto-format the pasted value
+  const cleaned = pasted.trim();
+  input.value = cleaned;
+  document.getElementById('providerSelect').value = '';
+  document.getElementById('providerInfoBox').classList.remove('show');
+  document.querySelectorAll('.pcard').forEach(c => c.classList.remove('spotlight'));
+  applyDob(cleaned);
 }
 function resetAll() {
   state.days.clear(); state.locs.clear(); state.types.clear();
