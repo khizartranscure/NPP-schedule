@@ -1316,7 +1316,22 @@ function switchTab(tab, btn) {
   document.getElementById('tab-insurance').classList.toggle('show', tab === 'insurance');
   document.getElementById('topStats').style.display = tab === 'schedule' ? 'flex' : 'none';
   if (tab === 'insurance') renderInsurance();
+  try { localStorage.setItem('npp_active_tab', tab); } catch(e) {}
 }
+
+// Restore last active tab on page load/refresh
+(function restoreTab() {
+  let savedTab = 'schedule';
+  try { savedTab = localStorage.getItem('npp_active_tab') || 'schedule'; } catch(e) {}
+  const tabIndex = { schedule: 0, info: 1, insurance: 2 };
+  const idx = tabIndex.hasOwnProperty(savedTab) ? tabIndex[savedTab] : 0;
+  document.addEventListener('DOMContentLoaded', function() {
+    const btns = document.querySelectorAll('.tab-btn');
+    if (btns[idx] && savedTab !== 'schedule') {
+      switchTab(savedTab, btns[idx]);
+    }
+  });
+})();
 
 // ── PROVIDER DATA for quick lookup ──
 const PROVIDERS = {
