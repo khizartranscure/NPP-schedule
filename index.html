@@ -320,6 +320,22 @@
     background: #F8FAFC; border-left: 3px solid #CBD5E1; border-radius: 0 4px 4px 0;
     padding: 7px 10px; font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; line-height: 1.5;
   }
+  .note-box.restriction {
+    background: #FEF2F2; border-left-color: #DC2626; color: #B91C1C; font-weight: 500;
+  }
+  .restriction-strip {
+    display: flex; align-items: flex-start; gap: 6px;
+    background: #FEF2F2; border-left: 3px solid #DC2626; border-radius: 0 4px 4px 0;
+    padding: 7px 10px; font-size: 0.75rem; color: #B91C1C; margin-top: 8px; line-height: 1.5; font-weight: 500;
+  }
+  .no-rx-note {
+    font-size: 0.72rem; color: #6D28D9; background: #F5F3FF; border-radius: 4px;
+    padding: 3px 8px; display: inline-block; margin-top: 8px; font-weight: 500;
+  }
+  .noshow-fee-note {
+    font-size: 0.72rem; color: #B45309; background: #FEF3C7; border-radius: 4px;
+    padding: 3px 8px; display: inline-block; margin-top: 8px; margin-right: 6px; font-weight: 500;
+  }
 
   .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); display: none; }
   .empty-state.show { display: block; }
@@ -775,7 +791,8 @@
           </div>
           <div class="badge-row">
             <span class="badge badge-red">✗ Not accepting new</span>
-            <span class="badge badge-blue">✓ Can double book (except Fri)</span>
+            <span class="badge badge-blue">✓ Can double book</span>
+            <span class="badge badge-red">⚠ Cannot double book on Fri</span>
           </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon — 9:30 am to 4:15 pm</span></div>
@@ -785,6 +802,7 @@
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 15 min</span>
           <span class="appt-tag">⏱ New pt: 45 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new / $25 follow-up</span>
         </div>
       </div>
 
@@ -796,13 +814,18 @@
             <div><div class="pcard-name">NP Marian Fabyan</div><div class="pcard-role">Nurse Practitioner · Age 15+</div></div>
           </div>
           <div class="badge-row">
-            <span class="badge badge-green">✓ Accepting new on Thursday</span>
-            <span class="badge badge-gray">No double book</span>
+            <span class="badge badge-green">✓ Accepting new (Check below)</span>
+            <span class="badge badge-red">⚠ Cannot double book</span>
           </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag dn" data-tag="dn">DN</span><span class="schedule-text">Mon – Fri — 10:30 am to 5:00 pm</span></div>
           </div>
-          <div class="note-box">New pts Thursdays only · No male pts after 4 pm Thu · New female pts also Mon/Tue/Wed at 5 pm</div>
+          <div class="note-box">
+            <strong>New patient scheduling:</strong><br>
+            Thursday — new patients (all)<br>
+            Mon · Tue · Wed · Fri after 5:00 pm — female patients only
+          </div>
+          <div class="note-box restriction">⚠ No male patients after 4 pm Thursday</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 15 min</span>
@@ -852,6 +875,7 @@
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 15 min</span>
           <span class="appt-tag">⏱ New pt: 45 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new / $25 follow-up</span>
         </div>
       </div>
 
@@ -864,7 +888,7 @@
           </div>
           <div class="badge-row">
             <span class="badge badge-green">✓ Accepting new</span>
-            <span class="badge badge-gray">No double book</span>
+            <span class="badge badge-red">⚠ Cannot double book</span>
           </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon · Tue · Thu — 9:00 am to 5:00 pm</span></div>
@@ -875,6 +899,7 @@
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 15 min</span>
           <span class="appt-tag">⏱ New pt: 60 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new / $25 follow-up</span>
         </div>
       </div>
 
@@ -887,7 +912,7 @@
           </div>
           <div class="badge-row">
 		  <span class="badge badge-green">✓ Accepting new</span>
-		  <span class="badge badge-gray">No double book</span>
+		  <span class="badge badge-red">⚠ Cannot double book</span>
 		  </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon · Wed — 9:00 am to 3:45 pm</span></div>
@@ -930,7 +955,7 @@
           </div>
           <div class="badge-row">
             <span class="badge badge-green">✓ Accepting new</span>
-            <span class="badge badge-gray">No double book</span>
+            <span class="badge badge-red">⚠ Cannot double book</span>
           </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon — 11:00 am to 4:00 pm</span></div>
@@ -972,25 +997,17 @@
       </div>
 
       <!-- ══ COUNSELOR CARDS ══ -->
-      <div class="pcard" data-type="CN" data-loc="dn" data-days="Mon Tue Wed Thu" data-accepting="no" data-id="BM" data-min-age="13">
+      <div class="pcard" data-type="CN" data-loc="dn" data-days="Mon Tue Wed Thu" data-accepting="unknown" data-transfer="yes" data-id="BM">
         <div class="pcard-accent cn"></div>
         <div class="pcard-body">
-          <div class="pcard-header">
-            <div class="pcard-avatar cn">BM</div>
-            <div><div class="pcard-name">Bret M. Menassa</div><div class="pcard-role">Counselor · Age 13+</div></div>
+          <div class="transfer-card" style="margin:0;border:none;background:transparent;padding:0;">
+            <div class="transfer-icon">↗</div>
+            <div>
+              <div class="transfer-name">Bret M. Menassa</div>
+              <div class="transfer-info">Transfer all appointment concerns → <strong>Denton front desk</strong> (IVR Press 4)</div>
+              <div class="no-rx-note">💊 Cannot prescribe medications</div>
+            </div>
           </div>
-          <div class="badge-row">
-            <span class="badge badge-red">✗ Not accepting new</span>
-            <span class="badge badge-gray">No double book</span>
-          </div>
-          <div class="schedule-block">
-            <div class="schedule-row"><span class="loc-tag dn" data-tag="dn">DN</span><span class="schedule-text">Mon – Thu — 10:30 am to 5:00 pm</span></div>
-          </div>
-          <div class="note-box">Prefers to schedule his own follow-ups. Transfer to Denton front desk.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="appt-tag">⏱ Follow-up: 60 min</span>
-          <span class="appt-tag">⏱ New pt: 60 min</span>
         </div>
       </div>
 
@@ -1003,12 +1020,13 @@
           </div>
           <div class="badge-row">
             <span class="badge badge-red">✗ Not accepting new</span>
-            <span class="badge badge-gray">No double book</span>
+            <span class="badge badge-red">⚠ Cannot double book</span>
           </div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon – Thu (hours per FM front desk)</span></div>
           </div>
           <div class="note-box">Transfer to Flower Mound front desk for all scheduling.</div>
+          <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 60 min</span>
@@ -1027,7 +1045,9 @@
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon · Tue — 10:00 am to 3:00 pm</span></div>
           </div>
-          <div class="note-box">Max 4 patients/day · No kids · No pregnancy loss · No families</div>
+          <div class="note-box">Max 4 patients/day</div>
+          <div class="note-box restriction">⚠ No kids · No pregnancy loss patients · No families</div>
+          <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 60 min</span>
@@ -1043,6 +1063,7 @@
             <div>
               <div class="transfer-name">Counselor Kayla Clark</div>
               <div class="transfer-info">Transfer all appointment concerns → <strong>Flower Mound front desk</strong> (IVR Press 3)</div>
+              <div class="no-rx-note">💊 Cannot prescribe medications</div>
             </div>
           </div>
         </div>
@@ -1059,10 +1080,12 @@
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon – Thu — 10:00 am to 3:00 pm</span></div>
           </div>
+          <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 60 min</span>
           <span class="appt-tag">⏱ New pt: 60 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new / $25 follow-up</span>
         </div>
       </div>
 
@@ -1079,6 +1102,7 @@
             <div class="schedule-row"><span class="loc-tag ev" data-tag="fm">FM E-visit</span><span class="schedule-text">Mon · Fri — 10:00 am to 4:00 pm <em>(E-visits only)</em></span></div>
           </div>
           <div class="note-box">Max 4 patients/day</div>
+          <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 60 min</span>
@@ -1100,10 +1124,12 @@
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Wed — 9:00 am to 5:00 pm <em>(Lunch at 12 pm)</em><br>Fri — 9:00 am to 2:00 pm <em>(No lunch break)</em></span></div>
           </div>
+          <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
         <div class="pcard-footer">
           <span class="appt-tag">⏱ Follow-up: 60 min</span>
           <span class="appt-tag">⏱ New pt: 60 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new / $25 follow-up</span>
         </div>
       </div>
 
@@ -1115,6 +1141,7 @@
             <div>
               <div class="transfer-name">Counselor Sara Salinas</div>
               <div class="transfer-info">Transfer all appointment concerns → <strong>Flower Mound front desk</strong> (IVR Press 3)</div>
+              <div class="no-rx-note">💊 Cannot prescribe medications</div>
             </div>
           </div>
         </div>
@@ -1205,12 +1232,13 @@
           <div class="policy-title"><span class="policy-icon">👤</span> New Patient Policy</div>
           <div class="policy-body">
             <ul>
+              <li><strong>Before scheduling:</strong> Transfer patient to the Billing Department to verify network status</li>
               <li>Not seen in <strong>1+ year</strong> = treated as new patient</li>
               <li>Must arrive <strong>15–20 minutes early</strong> for paperwork</li>
-              <li>Collect: <strong> Insurance · DOB · Name · Phone · Email · Address</li>
+              <li>Collect: <strong>Insurance · DOB · Name · Phone · Email · Address</strong></li>
             </ul>
-			<div style="margin-top:8px;"><strong>Out of Pocket:</strong> $250</strong> for new patient visit</div>
-			<div style="margin-top:8px;"><strong>Out of Pocket: $130</strong> for follow up visit</div>
+            <div style="margin-top:8px;"><strong>Self-pay New Patient:</strong> $250</div>
+            <div style="margin-top:8px;"><strong>Follow-ups:</strong> $130</div>
           </div>
         </div>
         <div class="policy-card">
@@ -1218,15 +1246,6 @@
           <div class="policy-body">
             <strong>Within 24 hours:</strong> Do NOT cancel or mark no-show. Add note: "Pt requested to cancel (reason) – rescheduled to [date/time]" and save appointment.<br><br>
             <strong>24+ hours prior:</strong> Cancel without notes.
-          </div>
-        </div>
-        <div class="policy-card">
-          <div class="policy-title"><span class="policy-icon">💵</span> No-Show Fees</div>
-          <div class="policy-body">
-            <strong>No fee:</strong> Dr. Islam · Dr. Murad · Michelle White<br><br>
-            <strong>Shelly, Anita, Nikki, Silvia, David L and Richard charge:</strong><br>
-            New patient no-show: <strong>$50</strong><br>
-            Follow-up no-show: <strong>$25</strong><br><br>
           </div>
         </div>
         <div class="policy-card">
@@ -1377,9 +1396,10 @@ const PROVIDERS = {
   MF: {
     name: 'NP Marian Fabyan', role: 'NP · Age 15+', accepting: true,
     schedule: [
-      { loc: 'dn', label: 'Denton', text: 'Mon–Fri — 10:30 am–5:00 pm (new pts Thu only)' }
+      { loc: 'dn', label: 'Denton', text: 'Mon–Fri — 10:30 am–5:00 pm' }
     ],
-    appt: 'Follow-up 15 min · New pt 60 min'
+    appt: 'Follow-up 15 min · New pt 60 min',
+    note: 'New pts: Thu (all) · Mon/Tue/Wed/Fri after 5pm (female only) · No male pts after 4pm Thu'
   },
   RB: {
     name: 'NP Rauvi Blackwell', role: 'NP · Age 16+', accepting: true,
@@ -1433,11 +1453,7 @@ const PROVIDERS = {
   },
   SS: { name: 'NP Shelly Sanders', role: 'NP', accepting: null, transfer: 'Lewisville front desk (IVR Press 2)', schedule: [] },
   MW: { name: 'NP Michelle White', role: 'NP · No no-show fee', accepting: null, transfer: 'Flower Mound front desk (IVR Press 3)', schedule: [] },
-  BM: {
-    name: 'Bret M. Menassa', role: 'Counselor · Age 13+', accepting: false,
-    schedule: [{ loc: 'dn', label: 'Denton', text: 'Mon–Thu — 10:30 am–5:00 pm' }],
-    appt: 'Follow-up 60 min · New pt 60 min', note: 'Prefers to schedule own follow-ups. Transfer to Denton front desk.'
-  },
+  BM: { name: 'Bret M. Menassa', role: 'Counselor', accepting: null, transfer: 'Denton front desk (IVR Press 4)', schedule: [] },
   CB: {
     name: 'Charles Bost (Chad)', role: 'Counselor · Age 13+', accepting: false,
     schedule: [{ loc: 'fm', label: 'Flower Mound', text: 'Mon–Thu (hours per FM front desk)' }],
