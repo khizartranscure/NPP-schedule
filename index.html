@@ -525,19 +525,29 @@
   /* ══════════ RESPONSIVE — TABLETS & MOBILE ══════════ */
   .mobile-filter-toggle { display: none; }
 
+  /* TX Date/Clock */
+  .tx-clock-wrap { text-align: right; flex-shrink: 0; }
+  .tx-date { font-size: 14px; font-weight: 800; color: #F1F5F9; line-height: 1.2; }
+  .tx-day  { font-size: 10px; color: #FFFFF7; margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
   @media (max-width: 900px) {
     .topbar {
-      flex-wrap: wrap; height: auto; padding: 12px 16px; row-gap: 10px;
+      flex-wrap: wrap; height: auto; padding: 10px 14px; row-gap: 8px;
       position: static;
     }
     .topbar-left { width: 100%; }
-    .topbar-right { width: 100%; max-width: 100%; flex-wrap: wrap; gap: 12px 16px; justify-content: flex-start; }
+    .topbar-right {
+      width: 100%; flex-wrap: wrap; gap: 10px 14px;
+      justify-content: flex-start; align-items: center;
+    }
+    .tx-clock-wrap { margin-left: auto; text-align: right; }
 
     .tab-nav {
       position: sticky; top: 0; overflow-x: auto;
       -webkit-overflow-scrolling: touch; scrollbar-width: none;
     }
     .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 10px 12px; font-size: 12px; white-space: nowrap; }
 
     .schedule-tab { flex-direction: column; }
     .mobile-filter-toggle {
@@ -552,34 +562,75 @@
 
     .sidebar {
       display: none; position: static; width: 100%; height: auto;
-      max-height: 65vh; overflow-y: auto; top: auto;
+      max-height: 70vh; overflow-y: auto; top: auto;
     }
     .sidebar.mobile-open { display: block; }
 
-    .main { padding: 16px; }
-    .info-main { padding: 18px 16px; gap: 20px; }
+    .main { padding: 14px; }
+    .info-main { padding: 16px 14px; gap: 18px; }
 
+    .info-grid { grid-template-columns: 1fr 1fr; }
     .loc-ivr-grid { grid-template-columns: 1fr; }
     .greeting-grid { grid-template-columns: 1fr; }
     .role-grid { grid-template-columns: repeat(2, 1fr); }
+    .policy-grid { grid-template-columns: 1fr; }
 
-    .dob-ctrl { width: 100%; max-width: 100%; flex-wrap: wrap; row-gap: 6px; }
-    .dob-input { flex: 1 1 auto; min-width: 0; max-width: 100%; }
-    .font-btn, .dob-reset-btn { width: 32px; height: 32px; font-size: 13px; flex-shrink: 0; }
+    .dob-ctrl { flex-wrap: wrap; row-gap: 6px; }
+    .dob-input { flex: 1 1 120px; min-width: 0; }
+
+    /* Insurance tab mobile */
+    .ins-layout { flex-direction: column; }
+    .ins-sidebar { width: 100%; height: auto; position: static; padding: 14px; }
+    .ins-type-btns { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .ins-type-btn { flex: 1 1 calc(50% - 6px); font-size: 12px; padding: 7px 10px; }
+    .ins-main { padding: 14px; }
+    .ins-cards { grid-template-columns: 1fr; }
+
+    /* Admin modal mobile */
+    .admin-modal { width: 96vw; max-height: 94vh; }
+    .admin-field-grid { grid-template-columns: 1fr; }
+    .admin-field.full { grid-column: 1; }
+
+    /* Provider grid */
+    .provider-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
     .provider-grid { grid-template-columns: 1fr; }
     .role-grid { grid-template-columns: 1fr; }
-    .topbar-title { font-size: 14px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .topbar-title { font-size: 13px; }
     .topbar-sub { font-size: 10px; }
-    .stat-num { font-size: 17px; }
-    .day-btn { font-size: 10px; padding: 9px 0; }
-    .loc-pill, .type-btn, .toggle-row { padding: 10px 11px; }
+    .stat-num { font-size: 16px; }
+    .day-btn { font-size: 10px; padding: 8px 0; }
+    .loc-pill, .type-btn, .toggle-row { padding: 9px 10px; font-size: 12px; }
     .greeting-grid, .info-grid, .policy-grid { gap: 10px; }
-    .pcard-body { padding: 13px; }
+    .pcard-body { padding: 12px; }
+    .pcard-name { font-size: 0.88rem; }
     .dob-age-badge { min-width: 0; flex-shrink: 0; }
-    .dob-input { font-size: 12px; padding: 6px 7px; }
+    .dob-input { font-size: 12px; padding: 6px 8px; }
+    .tx-date { font-size: 12px; }
+
+    /* Topbar stats on small screens */
+    #topStats { gap: 12px; }
+    .stat-num { font-size: 15px; }
+    .stat-label { font-size: 9px; }
+
+    /* Tab nav smaller */
+    .tab-btn { padding: 9px 10px; font-size: 11px; }
+
+    /* Insurance sidebar on small screens */
+    .ins-type-btn { flex: 1 1 100%; }
+    .ins-plans { gap: 3px; }
+    .ins-plan-tag { font-size: 10px; padding: 2px 6px; }
+
+    /* Badges wrap nicely */
+    .badge-row { gap: 4px; }
+    .badge { font-size: 0.68rem; }
+
+    /* Footer appt tags */
+    .pcard-footer { flex-wrap: wrap; gap: 5px; }
+    .appt-tag { font-size: 0.7rem; }
   }
 </style>
 </head>
@@ -625,6 +676,11 @@
         title="Enter or paste date of birth — accepts MM/DD/YYYY, MM-DD-YYYY, or MMDDYYYY">
       <button class="dob-reset-btn" onclick="resetDob()" title="Clear date of birth">✕</button>
       <span class="dob-age-badge" id="dobAgeBadge"></span>
+    </div>
+    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div class="tx-clock-wrap">
+      <div class="tx-date" id="txDate">—</div>
+      <div class="tx-day" id="txDay">Texas Time</div>
     </div>
   </div>
 </header>
@@ -1333,12 +1389,37 @@
 
 <script>
 // ── FONT SIZE ──
-let currentFs = 14;
+let currentFs = parseInt(localStorage.getItem('npp_font_size') || '14');
+document.documentElement.style.setProperty('--fs', currentFs + 'px');
+document.getElementById('fontDisplay').textContent = currentFs + 'px';
+
 function changeFont(dir) {
   currentFs = Math.min(20, Math.max(11, currentFs + dir));
   document.documentElement.style.setProperty('--fs', currentFs + 'px');
   document.getElementById('fontDisplay').textContent = currentFs + 'px';
+  try { localStorage.setItem('npp_font_size', currentFs); } catch(e) {}
 }
+
+// ── TEXAS DATE/TIME DISPLAY ──
+function updateTxClock() {
+  const now = new Date();
+  const txDate = new Date(now.toLocaleString('en-US', { timeZone: 'American/Chicago' }));
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const m = months[txDate.getMonth()];
+  const d = txDate.getDate();
+  const y = txDate.getFullYear();
+  const day = days[txDate.getDay()];
+  const h = txDate.getHours();
+  const min = String(txDate.getMinutes()).padStart(2,'0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  const sec  = String(txDate.getSeconds()).padStart(2,'0');
+  document.getElementById('txDate').textContent = `${m} ${d}, ${y} · ${h12}:${min}:${sec} ${ampm}`;
+  document.getElementById('txDay').textContent  = day + ' — Texas (CT)';
+}
+updateTxClock();
+setInterval(updateTxClock, 1000);
 
 // ── TAB SWITCHING ──
 function switchTab(tab, btn) {
