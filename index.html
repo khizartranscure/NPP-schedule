@@ -527,8 +527,8 @@
 
   /* TX Date/Clock */
   .tx-clock-wrap { text-align: right; flex-shrink: 0; }
-  .tx-date { font-size: 14px; font-weight: 800; color: #F1F5F9; line-height: 1.2; }
-  .tx-day  { font-size: 10px; color: #FFFFF7; margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .tx-date { font-size: 13px; font-weight: 700; color: #F1F5F9; line-height: 1.2; }
+  .tx-day  { font-size: 10px; color: #475569; margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
 
   @media (max-width: 900px) {
     .topbar {
@@ -1403,7 +1403,7 @@ function changeFont(dir) {
 // ── TEXAS DATE/TIME DISPLAY ──
 function updateTxClock() {
   const now = new Date();
-  const txDate = new Date(now.toLocaleString('en-US', { timeZone: 'American/Chicago' }));
+  const txDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Chicago' }));
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const m = months[txDate.getMonth()];
