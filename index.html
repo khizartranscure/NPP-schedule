@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -671,9 +671,9 @@
   }
   .cl-chevron { font-size: 12px; }
   .cl-dashboard { display: flex; flex-direction: column; gap: 22px; padding-top: 14px; }
-  .cl-range-pills { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .cl-range-pills { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
   .cl-range-pill {
-    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    padding: 8px 18px; border-radius: 20px; border: 1px solid var(--border);
     background: white; color: var(--text); font-size: 12px; font-weight: 600;
     cursor: pointer; transition: all 0.15s;
   }
@@ -701,6 +701,13 @@
     background: white; outline: none; color-scheme: light;
   }
   .cl-date-input:focus { border-color: #3B82F6; }
+  .cl-staff-filter-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 4px 0 10px; }
+  .cl-staff-select {
+    border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px;
+    font-size: 12px; font-family: 'Inter', sans-serif; color: var(--text);
+    background: white; outline: none; min-width: 150px; cursor: pointer;
+  }
+  .cl-staff-select:focus { border-color: #3B82F6; }
   .cl-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .cl-summary-card {
     background: white; border: 2px solid var(--border); border-radius: var(--radius);
@@ -718,10 +725,12 @@
   .cl-table tr:last-child td { border-bottom: none; }
   .cl-table tbody tr:hover { background: #F8FAFC; }
   .cl-empty { padding: 24px; text-align: center; color: #94A3B8; font-size: 13px; }
-  .cl-type-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-  .cl-type-tab { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: white; color: #64748B; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+  .cl-type-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; margin-top: 6px; }
+  .cl-type-tab { padding: 8px 18px; border-radius: 20px; border: 1.5px solid var(--border); background: white; color: #64748B; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
   .cl-type-tab:hover { border-color: #94A3B8; color: var(--text); }
   .cl-type-tab.active { background: #0F172A; color: white; border-color: #0F172A; }
+  .cl-type-tab.cl-trash-tab { border-color: #FCA5A5; color: #EF4444; }
+  .cl-type-tab.cl-trash-tab.active { background: #EF4444; border-color: #EF4444; color: white; }
 
   /* Name gate overlay */
   .namegate-overlay {
@@ -1673,6 +1682,13 @@
         <button class="cl-refresh-btn" id="clRefreshBtn" onclick="loadDashboard(true)" title="Refresh">⟳ Refresh</button>
         <button class="cl-refresh-btn" onclick="downloadExcel()" title="Download styled Excel file" style="background:#ECFDF5;border-color:#6EE7B7;color:#065F46;">⬇ Download Excel</button>
       </div>
+      <div class="cl-staff-filter-row">
+        <label class="cl-field-label" style="margin:0;white-space:nowrap;">👤 Staff:</label>
+        <select id="clStaffFilter" class="cl-staff-select" onchange="renderDashboard()">
+          <option value="">All Staff</option>
+        </select>
+        <button class="cl-refresh-btn" onclick="clearStaffFilter()" id="clStaffClearBtn" style="display:none;">✕ Clear</button>
+      </div>
       <div class="cl-custom-range" id="clCustomRange" style="display:none;">
         <label class="cl-field-label" style="margin-bottom:4px;">From</label>
         <input type="date" id="clRangeFrom" class="cl-date-input" onchange="renderDashboard()">
@@ -1693,6 +1709,7 @@
         <button class="cl-type-tab" onclick="setLogType('New Patient',this)">New Patient</button>
         <button class="cl-type-tab" onclick="setLogType('Cancelled',this)">Cancelled</button>
         <button class="cl-type-tab" onclick="setLogType('Other / Transferred',this)">Other/Transferred</button>
+        <button class="cl-type-tab cl-trash-tab" onclick="setLogType('__trash__',this)">🗑️ Trash</button>
       </div>
       <div class="cl-table-wrap" id="clLogTable"></div>
     </div>
@@ -1768,6 +1785,19 @@
       <button class="cl-modal-submit" id="clSubmitBtn" onclick="submitCallLog()">Log Call</button>
     </div>
   </div>
+
+<!-- Custom confirm dialog -->
+<div id="clConfirmOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9500;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:white;border-radius:14px;padding:28px 24px;max-width:360px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,0.2);text-align:center;">
+    <div id="clConfirmIcon" style="font-size:28px;margin-bottom:12px;"></div>
+    <div id="clConfirmMsg" style="font-size:15px;font-weight:600;color:#0F172A;margin-bottom:8px;"></div>
+    <div id="clConfirmSub" style="font-size:13px;color:#64748B;margin-bottom:22px;"></div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="clConfirmResolve(false)" style="flex:1;padding:11px;border-radius:8px;border:1.5px solid #E2E8F0;background:white;color:#64748B;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">Cancel</button>
+      <button id="clConfirmOkBtn" onclick="clConfirmResolve(true)" style="flex:1;padding:11px;border-radius:8px;border:none;background:#EF4444;color:white;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">Confirm</button>
+    </div>
+  </div>
+</div>
 
 <div class="cl-toast" id="clToast"></div>
 
@@ -2479,6 +2509,7 @@ const CL_TYPE_META = {
 };
 
 let clPendingType = '';
+let clEditEntry   = null; // holds original entry being edited (null = new entry mode)
 let clPendingIcon = '';
 let clDashRange = 'today';
 let clAllEntries = [];
@@ -2496,6 +2527,7 @@ let clLastFetched = 0;
   } catch(e) {}
 })();
 let clLogTypeFilter = 'All';
+let clStaffFilter    = '';
 let clProviderListBuilt = false;
 
 function initCallLog() {
@@ -2584,6 +2616,12 @@ function openCallForm(type, icon) {
 }
 function closeCallForm() {
   document.getElementById('clModalOverlay').style.display = 'none';
+  // Reset to "Log Call" mode if we were in edit mode
+  if (clEditEntry) {
+    const btn = document.getElementById('clSubmitBtn');
+    if (btn) { btn.textContent = 'Log Call'; btn.onclick = submitCallLog; }
+    clEditEntry = null;
+  }
 }
 
 async function submitCallLog() {
@@ -2830,7 +2868,21 @@ function formatDob(val) {
 }
 
 function renderDashboard() {
-  const filtered = filterByRange(clAllEntries, clDashRange);
+  const dateFiltered = filterByRange(clAllEntries, clDashRange);
+
+  // Populate staff dropdown
+  const staffSelect = document.getElementById('clStaffFilter');
+  if (staffSelect) {
+    const selectedStaff = staffSelect.value;
+    const names = [...new Set(dateFiltered.map(e => e.staff).filter(Boolean))].sort();
+    staffSelect.innerHTML = '<option value="">All Staff</option>' +
+      names.map(n => `<option value="${n}" ${n===selectedStaff?'selected':''}>${n}</option>`).join('');
+    const clearBtn = document.getElementById('clStaffClearBtn');
+    if (clearBtn) clearBtn.style.display = selectedStaff ? 'inline-block' : 'none';
+  }
+  const staffVal = staffSelect ? staffSelect.value : '';
+  const preFiltered = staffVal ? dateFiltered.filter(e => e.staff === staffVal) : dateFiltered;
+  const filtered = preFiltered.filter(e => e.deleted !== 'trash');
 
   let cardsHtml = `<div class="cl-summary-card cl-total"><div class="cl-card-num">${filtered.length}</div><div class="cl-card-label">Total Calls</div></div>`;
   CL_TYPES.forEach(t => {
@@ -2857,13 +2909,55 @@ function renderDashboard() {
 
   const typeFiltered = clLogTypeFilter === 'All' ? filtered : filtered.filter(e => e.type === clLogTypeFilter);
   const sorted = [...typeFiltered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-  let logHtml = '<table class="cl-table"><tr><th>Time (TX)</th><th>Staff</th><th>Type</th><th>Phone</th><th>DOB</th><th>Provider</th><th>Location</th><th>Insurance</th><th>Note</th></tr>';
-  sorted.slice(0, 200).forEach(e => {
+  const myName = localStorage.getItem('cl_staffName') || '';
+
+  // ── Trash tab — show trashed entries with restore + hard-delete ──
+  if (clLogTypeFilter === '__trash__') {
+    const trashed = clAllEntries.filter(e => e.deleted === 'trash' && e.staff === myName);
+    if (!trashed.length) {
+      document.getElementById('clLogTable').innerHTML = '<div class="cl-empty">Your trash is empty.</div>';
+    } else {
+      const typeColors = { 'Follow-up':'#3B82F6','Reschedule':'#F59E0B','New Patient':'#10B981','Cancelled':'#EF4444','Other / Transferred':'#8B5CF6' };
+      let th = '<table class="cl-table"><tr><th>Time (TX)</th><th>Type</th><th>Phone</th><th>DOB</th><th>Provider</th><th>Location</th><th></th></tr>';
+      trashed.sort((a,b) => new Date(b.timestamp)-new Date(a.timestamp)).forEach(e => {
+        const d = new Date(e.timestamp);
+        const t = isNaN(d) ? e.timestamp : d.toLocaleString('en-US',{timeZone:'America/Chicago',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+        const tc = typeColors[e.type]||'#64748B';
+        th += `<tr style="opacity:0.7;">
+          <td>${t}</td>
+          <td style="color:${tc};font-weight:600;">${escapeHtml(e.type)}</td>
+          <td>${escapeHtml(e.phone)||'—'}</td>
+          <td>${formatDob(e.dob)||'—'}</td>
+          <td>${escapeHtml(e.provider)||'—'}</td>
+          <td>${escapeHtml(e.location)||'—'}</td>
+          <td style="display:flex;gap:6px;">
+            <button onclick='restoreEntry(${JSON.stringify(e)})' style="background:none;border:1px solid #6EE7B7;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:12px;color:#10B981;" title="Restore">↩️ Restore</button>
+            <button onclick='hardDeleteEntry(${JSON.stringify(e)})' style="background:none;border:1px solid #FCA5A5;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:12px;color:#EF4444;" title="Delete forever">🗑️ Delete Forever</button>
+          </td>
+        </tr>`;
+      });
+      th += '</table>';
+      document.getElementById('clLogTable').innerHTML = th;
+    }
+    return;
+  }
+
+  // ── Normal log (exclude trashed entries) ──
+  const visibleSorted = sorted.filter(e => e.deleted !== 'trash');
+  let logHtml = '<table class="cl-table"><tr><th>Time (TX)</th><th>Staff</th><th>Type</th><th>Phone</th><th>DOB</th><th>Provider</th><th>Location</th><th>Insurance</th><th>Note</th><th></th></tr>';
+  visibleSorted.slice(0, 200).forEach(e => {
     const d = new Date(e.timestamp);
     const timeStr = isNaN(d) ? e.timestamp : d.toLocaleString('en-US', { timeZone: 'America/Chicago', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
     const meta = CL_TYPE_META[e.type] || { icon: '' };
     const typeColors = { 'Follow-up':'#3B82F6','Reschedule':'#F59E0B','New Patient':'#10B981','Cancelled':'#EF4444','Other / Transferred':'#8B5CF6' };
     const tc = typeColors[e.type] || '#64748B';
+    const isOwn = myName && e.staff === myName;
+    const actionBtns = isOwn
+      ? `<div style="display:flex;gap:5px;">
+           <button onclick='openEditForm(${JSON.stringify(e)})' style="background:none;border:1px solid #CBD5E1;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:12px;color:#64748B;" title="Edit">✏️</button>
+           <button onclick='softDeleteEntry(${JSON.stringify(e)})' style="background:none;border:1px solid #FCA5A5;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:12px;color:#EF4444;" title="Move to Trash">🗑️</button>
+         </div>`
+      : '';
     logHtml += `<tr>
       <td>${timeStr}</td>
       <td>${escapeHtml(e.staff)}</td>
@@ -2874,10 +2968,139 @@ function renderDashboard() {
       <td>${escapeHtml(e.location)||'—'}</td>
       <td>${escapeHtml(e.insurance)||'—'}</td>
       <td>${escapeHtml(e.note)||'—'}</td>
+      <td>${actionBtns}</td>
     </tr>`;
   });
   logHtml += '</table>';
-  document.getElementById('clLogTable').innerHTML = sorted.length ? logHtml : '<div class="cl-empty">No entries for this range.</div>';
+  document.getElementById('clLogTable').innerHTML = visibleSorted.length ? logHtml : '<div class="cl-empty">No entries for this range.</div>';
+}
+
+// Custom confirm dialog — replaces browser confirm() which can be blocked
+let clConfirmResolve = () => {};
+function clConfirm(icon, msg, sub, okLabel, okColor) {
+  return new Promise(resolve => {
+    document.getElementById('clConfirmIcon').textContent = icon;
+    document.getElementById('clConfirmMsg').textContent  = msg;
+    document.getElementById('clConfirmSub').textContent  = sub || '';
+    const okBtn = document.getElementById('clConfirmOkBtn');
+    okBtn.textContent   = okLabel || 'Confirm';
+    okBtn.style.background = okColor || '#EF4444';
+    const overlay = document.getElementById('clConfirmOverlay');
+    overlay.style.display = 'flex';
+    clConfirmResolve = (result) => {
+      overlay.style.display = 'none';
+      resolve(result);
+    };
+  });
+}
+
+async function softDeleteEntry(entry) {
+  const ok = await clConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
+  if (!ok) return;
+  try {
+    const params = new URLSearchParams({ action:'softdelete', timestamp: String(entry.timestamp), staff: entry.staff });
+    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    showCallToast('🗑️ Moved to Trash');
+    setTimeout(() => loadDashboard(true), 800);
+  } catch(err) { alert('Could not delete. Try again.'); }
+}
+
+async function restoreEntry(entry) {
+  try {
+    const params = new URLSearchParams({ action:'restore', timestamp: String(entry.timestamp), staff: entry.staff });
+    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    showCallToast('↩️ Entry restored');
+    setTimeout(() => loadDashboard(true), 800);
+  } catch(err) { alert('Could not restore. Try again.'); }
+}
+
+async function hardDeleteEntry(entry) {
+  const ok = await clConfirm('⚠️', 'Delete Forever?', 'This will permanently remove the entry from Google Sheet. This cannot be undone.', 'Delete Forever', '#7F1D1D');
+  if (!ok) return;
+  try {
+    const params = new URLSearchParams({ action:'harddelete', timestamp: String(entry.timestamp), staff: entry.staff });
+    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    showCallToast('🗑️ Permanently deleted');
+    setTimeout(() => loadDashboard(true), 800);
+  } catch(err) { alert('Could not delete. Try again.'); }
+}
+
+function clearStaffFilter() {
+  const sel = document.getElementById('clStaffFilter');
+  if (sel) sel.value = '';
+  const btn = document.getElementById('clStaffClearBtn');
+  if (btn) btn.style.display = 'none';
+  renderDashboard();
+}
+
+function openEditForm(entry) {
+  clEditEntry   = entry;
+  clPendingType = entry.type;
+  clPendingIcon = (CL_TYPE_META[entry.type] || {}).icon || '';
+  document.getElementById('clModalTitle').textContent = `✏️ Edit: ${entry.type}`;
+
+  // Pre-fill all fields
+  document.getElementById('clPhone').value    = entry.phone    || '';
+  document.getElementById('clDob').value      = formatDob(entry.dob) || '';
+  document.getElementById('clProvider').value = entry.provider || '';
+  document.getElementById('clLocation').value = entry.location || '';
+  document.getElementById('clNote').value     = entry.note     || '';
+  const insEl = document.getElementById('clInsurance');
+  if (insEl) insEl.value = entry.insurance || '';
+
+  // Set appt type badge
+  const badge = document.getElementById('clApptTypeBadge');
+  if (badge) badge.textContent = clPendingIcon + '  ' + entry.type;
+
+  const isOther = entry.type === 'Other / Transferred';
+  ['clDobRow','clApptTypeRow','clProviderRow','clLocationRow'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = isOther ? 'none' : 'block';
+  });
+  const insRow = document.getElementById('clInsuranceRow');
+  if (insRow) insRow.style.display = entry.type === 'New Patient' ? 'block' : 'none';
+  const noteRow = document.getElementById('clNoteRow');
+  if (noteRow) noteRow.style.display = isOther ? 'block' : 'none';
+
+  // Change button to "Update"
+  const btn = document.getElementById('clSubmitBtn');
+  btn.textContent = 'Update';
+  btn.onclick = submitEditLog;
+
+  document.getElementById('clModalOverlay').style.display = 'flex';
+  document.getElementById('clPhone').focus();
+}
+
+async function submitEditLog() {
+  if (!clEditEntry) return;
+  const btn = document.getElementById('clSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const isOther = clPendingType === 'Other / Transferred';
+  const isNew   = clPendingType === 'New Patient';
+  const params  = new URLSearchParams({
+    action:    'update',
+    timestamp: String(clEditEntry.timestamp),
+    staff:     clEditEntry.staff,
+    type:      clPendingType,
+    phone:     document.getElementById('clPhone').value,
+    dob:       isOther ? '' : normalizeDob(document.getElementById('clDob').value),
+    provider:  isOther ? '' : (document.getElementById('clProvider').value || ''),
+    location:  isOther ? '' : (document.getElementById('clLocation').value || ''),
+    insurance: isNew   ? (document.getElementById('clInsurance')?.value || '') : '',
+    note:      isOther ? (document.getElementById('clNote')?.value || '') : ''
+  });
+  try {
+    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    closeCallForm();
+    showCallToast('✏️ Entry updated ✓');
+    setTimeout(() => loadDashboard(true), 800);
+  } catch(err) {
+    alert('Update failed. Check internet and try again.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Update';
+    btn.onclick  = submitCallLog;
+    clEditEntry  = null;
+  }
 }
 
 function downloadExcel() {
@@ -2889,11 +3112,22 @@ function downloadExcel() {
 }
 
 function buildAndDownloadExcel() {
-  const filtered = filterByRange(clAllEntries, clDashRange);
+  const dateFiltered = filterByRange(clAllEntries, clDashRange);
+  const staffVal     = (document.getElementById('clStaffFilter') || {}).value || '';
+  const filtered     = staffVal ? dateFiltered.filter(e => e.staff === staffVal) : dateFiltered;
   if (!filtered.length) { alert('No entries found for the selected date range.'); return; }
   if (typeof XLSX === 'undefined') { alert('Excel library not loaded. Check internet and try again.'); return; }
 
   const dateTag = new Date().toLocaleDateString('en-CA', { timeZone:'America/Chicago' });
+
+  // Auto-fill comment based on call type and location
+  function defaultComment(e) {
+    if (e.type === 'Follow-up')           return 'Follow up';
+    if (e.type === 'Reschedule')          return 'Rescheduled';
+    if (e.type === 'Cancelled')           return 'Appointment cancelled';
+    if (e.type === 'New Patient')         return e.location ? `New patient - ${e.location}` : 'New patient';
+    return e.note || '';
+  }
 
   // ── Tab definitions ──
   const TABS = [
@@ -2902,28 +3136,28 @@ function buildAndDownloadExcel() {
       label: 'New Patient',
       cols:  ['Phone Number', 'DOB', 'Provider', 'Comments', 'Insurance'],
       widths:[18, 15, 26, 36, 24],
-      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.provider||'', e.note||'', e.insurance||'']
+      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.provider||'', e.note || defaultComment(e), e.insurance||'']
     },
     {
       key:   'Follow-up',
       label: 'Follow Up',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[18, 15, 18, 36, 26],
-      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note||'', e.provider||'']
+      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Cancelled',
       label: 'Cancel',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[18, 15, 18, 36, 26],
-      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note||'', e.provider||'']
+      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Reschedule',
       label: 'Reschedule',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[18, 15, 18, 36, 26],
-      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note||'', e.provider||'']
+      row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Other / Transferred',
@@ -2934,46 +3168,48 @@ function buildAndDownloadExcel() {
     }
   ];
 
+  // Border style reused
+  const BORDER = {
+    top:    { style: 'thin', color: { rgb: '000000' } },
+    bottom: { style: 'thin', color: { rgb: '000000' } },
+    left:   { style: 'thin', color: { rgb: '000000' } },
+    right:  { style: 'thin', color: { rgb: '000000' } }
+  };
+
+  const headerStyle = {
+    font:      { bold: true, color: { rgb: '000000' }, sz: 12, name: 'Aptos Narrow' },
+    fill:      { fgColor: { rgb: 'FFFF00' } },
+    alignment: { horizontal: 'center', vertical: 'center' },
+    border:    BORDER
+  };
+
+  const dataStyle = {
+    font:      { sz: 12, name: 'Aptos Narrow' },
+    alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+    border:    BORDER
+  };
+
   function makeSheet(tab, entries) {
     const rows = [...entries]
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
       .map(e => tab.row(e));
 
-    const data = [
-      tab.cols,
-      ...rows
-    ];
-
-    const ws = XLSX.utils.aoa_to_sheet(data);
+    const ws = XLSX.utils.aoa_to_sheet([tab.cols, ...rows]);
     ws['!cols'] = tab.widths.map(w => ({ wch: w }));
-    ws['!rows'] = [{ hpt: 20 }];
+    ws['!rows'] = [{ hpt: 22 }, ...rows.map(() => ({ hpt: 20 }))];
 
-    // Yellow bold header row
-    const headerStyle = {
-      font:      { bold: true, color: { rgb: '000000' }, sz: 11 },
-      fill:      { fgColor: { rgb: 'FFFF00' } },
-      alignment: { horizontal: 'center', vertical: 'center' },
-      border: {
-        top:    { style: 'thin', color: { rgb: '000000' } },
-        bottom: { style: 'thin', color: { rgb: '000000' } },
-        left:   { style: 'thin', color: { rgb: '000000' } },
-        right:  { style: 'thin', color: { rgb: '000000' } },
-      }
-    };
-
+    // Apply header styles
     tab.cols.forEach((_, ci) => {
       const ref = XLSX.utils.encode_cell({ r: 0, c: ci });
       if (ws[ref]) ws[ref].s = headerStyle;
     });
 
-    // Data rows styling
+    // Apply data row styles — all rows, all columns
     rows.forEach((row, ri) => {
       row.forEach((_, ci) => {
-        const ref = XLSX.utils.encode_cell({ r: 1 + ri, c: ci });
-        if (ws[ref]) ws[ref].s = {
-          alignment: { vertical: 'center', horizontal: 'left' },
-          border: { bottom: { style: 'hair', color: { rgb: 'CCCCCC' } } }
-        };
+        const ref = XLSX.utils.encode_cell({ r: ri + 1, c: ci });
+        if (!ws[ref]) ws[ref] = { v: '', t: 's' };
+        ws[ref].s = dataStyle;
       });
     });
 
