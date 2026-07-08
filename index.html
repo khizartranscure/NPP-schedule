@@ -775,6 +775,14 @@
   }
   .cl-modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 18px; }
   .cl-field-label { display: block; font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+  .cl-field-label .req { color: #EF4444; margin-left: 2px; }
+  @keyframes cl-shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
   .cl-select, .cl-text-input {
     width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px;
     font-size: 13px; font-family: 'Inter', sans-serif; color: var(--text);
@@ -1418,7 +1426,7 @@
         <div class="pcard-body">
           <div class="pcard-header">
             <div class="pcard-avatar cn">RI</div>
-            <div><div class="pcard-name">Richard Climer</div><div class="pcard-role">Counselor · Age 13+</div></div>
+            <div><div class="pcard-name">Richard Climer</div><div class="pcard-role">Counselor · Age 13+ · Effective 07-06-2026</div></div>
           </div>
           <div class="badge-row">
             <span class="badge badge-green">✓ Accepting new</span>
@@ -1733,25 +1741,25 @@
     <div class="cl-modal-title" id="clModalTitle"></div>
 
     <!-- Phone — all types -->
-    <label class="cl-field-label">&#x1F4DE; Phone Number</label>
+    <label class="cl-field-label">&#x1F4DE; Phone Number <span class="req">*</span></label>
     <input type="tel" id="clPhone" class="cl-text-input" placeholder="(817) 343-8501"
       oninput="formatPhoneInput(this)" maxlength="14">
 
     <!-- DOB — all except Other/Transferred -->
     <div id="clDobRow">
-      <label class="cl-field-label">&#x1F382; Date of Birth</label>
+      <label class="cl-field-label">&#x1F382; Date of Birth <span class="req">*</span></label>
       <input type="text" id="clDob" class="cl-text-input" placeholder="e.g. 01/15/1990" onblur="this.value=normalizeDob(this.value)">
     </div>
 
     <!-- Appt Type badge — all except Other/Transferred -->
     <div id="clApptTypeRow">
-      <label class="cl-field-label">&#x1F4CB; Appointment Type</label>
+      <label class="cl-field-label">&#x1F4CB; Appointment Type <span class="req">*</span></label>
       <div class="cl-appt-type-badge" id="clApptTypeBadge"></div>
     </div>
 
     <!-- Provider — all except Other/Transferred -->
     <div id="clProviderRow">
-      <label class="cl-field-label">&#x1F464; Provider / Doctor</label>
+      <label class="cl-field-label">&#x1F464; Provider / Doctor <span class="req">*</span></label>
       <select id="clProvider" class="cl-select">
         <option value="">&#x2014; Not specified &#x2014;</option>
       </select>
@@ -1759,7 +1767,7 @@
 
     <!-- Location — all except Other/Transferred -->
     <div id="clLocationRow">
-      <label class="cl-field-label">&#x1F4CD; Location</label>
+      <label class="cl-field-label">&#x1F4CD; Location <span class="req">*</span></label>
       <select id="clLocation" class="cl-select">
         <option value="">&#x2014; Not specified &#x2014;</option>
         <option value="Lewisville">Lewisville</option>
@@ -1770,13 +1778,13 @@
 
     <!-- Insurance — New Patient only -->
     <div id="clInsuranceRow" style="display:none;">
-      <label class="cl-field-label">&#x1F3E5; Insurance Name</label>
+      <label class="cl-field-label">&#x1F3E5; Insurance Name <span class="req">*</span></label>
       <input type="text" id="clInsurance" class="cl-text-input" placeholder="e.g. Blue Cross Blue Shield">
     </div>
 
     <!-- Note — Other/Transferred only -->
     <div id="clNoteRow" style="display:none;">
-      <label class="cl-field-label">&#x1F4DD; Note</label>
+      <label class="cl-field-label">&#x1F4DD; Note <span class="req">*</span></label>
       <input type="text" id="clNote" class="cl-text-input" placeholder="Transfer details or any other info">
     </div>
 
@@ -2591,13 +2599,11 @@ function openCallForm(type, icon) {
   clPendingType = type; clPendingIcon = icon;
   document.getElementById('clModalTitle').textContent = `${icon} ${type}`;
 
-  // Reset fields
-  document.getElementById('clPhone').value = '';
-  document.getElementById('clDob').value = '';
-  document.getElementById('clProvider').value = '';
-  document.getElementById('clLocation').value = '';
-  document.getElementById('clInsurance').value = '';
-  document.getElementById('clNote').value = '';
+  // Reset fields and clear any validation errors
+  ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.style.borderColor = ''; }
+  });
 
   const isOther = type === 'Other / Transferred';
 
@@ -2612,11 +2618,16 @@ function openCallForm(type, icon) {
   document.getElementById('clNoteRow').style.display = isOther ? 'block' : 'none';
 
   document.getElementById('clModalOverlay').style.display = 'flex';
-  document.getElementById('clPhone').focus();
+  setTimeout(() => document.getElementById('clPhone').focus(), 50);
 }
+
 function closeCallForm() {
   document.getElementById('clModalOverlay').style.display = 'none';
-  // Reset to "Log Call" mode if we were in edit mode
+  // Clear validation highlights
+  ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.borderColor = '';
+  });
   if (clEditEntry) {
     const btn = document.getElementById('clSubmitBtn');
     if (btn) { btn.textContent = 'Log Call'; btn.onclick = submitCallLog; }
@@ -2624,21 +2635,91 @@ function closeCallForm() {
   }
 }
 
+// Enter key on any form input → submit
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  const overlay = document.getElementById('clModalOverlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  // Don't fire if confirm dialog is open
+  const confirm = document.getElementById('clConfirmOverlay');
+  if (confirm && confirm.style.display !== 'none') return;
+  e.preventDefault();
+  submitCallLog();
+});
+
 async function submitCallLog() {
   if (!clPendingType) return;
-  const staff = localStorage.getItem('cl_staffName') || 'Unknown';
   const isOther = clPendingType === 'Other / Transferred';
-  const isNew = clPendingType === 'New Patient';
+  const isNew   = clPendingType === 'New Patient';
+
+  // ── VALIDATION ──
+  const errors = [];
+
+  const phone    = document.getElementById('clPhone').value.trim();
+  const dob      = isOther ? 'skip' : document.getElementById('clDob').value.trim();
+  const provider = isOther ? 'skip' : document.getElementById('clProvider').value.trim();
+  const location = isOther ? 'skip' : document.getElementById('clLocation').value.trim();
+  const insurance= isNew   ? document.getElementById('clInsurance').value.trim() : 'skip';
+  const note     = isOther ? document.getElementById('clNote').value.trim() : 'skip';
+
+  // Helper: highlight field red if empty
+  function markField(id, isEmpty) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.borderColor = isEmpty ? '#EF4444' : '';
+    el.style.boxShadow   = isEmpty ? '0 0 0 2px rgba(239,68,68,0.2)' : '';
+  }
+
+  markField('clPhone',    !phone);
+  if (!isOther) {
+    markField('clDob',      !dob);
+    markField('clProvider', !provider);
+    markField('clLocation', !location);
+  }
+  if (isNew)   markField('clInsurance', !insurance);
+  if (isOther) markField('clNote',      !note);
+
+  if (!phone)                  errors.push('Phone Number');
+  if (!isOther && !dob)        errors.push('Date of Birth');
+  if (!isOther && !provider)   errors.push('Provider');
+  if (!isOther && !location)   errors.push('Location');
+  if (isNew    && !insurance)  errors.push('Insurance Name');
+  if (isOther  && !note)       errors.push('Note / Concern');
+
+  if (errors.length) {
+    // Shake the submit button
+    const btn = document.getElementById('clSubmitBtn');
+    btn.style.animation = 'none';
+    btn.offsetHeight; // reflow
+    btn.style.animation = 'cl-shake 0.35s ease';
+    // Focus first empty field
+    const firstEmpty = ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote']
+      .find(id => {
+        const el = document.getElementById(id);
+        return el && el.style.borderColor === 'rgb(239, 68, 68)';
+      });
+    if (firstEmpty) document.getElementById(firstEmpty).focus();
+    return;
+  }
+
+  // Clear all highlights
+  ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.style.borderColor = ''; el.style.boxShadow = ''; }
+  });
+
+  const staff = localStorage.getItem('cl_staffName') || 'Unknown';
   const entry = {
     staff,
     type:      clPendingType,
-    phone:     document.getElementById('clPhone').value,
-    dob:       isOther ? '' : normalizeDob(document.getElementById('clDob').value),
-    provider:  isOther ? '' : document.getElementById('clProvider').value,
-    location:  isOther ? '' : document.getElementById('clLocation').value,
-    insurance: isNew   ? document.getElementById('clInsurance').value : '',
-    note:      isOther ? document.getElementById('clNote').value : ''
+    phone,
+    dob:       isOther ? '' : normalizeDob(dob),
+    provider:  isOther ? '' : provider,
+    location:  isOther ? '' : location,
+    insurance: isNew   ? insurance : '',
+    note:      isOther ? note : ''
   };
+
   const btn = document.getElementById('clSubmitBtn');
   btn.disabled = true; btn.textContent = 'Saving…';
   try {
@@ -2998,30 +3079,57 @@ async function softDeleteEntry(entry) {
   const ok = await clConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
   if (!ok) return;
   try {
-    const params = new URLSearchParams({ action:'softdelete', timestamp: String(entry.timestamp), staff: entry.staff });
-    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    // Optimistic local update — mark as trash immediately
+    const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
+    if (idx !== -1) clAllEntries[idx].deleted = 'trash';
+    try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
+    renderCallLog();
     showCallToast('🗑️ Moved to Trash');
-    setTimeout(() => loadDashboard(true), 800);
-  } catch(err) { alert('Could not delete. Try again.'); }
+
+    // Send to backend
+    const params = new URLSearchParams({ action:'softdelete', timestamp: String(entry.timestamp), staff: entry.staff });
+    fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+      .catch(() => {}); // fire-and-forget, local state already updated
+
+    // Refresh from server after short delay
+    setTimeout(() => loadDashboard(true), 2000);
+  } catch(err) {
+    alert('Could not delete. Try again.');
+  }
 }
 
 async function restoreEntry(entry) {
   try {
-    const params = new URLSearchParams({ action:'restore', timestamp: String(entry.timestamp), staff: entry.staff });
-    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    // Optimistic local update
+    const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
+    if (idx !== -1) clAllEntries[idx].deleted = '';
+    try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
+    renderCallLog();
     showCallToast('↩️ Entry restored');
-    setTimeout(() => loadDashboard(true), 800);
+
+    const params = new URLSearchParams({ action:'restore', timestamp: String(entry.timestamp), staff: entry.staff });
+    fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+      .catch(() => {});
+
+    setTimeout(() => loadDashboard(true), 2000);
   } catch(err) { alert('Could not restore. Try again.'); }
 }
 
 async function hardDeleteEntry(entry) {
-  const ok = await clConfirm('⚠️', 'Delete Forever?', 'This will permanently remove the entry from Google Sheet. This cannot be undone.', 'Delete Forever', '#7F1D1D');
+  const ok = await clConfirm('⚠️', 'Delete Forever?', 'This entry will be moved to the Trash sheet in Google Sheets and cannot be recovered from here.', 'Delete Forever', '#7F1D1D');
   if (!ok) return;
   try {
-    const params = new URLSearchParams({ action:'harddelete', timestamp: String(entry.timestamp), staff: entry.staff });
-    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+    // Remove from local state entirely
+    clAllEntries = clAllEntries.filter(e => !(e.timestamp === entry.timestamp && e.staff === entry.staff));
+    try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
+    renderCallLog();
     showCallToast('🗑️ Permanently deleted');
-    setTimeout(() => loadDashboard(true), 800);
+
+    const params = new URLSearchParams({ action:'harddelete', timestamp: String(entry.timestamp), staff: entry.staff });
+    fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+      .catch(() => {});
+
+    setTimeout(() => loadDashboard(true), 2000);
   } catch(err) { alert('Could not delete. Try again.'); }
 }
 
