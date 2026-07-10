@@ -3243,35 +3243,35 @@ function buildAndDownloadExcel() {
       key:   'New Patient',
       label: 'New Patient',
       cols:  ['Phone Number', 'DOB', 'Provider', 'Comments', 'Insurance'],
-      widths:[18, 15, 26, 36, 24],
+      widths:[22, 18, 26, 48, 26],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.provider||'', e.note || defaultComment(e), e.insurance||'']
     },
     {
       key:   'Follow-up',
       label: 'Follow Up',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
-      widths:[18, 15, 18, 36, 26],
+      widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Cancelled',
       label: 'Cancel',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
-      widths:[18, 15, 18, 36, 26],
+      widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Reschedule',
       label: 'Reschedule',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
-      widths:[18, 15, 18, 36, 26],
+      widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
     },
     {
       key:   'Other / Transferred',
       label: 'Other Concerns',
       cols:  ['Phone Number', 'Location', 'Concern'],
-      widths:[18, 18, 50],
+      widths:[22, 22, 65],
       row:   (e) => [e.phone||'', e.location||'', e.note||'']
     }
   ];
