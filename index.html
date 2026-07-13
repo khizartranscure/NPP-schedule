@@ -1426,7 +1426,7 @@
         <div class="pcard-body">
           <div class="pcard-header">
             <div class="pcard-avatar cn">RI</div>
-            <div><div class="pcard-name">Richard Climer</div><div class="pcard-role">Counselor · Age 13+</div></div>
+            <div><div class="pcard-name">Richard Climer</div><div class="pcard-role">Counselor · Age 13+ · Effective 07-06-2026</div></div>
           </div>
           <div class="badge-row">
             <span class="badge badge-green">✓ Accepting new</span>
@@ -2921,7 +2921,16 @@ function filterByRange(entries, range) {
     const dTX = txDateStr(d);
     if (range === 'today')     return dTX === todayTX;
     if (range === 'yesterday') return dTX === yesterdayTX;
-    if (range === 'week')   { const wk = new Date(now); wk.setDate(now.getDate() - 7); return d >= wk; }
+    if (range === 'week') {
+      // Calendar week (Mon-Sun) in TX time, based on today's TX date
+      const [ty, tm, td] = todayTX.split('-').map(Number);
+      const todayNoon = new Date(ty, tm - 1, td, 12, 0, 0); // local noon avoids DST edge issues
+      const dow = todayNoon.getDay(); // 0=Sun..6=Sat
+      const diffToMonday = (dow === 0) ? 6 : dow - 1;
+      const monday = new Date(todayNoon); monday.setDate(todayNoon.getDate() - diffToMonday);
+      const mondayStr = txDateStr(monday);
+      return dTX >= mondayStr && dTX <= todayTX;
+    }
     if (range === 'month')  return dTX.slice(0,7) === todayTX.slice(0,7);
     if (range === 'custom') {
       const fromEl = document.getElementById('clRangeFrom');
