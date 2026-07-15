@@ -2567,14 +2567,14 @@ let clPendingRerender = false; // set true if new data arrives while a modal/con
 function isAnyModalOpen() {
   const modal   = document.getElementById('clModalOverlay');
   const confirm = document.getElementById('clConfirmOverlay');
-  const alerts  = document.getElementById('paOverlay');
+  const alerts  = document.getElementById('paOverlayDynamic');
   return (modal && modal.style.display !== 'none') || (confirm && confirm.style.display !== 'none') || (alerts && alerts.style.display !== 'none');
 }
 
 // ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-10';
+const TOOL_VERSION = '2026-07-13-11';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
@@ -2871,7 +2871,7 @@ function changeStaffName() {
 }
 
 function openCallForm(type, icon) {
-  const alertsPopup = document.getElementById('paOverlay');
+  const alertsPopup = document.getElementById('paOverlayDynamic');
   if (alertsPopup && alertsPopup.style.display !== 'none') return; // don't stack on top of alerts popup
   if (!localStorage.getItem('cl_staffName')) { changeStaffName(); return; }
   clPendingType = type; clPendingIcon = icon;
