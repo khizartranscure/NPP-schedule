@@ -2736,7 +2736,7 @@ async function submitProviderAlert() {
 }
 
 async function deleteProviderAlert(id, timestamp) {
-  const ok = await clConfirm('🗑️', 'Remove this alert?', 'This will remove it for everyone.', 'Remove', '#EF4444');
+  const ok = await paConfirm('🗑️', 'Remove this alert?', 'This will remove it for everyone.');
   if (!ok) return;
   clProviderAlerts[id] = (clProviderAlerts[id] || []).filter(a => a.timestamp !== timestamp);
   renderProviderAlertList(id);
@@ -2746,6 +2746,38 @@ async function deleteProviderAlert(id, timestamp) {
     await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
     loadProviderAlerts();
   } catch (e) {}
+}
+
+// Self-contained confirm dialog just for the provider-alerts popup — never touches
+// or shares anything with the call-log modal's confirm dialog.
+function paConfirm(icon, title, sub) {
+  return new Promise(resolve => {
+    const existing = document.getElementById('paConfirmDynamic');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'paConfirmDynamic';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20050;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border-radius:14px;padding:26px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.25);font-family:Inter,sans-serif;';
+    box.addEventListener('click', ev => ev.stopPropagation());
+    box.innerHTML = `
+      <div style="font-size:26px;margin-bottom:6px;">${icon}</div>
+      <div style="font-weight:700;font-size:15px;color:#0F172A;margin-bottom:4px;">${escapeHtml(title)}</div>
+      <div style="font-size:13px;color:#64748B;margin-bottom:18px;">${escapeHtml(sub)}</div>
+      <div style="display:flex;gap:10px;">
+        <button id="paConfCancel" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid #E2E8F0;background:white;color:#64748B;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">Cancel</button>
+        <button id="paConfOk" style="flex:1;padding:10px;border-radius:8px;border:none;background:#EF4444;color:white;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">Remove</button>
+      </div>`;
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    const cleanup = (result) => { overlay.remove(); resolve(result); };
+    box.querySelector('#paConfCancel').onclick = () => cleanup(false);
+    box.querySelector('#paConfOk').onclick     = () => cleanup(true);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
