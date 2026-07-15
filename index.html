@@ -14,9 +14,11 @@
   :root {
     --fs: 14px;
     --bg: #F8FAFC;
-    --sidebar: #0F172A;
-    --sidebar-card: #1E293B;
-    --sidebar-border: #334155;
+    --sidebar: #0A121F;
+    --sidebar-card: #131D2E;
+    --sidebar-border: #26374F;
+    --accent: #1E5F74;
+    --accent-light: #2D7A94;
     --text: #0F172A;
     --text-muted: #64748B;
     --border: #E2E8F0;
@@ -28,6 +30,43 @@
     --radius: 10px; --radius-sm: 6px;
     --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+
+    /* Theme-able chrome colors (topbar/sidebar/tabs) — swapped by data-theme attribute */
+    --chrome-1: #0C1524;      /* topbar gradient top */
+    --chrome-2: #0A121F;      /* topbar gradient bottom / sidebar base */
+    --chrome-border: #1E2C41;
+    --chrome-tabnav: #0A121F;
+    --chrome-sub-text: #7C8CA6;
+    --chrome-hover-text: #C3CEDD;
+    --chrome-accent: #2D7A94;
+    --logo-grad-1: #1E3A5F;
+    --logo-grad-2: #1E5F74;
+  }
+
+  [data-theme="charcoal"] {
+    --chrome-1: #16181D; --chrome-2: #111318; --chrome-border: #262A33;
+    --chrome-tabnav: #111318; --chrome-sub-text: #8A93A3; --chrome-hover-text: #D3D8E0;
+    --chrome-accent: #5B7A99; --logo-grad-1: #2C333F; --logo-grad-2: #5B7A99;
+  }
+  [data-theme="indigo"] {
+    --chrome-1: #131736; --chrome-2: #0F1229; --chrome-border: #262C56;
+    --chrome-tabnav: #0F1229; --chrome-sub-text: #9094C4; --chrome-hover-text: #D6D8F5;
+    --chrome-accent: #5558D6; --logo-grad-1: #26305F; --logo-grad-2: #5558D6;
+  }
+  [data-theme="forest"] {
+    --chrome-1: #10201A; --chrome-2: #0B1712; --chrome-border: #1E3A2E;
+    --chrome-tabnav: #0B1712; --chrome-sub-text: #82A895; --chrome-hover-text: #CBE8D9;
+    --chrome-accent: #2F9E6E; --logo-grad-1: #163326; --logo-grad-2: #2F9E6E;
+  }
+  [data-theme="wine"] {
+    --chrome-1: #241419; --chrome-2: #1A0E12; --chrome-border: #3A222A;
+    --chrome-tabnav: #1A0E12; --chrome-sub-text: #B08893; --chrome-hover-text: #EBD3D8;
+    --chrome-accent: #9F4757; --logo-grad-1: #3A2029; --logo-grad-2: #9F4757;
+  }
+  [data-theme="slate"] {
+    --chrome-1: #1E2937; --chrome-2: #17212E; --chrome-border: #2E3D4F;
+    --chrome-tabnav: #17212E; --chrome-sub-text: #93A3B5; --chrome-hover-text: #DAE3EC;
+    --chrome-accent: #4A8FBF; --logo-grad-1: #263646; --logo-grad-2: #4A8FBF;
   }
 
   html { font-size: var(--fs); }
@@ -35,27 +74,37 @@
 
   /* ── TOP BAR ── */
   .topbar {
-    background: var(--sidebar); color: white;
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
+    color: white;
     padding: 0 20px; height: 58px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 200;
+    border-bottom: 1px solid var(--chrome-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   }
   .topbar-left { display: flex; align-items: center; gap: 12px; }
   .logo-mark {
     width: 34px; height: 34px; border-radius: 8px;
-    background: linear-gradient(135deg,#3B82F6,#8B5CF6);
+    background: linear-gradient(135deg,var(--logo-grad-1),var(--logo-grad-2));
     display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 14px; color: white; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
   .topbar-title { font-size: 15px; font-weight: 600; }
-  .topbar-sub { font-size: 11px; color: #64748B; margin-top: 1px; }
+  .topbar-sub { font-size: 11px; color: var(--chrome-sub-text); margin-top: 1px; }
   .topbar-right { display: flex; align-items: center; gap: 18px; }
   .stat-item { text-align: right; }
   .stat-num { font-size: 20px; font-weight: 700; line-height: 1; }
-  .stat-label { font-size: 10px; color: #64748B; margin-top: 1px; }
+  .stat-label { font-size: 10px; color: var(--chrome-sub-text); margin-top: 1px; }
 
   /* Font size controls */
   .font-ctrl { display: flex; align-items: center; gap: 6px; }
+  .theme-swatch {
+    width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.25); padding: 0; transition: transform 0.12s, border-color 0.12s;
+  }
+  .theme-swatch:hover { transform: scale(1.15); }
+  .theme-swatch.active { border-color: white; box-shadow: 0 0 0 2px rgba(255,255,255,0.2); }
   .font-ctrl-label { font-size: 10px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
   .font-btns { display: flex; gap: 3px; }
   .font-btn {
@@ -88,18 +137,18 @@
 
   /* Tab nav */
   .tab-nav {
-    background: #0B1221; border-bottom: 1px solid #1E293B;
+    background: var(--chrome-tabnav); border-bottom: 1px solid var(--chrome-border);
     display: flex; padding: 0 20px; gap: 2px;
     position: sticky; top: 58px; z-index: 199;
   }
   .tab-btn {
     padding: 11px 16px; font-size: 13px; font-weight: 500;
-    color: #64748B; border: none; background: transparent; cursor: pointer;
+    color: var(--chrome-sub-text); border: none; background: transparent; cursor: pointer;
     border-bottom: 2px solid transparent; font-family: 'Inter', sans-serif;
     transition: all 0.15s; white-space: nowrap;
   }
-  .tab-btn:hover { color: #94A3B8; }
-  .tab-btn.active { color: white; border-bottom-color: #3B82F6; }
+  .tab-btn:hover { color: var(--chrome-hover-text); }
+  .tab-btn.active { color: white; border-bottom-color: var(--chrome-accent); }
 
   /* ── LAYOUT ── */
   .app-body { display: flex; flex: 1; }
@@ -107,12 +156,13 @@
   /* ── SIDEBAR ── */
   .sidebar {
     width: 255px; flex-shrink: 0;
-    background: var(--sidebar);
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
     padding: 18px 14px;
     position: sticky; top: 97px;
     height: calc(100vh - 97px);
     overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: #334155 transparent;
+    border-right: 1px solid var(--chrome-border);
   }
   .sidebar::-webkit-scrollbar { width: 4px; }
   .sidebar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -288,6 +338,11 @@
   }
   .cl-provider-alert-btn:hover { transform: scale(1.15); }
   .cl-provider-alert-btn.has-alert { background: #EF4444; }
+  @keyframes clCheckAlertBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+  .pa-notif-item:hover { background: #F8FAFC; }
   .pa-item {
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
     background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 8px;
@@ -930,6 +985,18 @@
     </div>
   </div>
   <div class="topbar-right">
+    <div style="display:flex;align-items:center;gap:7px;" title="Choose color theme">
+      <span class="font-ctrl-label">Theme</span>
+      <div style="display:flex;gap:5px;">
+        <button class="theme-swatch" data-theme="navy" onclick="setChromeTheme('navy')" style="background:linear-gradient(135deg,#1E3A5F,#1E5F74);" title="Navy Teal"></button>
+        <button class="theme-swatch" data-theme="charcoal" onclick="setChromeTheme('charcoal')" style="background:linear-gradient(135deg,#2C333F,#5B7A99);" title="Charcoal"></button>
+        <button class="theme-swatch" data-theme="slate" onclick="setChromeTheme('slate')" style="background:linear-gradient(135deg,#263646,#4A8FBF);" title="Slate Blue"></button>
+        <button class="theme-swatch" data-theme="indigo" onclick="setChromeTheme('indigo')" style="background:linear-gradient(135deg,#26305F,#5558D6);" title="Deep Indigo"></button>
+        <button class="theme-swatch" data-theme="forest" onclick="setChromeTheme('forest')" style="background:linear-gradient(135deg,#163326,#2F9E6E);" title="Forest"></button>
+        <button class="theme-swatch" data-theme="wine" onclick="setChromeTheme('wine')" style="background:linear-gradient(135deg,#3A2029,#9F4757);" title="Wine"></button>
+      </div>
+    </div>
+    <div style="width:1px;height:28px;background:#1E293B;"></div>
     <div class="font-ctrl">
       <span class="font-ctrl-label">Text</span>
       <div class="font-btns">
@@ -960,6 +1027,13 @@
         title="Enter or paste date of birth — accepts MM/DD/YYYY, MM-DD-YYYY, or MMDDYYYY">
       <button class="dob-reset-btn" onclick="resetDob()" title="Clear date of birth">✕</button>
       <span class="dob-age-badge" id="dobAgeBadge"></span>
+    </div>
+    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="position:relative;">
+      <button id="paBellBtn" onclick="toggleAlertNotifications(event)" title="Provider alert notifications" style="background:none;border:1.5px solid #334155;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;color:#CBD5E1;display:flex;align-items:center;justify-content:center;position:relative;">
+        🔔
+        <span id="paBellCount" style="display:none;position:absolute;top:-6px;right:-6px;background:#EF4444;color:white;font-size:10px;font-weight:700;border-radius:9px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;line-height:1;"></span>
+      </button>
     </div>
     <div style="width:1px;height:28px;background:#1E293B;"></div>
     <div class="tx-clock-wrap">
@@ -1869,6 +1943,23 @@ let currentFs = parseInt(localStorage.getItem('npp_font_size') || '14');
 document.documentElement.style.setProperty('--fs', currentFs + 'px');
 document.getElementById('fontDisplay').textContent = currentFs + 'px';
 
+function setChromeTheme(theme) {
+  if (theme === 'navy') {
+    document.documentElement.removeAttribute('data-theme'); // navy is the default (:root)
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  try { localStorage.setItem('cl_chromeTheme', theme); } catch (e) {}
+  document.querySelectorAll('.theme-swatch').forEach(sw => {
+    sw.classList.toggle('active', sw.dataset.theme === theme);
+  });
+}
+(function initChromeTheme() {
+  let saved = 'navy';
+  try { saved = localStorage.getItem('cl_chromeTheme') || 'navy'; } catch (e) {}
+  document.addEventListener('DOMContentLoaded', () => setChromeTheme(saved));
+})();
+
 function changeFont(dir) {
   currentFs = Math.min(20, Math.max(11, currentFs + dir));
   document.documentElement.style.setProperty('--fs', currentFs + 'px');
@@ -2574,7 +2665,7 @@ function isAnyModalOpen() {
 // ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-11';
+const TOOL_VERSION = '2026-07-13-22';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
@@ -2614,6 +2705,9 @@ const CL_TYPE_META = {
 // red if there's an active instruction/note. Shared across all staff via Google Sheets.
 let clProviderAlerts = {}; // { providerId: [{message, staff, timestamp}, ...] }
 let clOpenAlertProvider = null;
+let clSeenAlertKeys = null; // null until first load — prevents false "new" popups for existing alerts on page load
+
+function alertKey(a) { return a.providerId + '|||' + a.timestamp; }
 
 function injectProviderAlertIcons() {
   document.querySelectorAll('.pcard').forEach(card => {
@@ -2637,6 +2731,12 @@ function refreshProviderAlertIcons() {
     if (!btn) return;
     const hasAlert = (clProviderAlerts[id] || []).length > 0;
     btn.classList.toggle('has-alert', hasAlert);
+    btn.textContent = '!';
+    if (hasAlert) {
+      btn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:10px;padding:0;border:none;border-radius:50%;cursor:pointer;font-size:10px;font-weight:700;background:#EF4444;color:white;vertical-align:middle;line-height:1;animation:clCheckAlertBlink 1.4s ease-in-out infinite;';
+    } else {
+      btn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:10px;padding:0;border:none;border-radius:50%;cursor:pointer;font-size:10px;font-weight:700;background:#CBD5E1;color:white;vertical-align:middle;line-height:1;';
+    }
   });
 }
 
@@ -2653,9 +2753,195 @@ async function loadProviderAlerts() {
     clProviderAlerts = map;
     refreshProviderAlertIcons();
     if (clOpenAlertProvider) renderProviderAlertList(clOpenAlertProvider); // keep open popup in sync
+    updateBellBadge();
+    detectNewAlertsAndPreview();
   } catch (e) {
     // network hiccup — keep showing whatever we last had
   }
+}
+
+// Compares the freshly-fetched alerts against what we've already shown, and pops a
+// small live preview bubble above the provider's card icon for anything brand new —
+// so staff see it immediately without needing to click the bell or the icon.
+function detectNewAlertsAndPreview() {
+  const flat = getAllAlertsFlat();
+  const currentKeys = new Set(flat.map(alertKey));
+
+  if (clSeenAlertKeys === null) {
+    // First load ever — just record what already exists, don't pop previews for old data
+    clSeenAlertKeys = currentKeys;
+    return;
+  }
+
+  flat.forEach(a => {
+    const key = alertKey(a);
+    if (!clSeenAlertKeys.has(key)) {
+      showAlertPreviewBubble(a.providerId, a.message);
+    }
+  });
+  clSeenAlertKeys = currentKeys;
+}
+
+function showAlertPreviewBubble(providerId, message) {
+  const card = document.querySelector(`.pcard[data-id="${providerId}"]`);
+  const icon = card ? card.querySelector('.cl-provider-alert-btn') : null;
+  const p = PROVIDERS[providerId];
+  const pname = p ? p.name : providerId;
+
+  // On-screen bubble above the provider's icon (only if that card is currently visible)
+  if (icon) {
+    const rect = icon.getBoundingClientRect();
+    const bubble = document.createElement('div');
+    bubble.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top - 8}px;transform:translate(-50%,-100%);z-index:20200;background:#0F172A;color:white;padding:8px 12px;border-radius:8px;font-family:Inter,sans-serif;font-size:12px;max-width:220px;box-shadow:0 8px 24px rgba(0,0,0,0.3);opacity:0;transition:opacity 0.25s ease;pointer-events:none;`;
+    bubble.innerHTML = `<div style="font-weight:700;margin-bottom:2px;">${escapeHtml(pname)}</div><div style="opacity:0.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">New alert: ${escapeHtml(message)}</div>`;
+    document.body.appendChild(bubble);
+    requestAnimationFrame(() => { bubble.style.opacity = '1'; });
+    setTimeout(() => {
+      bubble.style.opacity = '0';
+      setTimeout(() => bubble.remove(), 300);
+    }, 4500);
+  }
+
+  // Real OS-level push notification (works even if this browser tab isn't focused/visible)
+  try {
+    if (window.Notification && Notification.permission === 'granted') {
+      const n = new Notification(pname + ' — New Alert', { body: message, tag: 'npp-alert-' + providerId + '-' + Date.now() });
+      n.onclick = () => { window.focus(); n.close(); };
+    }
+  } catch (e) {}
+
+  // Flash the browser tab title so it's noticeable even if the tab is in the background
+  flashTabTitle('🔴 New Alert — ' + pname);
+}
+
+let clOriginalTabTitle = document.title;
+let clTabFlashTimer = null;
+function flashTabTitle(flashText) {
+  if (document.visibilityState === 'visible' && document.hasFocus()) return; // no need to flash if they're already looking at it
+  if (clTabFlashTimer) clearInterval(clTabFlashTimer);
+  let showingFlash = false;
+  clTabFlashTimer = setInterval(() => {
+    document.title = showingFlash ? clOriginalTabTitle : flashText;
+    showingFlash = !showingFlash;
+  }, 1200);
+  const stopFlashing = () => {
+    clearInterval(clTabFlashTimer);
+    clTabFlashTimer = null;
+    document.title = clOriginalTabTitle;
+    document.removeEventListener('visibilitychange', stopFlashing);
+    window.removeEventListener('focus', stopFlashing);
+  };
+  document.addEventListener('visibilitychange', stopFlashing);
+  window.addEventListener('focus', stopFlashing);
+}
+
+// ── HEADER NOTIFICATION BELL ──
+// Shows a red count badge for provider alerts added since this device last checked,
+// and a dropdown listing who added what, for which provider, and when.
+function getAllAlertsFlat() {
+  const flat = [];
+  Object.keys(clProviderAlerts).forEach(pid => {
+    (clProviderAlerts[pid] || []).forEach(a => flat.push({ ...a, providerId: pid }));
+  });
+  flat.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  return flat;
+}
+
+function getReadAlertKeys() {
+  try {
+    const raw = localStorage.getItem('cl_alerts_readKeys');
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch (e) { return new Set(); }
+}
+function saveReadAlertKeys(set) {
+  try {
+    // Keep it bounded — only need the most recent ~300 keys
+    const arr = Array.from(set).slice(-300);
+    localStorage.setItem('cl_alerts_readKeys', JSON.stringify(arr));
+  } catch (e) {}
+}
+
+function updateBellBadge() {
+  const readKeys = getReadAlertKeys();
+  const unread = getAllAlertsFlat().filter(a => !readKeys.has(alertKey(a))).length;
+  const badge = document.getElementById('paBellCount');
+  if (!badge) return;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? '99+' : String(unread);
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function relativeTimeFrom(isoStr) {
+  const d = new Date(isoStr);
+  if (isNaN(d)) return '';
+  const diffMs = Date.now() - d.getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return d.toLocaleDateString('en-US', { timeZone: 'America/Chicago', month: 'short', day: 'numeric' }) +
+    ' · ' + d.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' });
+}
+
+function toggleAlertNotifications(ev) {
+  ev.stopPropagation();
+  const existing = document.getElementById('paNotifDropdown');
+  if (existing) { existing.remove(); return; }
+
+  const btn  = document.getElementById('paBellBtn');
+  const rect = btn.getBoundingClientRect();
+
+  const panel = document.createElement('div');
+  panel.id = 'paNotifDropdown';
+  panel.style.cssText = `position:fixed;top:${rect.bottom + 8}px;right:${window.innerWidth - rect.right}px;z-index:20100;background:white;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,0.25);width:320px;max-height:420px;overflow-y:auto;font-family:Inter,sans-serif;`;
+  panel.addEventListener('click', e => e.stopPropagation());
+
+  const flat = getAllAlertsFlat();
+  let itemsHtml;
+  if (!flat.length) {
+    itemsHtml = '<div style="padding:24px;text-align:center;color:#94A3B8;font-size:13px;">No provider alerts yet.</div>';
+  } else {
+    itemsHtml = flat.slice(0, 30).map(a => {
+      const p = PROVIDERS[a.providerId];
+      const pname = p ? p.name : a.providerId;
+      return `<div class="pa-notif-item" data-pid="${escapeHtml(a.providerId)}" style="padding:11px 14px;border-bottom:1px solid #F1F5F9;cursor:pointer;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;">
+          <div style="font-weight:700;font-size:12.5px;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(pname)}</div>
+          <div style="font-size:10.5px;color:#94A3B8;white-space:nowrap;flex-shrink:0;">${relativeTimeFrom(a.timestamp)}</div>
+        </div>
+        <div style="font-size:12px;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(a.message)}</div>
+        <div style="font-size:10.5px;color:#94A3B8;margin-top:3px;">— ${escapeHtml(a.staff)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  panel.innerHTML = `
+    <div style="padding:12px 14px;border-bottom:1px solid #E2E8F0;font-weight:700;font-size:13px;color:#0F172A;">Provider Alerts</div>
+    <div>${itemsHtml}</div>`;
+
+  document.body.appendChild(panel);
+  panel.querySelectorAll('.pa-notif-item').forEach(item => {
+    item.onclick = () => { panel.remove(); openProviderAlerts(item.dataset.pid); };
+  });
+
+  // Mark as read — store the exact keys shown, immune to any clock/timezone skew
+  const readKeys = getReadAlertKeys();
+  flat.forEach(a => readKeys.add(alertKey(a)));
+  saveReadAlertKeys(readKeys);
+  updateBellBadge();
+
+  // Close on outside click
+  setTimeout(() => {
+    document.addEventListener('click', function closeOnce() {
+      const p = document.getElementById('paNotifDropdown');
+      if (p) p.remove();
+      document.removeEventListener('click', closeOnce);
+    }, { once: true });
+  }, 0);
 }
 
 function openProviderAlerts(id) {
@@ -2783,7 +3069,10 @@ function paConfirm(icon, title, sub) {
 document.addEventListener('DOMContentLoaded', function() {
   injectProviderAlertIcons();
   loadProviderAlerts();
-  setInterval(loadProviderAlerts, 60000);
+  setInterval(loadProviderAlerts, 8000);
+  if (window.Notification && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
 });
 
 let clPendingType = '';
@@ -3784,6 +4073,6 @@ setTimeout(() => {
 }, 2000);
 
 </script>
-<footer style="text-align:center;padding:10px;font-size:11px;color:#94A3B8;background:#0F172A;border-top:1px solid #1E293B;">Created by Khizar Babar - ID: 1531</footer>
+<footer style="text-align:center;padding:10px;font-size:11px;color:var(--chrome-sub-text);background:var(--chrome-2);border-top:1px solid var(--chrome-border);">Created by Khizar Babar - ID: 1531</footer>
 </body>
 </html>
