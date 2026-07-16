@@ -1525,7 +1525,7 @@
         </div>
       </div>
 
-      <div class="pcard" data-type="CN" data-loc="lv" data-days="Mon Tue Wed Fri" data-accepting="yes" data-id="RI" data-min-age="13">
+      <div class="pcard" data-type="CN" data-loc="lv fm" data-days="Mon Tue Wed Thu Fri" data-accepting="yes" data-id="RI" data-min-age="13">
         <div class="pcard-accent cn"></div>
         <div class="pcard-body">
           <div class="pcard-header">
@@ -1537,7 +1537,9 @@
             <span class="badge badge-blue">New provider</span>
           </div>
           <div class="schedule-block">
-            <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Wed — 9:00 am to 5:00 pm <em>(Lunch at 12 pm)</em><br>Fri — 9:00 am to 2:00 pm <em>(No lunch break)</em></span></div>
+            <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Thu — 9:00 am to 4:00 pm <em>(Lunch at 12 pm) — Effective from 07/23/2026</em></span></div>
+            <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Wed — 9:00 am to 5:00 pm <em>(Lunch at 12 pm)</em></span></div>
+            <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Fri — 9:00 am to 2:00 pm <em>(No lunch break)</em></span></div>
           </div>
           <div class="no-rx-note">💊 Cannot prescribe medications</div>
         </div>
@@ -2131,7 +2133,9 @@ const PROVIDERS = {
   RI: {
     name: 'Richard Climer', role: 'Counselor · Age 13+ · Eff. 07-06-2026', accepting: true,
     schedule: [
-      { loc: 'lv', label: 'Lewisville', text: 'Mon · Tue · Wed — 9 am–5 pm (lunch 12 pm) · Fri — 9 am–2 pm' }
+      { loc: 'fm', label: 'Flower Mound', text: 'Thu — 9 am–4 pm (lunch 12 pm) — Effective from 07/23/2026' },
+      { loc: 'lv', label: 'Lewisville', text: 'Mon · Tue · Wed — 9 am–5 pm (lunch 12 pm)' },
+      { loc: 'lv', label: 'Lewisville', text: 'Fri — 9 am–2 pm (no lunch break)' }
     ],
     appt: 'Follow-up 60 min · New pt 60 min'
   },
@@ -2351,7 +2355,7 @@ const DAY_LOC_MAP = {
   KC:  { Mon:['fm'], Tue:['fm'], Wed:['fm'], Thu:['fm'], Fri:['fm'] },
   DL:  { Mon:['lv'], Tue:['lv'], Wed:['lv'], Thu:['lv'] },
   MM:  { Mon:['fm'], Tue:['fm'], Wed:['fm'], Thu:['fm'], Fri:['fm'] },
-  RI:  { Mon:['lv'], Tue:['lv'], Wed:['lv'], Fri:['lv'] },
+  RI:  { Mon:['lv'], Tue:['lv'], Wed:['lv'], Thu:['fm'], Fri:['lv'] },
   SA:  { Mon:['fm'], Tue:['fm'], Wed:['fm'], Thu:['fm'], Fri:['fm'] }
 };
 
@@ -2665,7 +2669,7 @@ function isAnyModalOpen() {
 // ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-22';
+const TOOL_VERSION = '2026-07-13-26';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
@@ -3251,8 +3255,10 @@ document.addEventListener('keydown', function(e) {
   if (btn) btn.click(); // triggers whatever handler is currently assigned (submitCallLog OR submitEditLog)
 });
 
+let clSubmitInFlight = false;
 async function submitCallLog() {
   if (!clPendingType) return;
+  if (clSubmitInFlight) return; // hard guard — ignore any extra clicks/taps/Enter while a submit is already running
   const isOther = clPendingType === 'Other / Transferred';
   const isNew   = clPendingType === 'New Patient';
 
@@ -3325,6 +3331,7 @@ async function submitCallLog() {
   };
 
   const btn = document.getElementById('clSubmitBtn');
+  clSubmitInFlight = true;
   btn.disabled = true; btn.textContent = 'Saving…';
   try {
     const params = new URLSearchParams({
@@ -3349,6 +3356,7 @@ async function submitCallLog() {
   } catch (err) {
     alert('Save nahi hua — internet connection check karein aur dobara try karein.');
   }
+  clSubmitInFlight = false;
   btn.disabled = false; btn.textContent = 'Log Call';
 }
 
