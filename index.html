@@ -1537,7 +1537,7 @@
             <span class="badge badge-blue">New provider</span>
           </div>
           <div class="schedule-block">
-            <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Thu — 9:00 am to 4:00 pm <em>(Lunch at 12 pm) — Effective from 07/23/2026</em></span></div>
+            <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Thu — 9:00 am to 4:00 pm <em>(Lunch at 12 pm)</em> — <em>Effective from 07/23/2026</em></span></div>
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Wed — 9:00 am to 5:00 pm <em>(Lunch at 12 pm)</em></span></div>
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Fri — 9:00 am to 2:00 pm <em>(No lunch break)</em></span></div>
           </div>
@@ -2869,14 +2869,62 @@ function updateBellBadge() {
   const readKeys = getReadAlertKeys();
   const unread = getAllAlertsFlat().filter(a => !readKeys.has(alertKey(a))).length;
   const badge = document.getElementById('paBellCount');
-  if (!badge) return;
-  if (unread > 0) {
-    badge.textContent = unread > 99 ? '99+' : String(unread);
-    badge.style.display = 'flex';
-  } else {
-    badge.style.display = 'none';
+  if (badge) {
+    if (unread > 0) {
+      badge.textContent = unread > 99 ? '99+' : String(unread);
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
   }
+  updateFaviconBadge(unread);
 }
+
+// Draws a small red badge with the unread count on top of the page favicon,
+// so a pinned Chrome tab (which only shows the icon, no title) still shows
+// at a glance that there's a new alert — like an app icon badge (1, 2, 3…).
+let clBaseFaviconImg = null;
+function updateFaviconBadge(count) {
+  const linkEl = document.querySelector('link[rel="icon"]');
+  if (!linkEl) return;
+
+  if (!clBaseFaviconImg) {
+    clBaseFaviconImg = new Image();
+    clBaseFaviconImg.onload = () => updateFaviconBadge(count);
+    clBaseFaviconImg.src = clBaseFaviconOriginalHref || linkEl.href;
+    clBaseFaviconOriginalHref = clBaseFaviconOriginalHref || linkEl.href;
+    return; // wait for onload to fire, then re-run
+  }
+  if (!clBaseFaviconImg.complete || clBaseFaviconImg.naturalWidth === 0) return; // still loading
+
+  const size = 48;
+  const canvas = document.createElement('canvas');
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, size, size);
+  ctx.drawImage(clBaseFaviconImg, 0, 0, size, size);
+
+  if (count > 0) {
+    const label = count > 99 ? '99+' : String(count);
+    const r = label.length > 2 ? 16 : 13;
+    const cx = size - r - 1, cy = r + 1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#EF4444';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+    ctx.fillStyle = 'white';
+    ctx.font = `bold ${label.length > 2 ? 14 : 18}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, cx, cy + 1);
+  }
+
+  linkEl.href = canvas.toDataURL('image/png');
+}
+let clBaseFaviconOriginalHref = null;
 
 function relativeTimeFrom(isoStr) {
   const d = new Date(isoStr);
