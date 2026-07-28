@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>North Pointe Psychiatry — Provider Schedule</title>
@@ -18,6 +17,10 @@
     --sidebar: #0A121F;
     --sidebar-card: #131D2E;
     --sidebar-border: #26374F;
+    --sidebar-text: #94A3B8;
+    --sidebar-text-muted: #64748B;
+    --sidebar-hover-bg: #263348;
+    --sidebar-hover-text: #CBD5E1;
     --accent: #1E5F74;
     --accent-light: #2D7A94;
     --text: #0F172A;
@@ -37,46 +40,78 @@
     --chrome-2: #0A121F;      /* topbar gradient bottom / sidebar base */
     --chrome-border: #1E2C41;
     --chrome-tabnav: #0A121F;
+    --chrome-text: white;
     --chrome-sub-text: #7C8CA6;
     --chrome-hover-text: #C3CEDD;
     --chrome-accent: #2D7A94;
+    --chrome-badge-bg: rgba(255,255,255,0.12);
+    --chrome-badge-text: white;
+    --chrome-item-bg: rgba(255,255,255,0.04);
+    --chrome-item-bg-hover: rgba(255,255,255,0.09);
     --logo-grad-1: #1E3A5F;
     --logo-grad-2: #1E5F74;
   }
 
-  [data-theme="charcoal"] {
-    --chrome-1: #16181D; --chrome-2: #111318; --chrome-border: #262A33;
-    --chrome-tabnav: #111318; --chrome-sub-text: #8A93A3; --chrome-hover-text: #D3D8E0;
-    --chrome-accent: #5B7A99; --logo-grad-1: #2C333F; --logo-grad-2: #5B7A99;
-  }
+  /* "Blue shade" family — kept as the original dark navy/blue tones */
   [data-theme="indigo"] {
     --chrome-1: #131736; --chrome-2: #0F1229; --chrome-border: #262C56;
     --chrome-tabnav: #0F1229; --chrome-sub-text: #9094C4; --chrome-hover-text: #D6D8F5;
     --chrome-accent: #5558D6; --logo-grad-1: #26305F; --logo-grad-2: #5558D6;
-  }
-  [data-theme="forest"] {
-    --chrome-1: #10201A; --chrome-2: #0B1712; --chrome-border: #1E3A2E;
-    --chrome-tabnav: #0B1712; --chrome-sub-text: #82A895; --chrome-hover-text: #CBE8D9;
-    --chrome-accent: #2F9E6E; --logo-grad-1: #163326; --logo-grad-2: #2F9E6E;
-  }
-  [data-theme="wine"] {
-    --chrome-1: #241419; --chrome-2: #1A0E12; --chrome-border: #3A222A;
-    --chrome-tabnav: #1A0E12; --chrome-sub-text: #B08893; --chrome-hover-text: #EBD3D8;
-    --chrome-accent: #9F4757; --logo-grad-1: #3A2029; --logo-grad-2: #9F4757;
+    --sidebar-card: #1B2050; --sidebar-border: #33397A;
+    --sidebar-text: #A0A4D8; --sidebar-text-muted: #7377AD;
+    --sidebar-hover-bg: #262C6B; --sidebar-hover-text: #E0E1F7;
   }
   [data-theme="slate"] {
     --chrome-1: #1E2937; --chrome-2: #17212E; --chrome-border: #2E3D4F;
     --chrome-tabnav: #17212E; --chrome-sub-text: #93A3B5; --chrome-hover-text: #DAE3EC;
     --chrome-accent: #4A8FBF; --logo-grad-1: #263646; --logo-grad-2: #4A8FBF;
+    --sidebar-card: #24313F; --sidebar-border: #3A4A5C;
+    --sidebar-text: #A7B4C2; --sidebar-text-muted: #7C8A99;
+    --sidebar-hover-bg: #2E3E4F; --sidebar-hover-text: #E4EAF0;
+  }
+
+  /* Light themes — background lightened, text/fonts flipped to dark for readability */
+  [data-theme="charcoal"] {
+    --chrome-1: #E4E7EB; --chrome-2: #D6DAE1; --chrome-border: #C1C7D1;
+    --chrome-tabnav: #D6DAE1; --chrome-text: #1F2937; --chrome-sub-text: #55606E; --chrome-hover-text: #0F172A;
+    --chrome-accent: #475569; --logo-grad-1: #334155; --logo-grad-2: #64748B;
+    --chrome-badge-bg: rgba(15,23,42,0.10); --chrome-badge-text: #1F2937;
+    --chrome-item-bg: rgba(15,23,42,0.045); --chrome-item-bg-hover: rgba(15,23,42,0.09);
+    --chrome-swatch-border: rgba(15,23,42,0.25);
+    --sidebar-card: #F1F2F4; --sidebar-border: #D3D7DC;
+    --sidebar-text: #4B5563; --sidebar-text-muted: #6B7280;
+    --sidebar-hover-bg: #E6E8EB; --sidebar-hover-text: #111827;
+  }
+  [data-theme="forest"] {
+    --chrome-1: #DCEEE3; --chrome-2: #C9E4D3; --chrome-border: #A9D2B9;
+    --chrome-tabnav: #C9E4D3; --chrome-text: #14532D; --chrome-sub-text: #3F6E52; --chrome-hover-text: #0F3D22;
+    --chrome-accent: #1F7A52; --logo-grad-1: #14532D; --logo-grad-2: #2F9E6E;
+    --chrome-badge-bg: rgba(20,83,45,0.12); --chrome-badge-text: #14532D;
+    --chrome-item-bg: rgba(20,83,45,0.05); --chrome-item-bg-hover: rgba(20,83,45,0.10);
+    --chrome-swatch-border: rgba(20,83,45,0.3);
+    --sidebar-card: #EAF5EE; --sidebar-border: #C3DFCD;
+    --sidebar-text: #386148; --sidebar-text-muted: #4B7A63;
+    --sidebar-hover-bg: #DCEEE3; --sidebar-hover-text: #0F3D22;
+  }
+  [data-theme="wine"] {
+    --chrome-1: #F3DCE1; --chrome-2: #ECC9D0; --chrome-border: #DDABB5;
+    --chrome-tabnav: #ECC9D0; --chrome-text: #6B1B2B; --chrome-sub-text: #8C4C57; --chrome-hover-text: #4A1220;
+    --chrome-accent: #7A3540; --logo-grad-1: #6B1B2B; --logo-grad-2: #9F4757;
+    --chrome-badge-bg: rgba(107,27,43,0.12); --chrome-badge-text: #6B1B2B;
+    --chrome-item-bg: rgba(107,27,43,0.05); --chrome-item-bg-hover: rgba(107,27,43,0.10);
+    --chrome-swatch-border: rgba(107,27,43,0.3);
+    --sidebar-card: #F7E9EC; --sidebar-border: #E4C2CA;
+    --sidebar-text: #7A3D48; --sidebar-text-muted: #8C4C57;
+    --sidebar-hover-bg: #F0DCE1; --sidebar-hover-text: #4A1220;
   }
 
   html { font-size: var(--fs); }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; font-size: 1rem; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; font-size: 1rem; padding-bottom: 28px; }
 
   /* ── TOP BAR ── */
   .topbar {
     background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
-    color: white;
+    color: var(--chrome-text);
     padding: 0 20px; height: 58px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 200;
@@ -102,35 +137,34 @@
   .font-ctrl { display: flex; align-items: center; gap: 6px; }
   .theme-swatch {
     width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
-    border: 1.5px solid rgba(255,255,255,0.25); padding: 0; transition: transform 0.12s, border-color 0.12s;
+    border: 1.5px solid var(--chrome-swatch-border, rgba(255,255,255,0.25)); padding: 0; transition: transform 0.12s, border-color 0.12s;
   }
   .theme-swatch:hover { transform: scale(1.15); }
-  .theme-swatch.active { border-color: white; box-shadow: 0 0 0 2px rgba(255,255,255,0.2); }
-  .font-ctrl-label { font-size: 10px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .theme-swatch.active { border-color: var(--chrome-text); box-shadow: 0 0 0 2px rgba(128,128,128,0.25); }
+  .font-ctrl-label { font-size: 10px; color: var(--chrome-sub-text); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
   .font-btns { display: flex; gap: 3px; }
   .font-btn {
-    width: 28px; height: 28px; border-radius: 6px; border: 1px solid #334155;
-    background: #1E293B; color: #94A3B8; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--sidebar-border);
+    background: var(--sidebar-card); color: var(--sidebar-text); cursor: pointer;
     font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
   .font-btn:hover { background: #3B82F6; border-color: #3B82F6; color: white; }
-  .font-size-display { font-size: 11px; color: #64748B; min-width: 28px; text-align: center; }
+  .font-size-display { font-size: 11px; color: var(--sidebar-text-muted); min-width: 28px; text-align: center; }
 
   /* DOB control (top right) */
   .dob-ctrl { display: flex; align-items: center; gap: 7px; }
   .dob-input {
-    background: #1E293B; border: 1px solid #334155; color: #E2E8F0;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border); color: var(--sidebar-hover-text);
     border-radius: 6px; padding: 6px 9px; font-size: 12px;
     font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.15s;
-    color-scheme: dark;
   }
   .dob-input:focus { border-color: #3B82F6; }
-  .dob-age-badge { font-size: 11px; font-weight: 600; min-width: 64px; color: #64748B; }
+  .dob-age-badge { font-size: 11px; font-weight: 600; min-width: 64px; color: var(--sidebar-text-muted); }
   .dob-reset-btn {
-    width: 22px; height: 22px; border-radius: 6px; border: 1px solid #334155;
-    background: #1E293B; color: #94A3B8; cursor: pointer;
+    width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--sidebar-border);
+    background: var(--sidebar-card); color: var(--sidebar-text); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-size: 12px; line-height: 1; transition: all 0.15s; flex-shrink: 0;
   }
@@ -149,7 +183,7 @@
     transition: all 0.15s; white-space: nowrap;
   }
   .tab-btn:hover { color: var(--chrome-hover-text); }
-  .tab-btn.active { color: white; border-bottom-color: var(--chrome-accent); }
+  .tab-btn.active { color: var(--chrome-text); border-bottom-color: var(--chrome-accent); }
 
   /* ── LAYOUT ── */
   .app-body { display: flex; flex: 1; }
@@ -160,7 +194,7 @@
     background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
     padding: 18px 14px;
     position: sticky; top: 97px;
-    height: calc(100vh - 97px);
+    height: calc(100vh - 97px - 28px);
     overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: #334155 transparent;
     border-right: 1px solid var(--chrome-border);
@@ -171,13 +205,13 @@
   .filter-section { margin-bottom: 22px; }
   .filter-label {
     font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: #475569; margin-bottom: 9px;
+    text-transform: uppercase; color: var(--chrome-sub-text); margin-bottom: 9px;
   }
 
   /* Provider dropdown */
   .provider-select {
     width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #CBD5E1; border-radius: var(--radius-sm); padding: 9px 10px;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 9px 10px;
     font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
     outline: none; transition: border-color 0.15s; appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
@@ -185,16 +219,16 @@
     padding-right: 30px;
   }
   .provider-select:focus { border-color: #3B82F6; }
-  .provider-select option { background: #1E293B; color: #CBD5E1; }
+  .provider-select option { background: var(--sidebar-card); color: var(--sidebar-text); }
 
   /* Provider quick info box */
   .provider-info-box {
-    background: var(--sidebar-card); border: 1px solid #334155;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 10px 11px; margin-top: 8px;
     display: none;
   }
   .provider-info-box.show { display: block; }
-  .pib-name { font-size: 13px; font-weight: 600; color: #F1F5F9; margin-bottom: 6px; }
+  .pib-name { font-size: 13px; font-weight: 600; color: var(--sidebar-hover-text); margin-bottom: 6px; }
   .pib-row { display: flex; align-items: flex-start; gap: 7px; margin-bottom: 5px; }
   .pib-loc {
     font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
@@ -204,23 +238,23 @@
   .pib-loc.lv { background: #065F46; color: white; }
   .pib-loc.dn { background: #92400E; color: white; }
   .pib-loc.ev { background: #4C1D95; color: white; }
-  .pib-text { font-size: 11px; color: #94A3B8; line-height: 1.5; }
-  .pib-footer { margin-top: 8px; padding-top: 7px; border-top: 1px solid #334155; font-size: 11px; color: #64748B; }
+  .pib-text { font-size: 11px; color: var(--sidebar-text-muted); line-height: 1.5; }
+  .pib-footer { margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--sidebar-border); font-size: 11px; color: var(--sidebar-text-muted); }
 
   /* Day picker */
   .day-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 6px; }
   .day-btn {
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #94A3B8; border-radius: var(--radius-sm); padding: 7px 0;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 7px 0;
     font-size: 11px; font-weight: 500; cursor: pointer; text-align: center;
     transition: all 0.15s; font-family: 'Inter', sans-serif;
   }
-  .day-btn:hover { background: #263348; color: white; }
+  .day-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .day-btn.active { background: #3B82F6; border-color: #3B82F6; color: white; }
 
   .date-input {
     width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #CBD5E1; border-radius: var(--radius-sm); padding: 8px 10px;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 8px 10px;
     font-size: 13px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.15s;
   }
   .date-input:focus { border-color: #3B82F6; }
@@ -232,9 +266,9 @@
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 9px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .loc-pill:hover { background: #263348; color: #CBD5E1; }
+  .loc-pill:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .loc-pill.active { border-color: transparent; color: white; }
   .loc-pill.active.fm { background: #1D4ED8; border-color: #3B82F6; }
   .loc-pill.active.lv { background: #065F46; border-color: #10B981; }
@@ -250,9 +284,9 @@
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 8px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .type-btn:hover { background: #263348; color: #CBD5E1; }
+  .type-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .type-btn.active { color: white; border-color: transparent; }
   .type-btn.active.md { background: #7F1D1D; border-color: #EF4444; }
   .type-btn.active.np { background: #1E3A5F; border-color: #3B82F6; }
@@ -509,33 +543,34 @@
 
   .ins-sidebar {
     width: 255px; flex-shrink: 0;
-    background: var(--sidebar);
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
     padding: 18px 14px;
     position: sticky; top: 97px;
-    height: calc(100vh - 97px);
+    height: calc(100vh - 97px - 28px);
     overflow-y: auto;
+    border-right: 1px solid var(--chrome-border);
   }
 
   .ins-search-wrap { position: relative; margin-bottom: 14px; }
   .ins-search {
-    width: 100%; background: #1E293B; border: 1px solid #334155;
-    color: #CBD5E1; border-radius: 8px; padding: 9px 10px 9px 34px;
+    width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text); border-radius: 8px; padding: 9px 10px 9px 34px;
     font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
     transition: border-color 0.15s;
   }
   .ins-search:focus { border-color: #3B82F6; }
-  .ins-search::placeholder { color: #475569; }
-  .ins-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 15px; pointer-events: none; }
+  .ins-search::placeholder { color: var(--sidebar-text-muted); }
+  .ins-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--sidebar-text-muted); font-size: 15px; pointer-events: none; }
 
   .ins-type-btns { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
   .ins-type-btn {
     display: flex; align-items: center; gap: 9px;
-    background: #1E293B; border: 1px solid #334155;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: 6px; padding: 8px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .ins-type-btn:hover { background: #263348; color: #CBD5E1; }
+  .ins-type-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .ins-type-btn.active { color: white; }
   .ins-type-btn.active.all  { background: #1E3A5F; border-color: #3B82F6; }
   .ins-type-btn.active.md   { background: #7F1D1D; border-color: #EF4444; }
@@ -548,12 +583,12 @@
   .ins-dot.cn  { background: #8B5CF6; }
 
   .ins-reset {
-    width: 100%; background: transparent; border: 1px dashed #334155;
-    color: #475569; border-radius: 6px; padding: 8px;
+    width: 100%; background: transparent; border: 1px dashed var(--sidebar-border);
+    color: var(--sidebar-text-muted); border-radius: 6px; padding: 8px;
     font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .ins-reset:hover { border-color: #64748B; color: #94A3B8; }
+  .ins-reset:hover { border-color: var(--sidebar-text); color: var(--sidebar-text); }
 
   .ins-main { flex: 1; padding: 18px 22px; overflow-y: auto; }
   .ins-results-line { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
@@ -604,10 +639,16 @@
 
   /* TX Date/Clock */
   .tx-clock-wrap { text-align: right; flex-shrink: 0; }
-  .tx-date { font-size: 14px; font-weight: 800; color: #F1F5F9; line-height: 1.2; }
-  .tx-day  { font-size: 10px; color: #FFFFF7; margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .tx-date { font-size: 14px; font-weight: 800; color: var(--chrome-text); line-height: 1.2; }
+  .tx-day  { font-size: 10px; color: var(--chrome-sub-text); margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
 
   @media (max-width: 900px) {
+    .cl-page-flex { flex-direction: column !important; }
+    .cl-side-nav { width: 100% !important; height: auto !important; position: static !important; padding: 14px; }
+    .cl-side-nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .cl-side-title, .cl-side-sub { width: 100%; margin: 0 0 4px; }
+    .cl-side-item { width: auto; flex: 1 1 45%; margin-bottom: 0; }
+
     .topbar {
       flex-wrap: wrap; height: auto; padding: 10px 14px; row-gap: 8px;
       position: static;
@@ -710,8 +751,33 @@
     .appt-tag { font-size: 0.7rem; }
   }
 /* ══════════ CALL LOG TAB ══════════ */
+  .cl-page-flex { display: flex; width: 100%; min-height: calc(100vh - 97px - 28px); }
+
+  /* Dark call-type sidebar */
+  .cl-side-nav {
+    width: 230px; flex-shrink: 0; background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
+    padding: 20px 14px; border-right: 1px solid var(--chrome-border);
+    position: sticky; top: 97px; height: calc(100vh - 97px - 28px); overflow-y: auto;
+  }
+  .cl-side-title { font-size: 11px; font-weight: 700; color: var(--chrome-sub-text); letter-spacing: 0.1em; text-transform: uppercase; }
+  .cl-side-sub { font-size: 16px; font-weight: 700; color: var(--chrome-text); margin: 3px 0 16px; }
+  .cl-side-item {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 11px 12px; margin-bottom: 6px; border-radius: 9px;
+    background: var(--chrome-item-bg); border: none; cursor: pointer;
+    color: var(--chrome-sub-text); font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif;
+    transition: background 0.15s, color 0.15s; text-align: left;
+  }
+  .cl-side-item:hover { background: var(--chrome-item-bg-hover); color: var(--chrome-hover-text); }
+  .cl-side-item .cl-side-item-label { display: flex; align-items: center; gap: 9px; }
+  .cl-side-item .cl-side-item-icon { font-size: 15px; }
+  .cl-side-count {
+    background: var(--chrome-badge-bg); color: var(--chrome-badge-text); font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center;
+  }
+
   .calllog-wrap {
-    flex: 1; padding: 24px 28px; width: 100%;
+    flex: 1; padding: 24px 28px; width: 100%; min-width: 0;
     display: flex; flex-direction: column; gap: 20px;
   }
   .cl-header {
@@ -720,14 +786,30 @@
     padding: 14px 18px; box-shadow: var(--shadow); flex-wrap: wrap; gap: 8px;
   }
   .cl-greeting { font-size: 15px; font-weight: 600; color: var(--text); }
-  .cl-header-actions { display: flex; align-items: center; gap: 14px; }
+  .cl-header-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .cl-today-count { font-size: 12px; color: #10B981; font-weight: 600; }
   .cl-link-btn {
     font-size: 12px; color: #64748B; background: none; border: none;
     cursor: pointer; text-decoration: underline; padding: 0;
   }
+  .cl-staff-chip {
+    display: flex; align-items: center; gap: 9px; background: #F8FAFC;
+    border: 1px solid var(--border); border-radius: 24px; padding: 5px 14px 5px 5px;
+  }
+  .cl-staff-chip-avatar {
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .cl-staff-chip-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.15; }
+  .cl-staff-chip-role { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cl-export-btn {
+    display: flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 9px;
+    border: 1px solid var(--border); background: white; color: #334155; font-weight: 600;
+    font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s;
+  }
+  .cl-export-btn:hover { background: #F8FAFC; }
   .cl-section-title { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-  .cl-type-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .cl-type-grid { display: none; }
   .cl-type-btn {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 8px; padding: 18px 10px; border-radius: var(--radius); cursor: pointer;
@@ -737,6 +819,18 @@
   }
   .cl-type-btn:hover { background: var(--cl-color, #3B82F6); color: white; transform: translateY(-2px); }
   .cl-type-icon { font-size: 22px; }
+
+  .cl-search-filter-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .cl-search-input-wrap { position: relative; flex: 1; min-width: 220px; }
+  .cl-search-input-wrap input {
+    width: 100%; box-sizing: border-box; padding: 10px 14px 10px 36px; border-radius: 9px;
+    border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif;
+  }
+  .cl-search-input-wrap .cl-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 14px; }
+  .cl-filter-select {
+    padding: 10px 14px; border-radius: 9px; border: 1px solid var(--border);
+    font-size: 13px; font-family: 'Inter', sans-serif; background: white; color: var(--text); cursor: pointer;
+  }
 
   .cl-dashboard-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -784,14 +878,60 @@
   }
   .cl-staff-select:focus { border-color: #3B82F6; }
   .cl-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .cl-summary-card {
-    background: white; border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 16px; text-align: center; box-shadow: var(--shadow);
+
+  /* Professional metrics row (donut charts + top staff) */
+  .cl-metrics-row { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 14px; margin-bottom: 20px; }
+  .cl-metric-card {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; box-shadow: var(--shadow);
   }
-  .cl-total { border-color: #0F172A; }
-  .cl-card-num { font-size: 30px; font-weight: 700; color: var(--text); }
+  .cl-metric-title {
+    font-size: 11px; font-weight: 700; color: #64748B; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .cl-donut-wrap { position: relative; height: 148px; display: flex; align-items: center; justify-content: center; }
+  .cl-donut-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center; pointer-events: none;
+  }
+  .cl-donut-center .num { font-size: 22px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .cl-donut-center .lbl { font-size: 9.5px; color: #94A3B8; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cl-legend-row {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; padding: 4px 0; color: #334155;
+  }
+  .cl-legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 7px; flex-shrink: 0; }
+  .cl-legend-left { display: flex; align-items: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cl-legend-count { font-weight: 700; color: #0F172A; margin-left: 8px; flex-shrink: 0; }
+  .cl-topstaff-row { padding: 8px 0; border-bottom: 1px solid #F1F5F9; }
+  .cl-topstaff-row:last-child { border-bottom: none; }
+  .cl-topstaff-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px; }
+  .cl-topstaff-name { font-weight: 600; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+  .cl-topstaff-count { font-weight: 700; color: #0F172A; }
+  .cl-topstaff-bar-track { height: 6px; border-radius: 4px; background: #F1F5F9; overflow: hidden; }
+  .cl-topstaff-bar-fill { height: 100%; border-radius: 4px; }
+  .cl-avatar-circle {
+    width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 9.5px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .cl-summary-card {
+    background: white; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; text-align: center; box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .cl-summary-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--card-accent, #0F172A);
+  }
+  .cl-summary-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .cl-total { }
+  .cl-card-num { font-size: 30px; font-weight: 700; color: var(--text); line-height: 1.1; }
   .cl-total .cl-card-num { color: #0F172A; }
   .cl-card-label { font-size: 11px; color: #64748B; font-weight: 600; margin-top: 4px; }
+  .cl-card-pct { font-size: 10.5px; color: #94A3B8; margin-top: 2px; }
+  .cl-card-bar-track { height: 4px; border-radius: 3px; background: #F1F5F9; margin-top: 9px; overflow: hidden; }
+  .cl-card-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
   .cl-subsection-title { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 22px; margin-bottom: 10px; }
   .cl-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 6px; }
   .cl-collapse-header {
@@ -804,6 +944,13 @@
   .cl-table th { background: #F8FAFC; color: #64748B; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
   .cl-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; color: var(--text); vertical-align: middle; }
   .cl-table tr:last-child td { border-bottom: none; }
+  .cl-table tbody tr:nth-child(even) { background: #FAFBFC; }
+  .cl-table tbody tr:hover { background: #F1F5F9; }
+  .cl-avatar-circle-sm {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 8.5px; font-weight: 700; color: white; flex-shrink: 0;
+    margin-right: 7px; vertical-align: middle;
+  }
   .cl-table tbody tr:hover { background: #F8FAFC; }
   .cl-empty { padding: 24px; text-align: center; color: #94A3B8; font-size: 13px; }
   .cl-type-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; margin-top: 6px; }
@@ -900,24 +1047,47 @@
 
   /* Call Log responsive */
   @media (max-width: 700px) {
-    .calllog-wrap { padding: 14px; gap: 14px; }
+    .cl-page-flex { flex-direction: column !important; }
+    .calllog-wrap { padding: 14px; gap: 14px; width: 100% !important; }
 
-    /* Header stacks vertically */
-    .cl-header { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px; }
-    .cl-header-actions { width: 100%; justify-content: space-between; }
+    /* Call-type sidebar becomes a horizontal wrap-strip above the content on phone */
+    .cl-side-nav {
+      width: 100% !important; height: auto !important; position: static !important; padding: 12px 14px;
+      display: flex !important; flex-wrap: wrap; gap: 8px; align-items: center; border-right: none;
+      border-bottom: 1px solid var(--chrome-border);
+    }
+    .cl-side-title, .cl-side-sub { width: 100%; margin: 0 0 2px; }
+    .cl-side-item { width: auto; flex: 1 1 45%; margin-bottom: 0; padding: 9px 10px; font-size: 12px; }
+    .cl-side-item .cl-side-item-icon { font-size: 13px; }
 
-    /* Call type buttons: 2 columns on phone */
+    /* Header stacks vertically, actions wrap and shrink */
+    .cl-header { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 14px; }
+    .cl-greeting { font-size: 14px; }
+    .cl-header-actions { width: 100%; gap: 8px; }
+    .cl-staff-chip { padding: 4px 10px 4px 4px; gap: 6px; }
+    .cl-staff-chip-avatar { width: 24px; height: 24px; font-size: 10px; }
+    .cl-staff-chip-name { font-size: 12px; }
+    .cl-staff-chip-role { font-size: 9px; }
+    .cl-export-btn { padding: 8px 12px; font-size: 12px; }
+    .cl-today-count { font-size: 11px; }
+    .cl-link-btn { font-size: 11px; }
+
+    /* Search + filter row stacks to full width */
+    .cl-search-filter-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .cl-search-input-wrap { min-width: 0; width: 100%; }
+    .cl-filter-select { width: 100%; }
+    #clStaffClearBtn { width: 100%; }
+
+    /* Call type buttons (legacy grid, kept hidden but safe if ever shown) */
     .cl-type-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .cl-type-btn { padding: 14px 8px; font-size: 12px; }
     .cl-type-icon { font-size: 18px; }
 
-    /* Dashboard toggle */
-    .cl-dashboard-toggle { font-size: 13px; padding: 12px 14px; }
-
-    /* Range pills wrap nicely */
-    .cl-range-pills { gap: 6px; }
-    .cl-range-pill { padding: 5px 11px; font-size: 11px; }
-    .cl-refresh-btn { padding: 5px 10px; font-size: 11px; }
+    /* Range pills wrap nicely, scroll if needed */
+    .cl-range-pills { gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; padding-bottom: 2px; }
+    .cl-range-pill { padding: 5px 11px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+    .cl-refresh-btn { padding: 5px 10px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+    .cl-last-updated { white-space: nowrap; }
 
     /* Custom date range stacks */
     .cl-custom-range { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -927,9 +1097,9 @@
     .cl-summary-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .cl-card-num { font-size: 24px; }
 
-    /* Type tabs for full log */
-    .cl-type-tabs { gap: 5px; }
-    .cl-type-tab { padding: 5px 10px; font-size: 11px; }
+    /* Collapsible section headers */
+    .cl-collapse-header { padding: 5px 2px; }
+    .cl-subsection-title { font-size: 11px; }
 
     /* Table: horizontal scroll with readable min-widths */
     .cl-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -939,6 +1109,9 @@
 
     /* Staff table simpler */
     .cl-table td:nth-child(1) { font-weight: 600; }
+
+    /* Pagination controls stack/shrink */
+    #clLogPager { flex-wrap: wrap; gap: 8px; }
 
     /* Modal: centered on mobile */
     .cl-modal-overlay { padding: 12px; }
@@ -957,6 +1130,14 @@
 
     /* Appt type badge */
     .cl-appt-type-badge { font-size: 13px; padding: 7px 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .cl-side-item { flex: 1 1 100%; }
+    .cl-header-actions { flex-direction: column; align-items: stretch; }
+    .cl-staff-chip { justify-content: center; }
+    .cl-export-btn { width: 100%; justify-content: center; }
+    .cl-today-count, .cl-link-btn { text-align: center; }
   }
 
   @media (max-width: 380px) {
@@ -990,14 +1171,14 @@
       <span class="font-ctrl-label">Theme</span>
       <div style="display:flex;gap:5px;">
         <button class="theme-swatch" data-theme="navy" onclick="setChromeTheme('navy')" style="background:linear-gradient(135deg,#1E3A5F,#1E5F74);" title="Navy Teal"></button>
-        <button class="theme-swatch" data-theme="charcoal" onclick="setChromeTheme('charcoal')" style="background:linear-gradient(135deg,#2C333F,#5B7A99);" title="Charcoal"></button>
+        <button class="theme-swatch" data-theme="charcoal" onclick="setChromeTheme('charcoal')" style="background:linear-gradient(135deg,#E4E7EB,#64748B);" title="Charcoal (Light)"></button>
         <button class="theme-swatch" data-theme="slate" onclick="setChromeTheme('slate')" style="background:linear-gradient(135deg,#263646,#4A8FBF);" title="Slate Blue"></button>
         <button class="theme-swatch" data-theme="indigo" onclick="setChromeTheme('indigo')" style="background:linear-gradient(135deg,#26305F,#5558D6);" title="Deep Indigo"></button>
-        <button class="theme-swatch" data-theme="forest" onclick="setChromeTheme('forest')" style="background:linear-gradient(135deg,#163326,#2F9E6E);" title="Forest"></button>
-        <button class="theme-swatch" data-theme="wine" onclick="setChromeTheme('wine')" style="background:linear-gradient(135deg,#3A2029,#9F4757);" title="Wine"></button>
+        <button class="theme-swatch" data-theme="forest" onclick="setChromeTheme('forest')" style="background:linear-gradient(135deg,#DCEEE3,#2F9E6E);" title="Forest (Light)"></button>
+        <button class="theme-swatch" data-theme="wine" onclick="setChromeTheme('wine')" style="background:linear-gradient(135deg,#F3DCE1,#9F4757);" title="Wine (Light)"></button>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="font-ctrl">
       <span class="font-ctrl-label">Text</span>
       <div class="font-btns">
@@ -1006,7 +1187,7 @@
         <button class="font-btn" onclick="changeFont(1)" title="Larger">A+</button>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div style="display:flex;gap:18px;" id="topStats">
       <div class="stat-item">
         <div class="stat-num" id="stat-showing">—</div>
@@ -1017,7 +1198,7 @@
         <div class="stat-label">Accepting new</div>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="dob-ctrl">
       <span class="font-ctrl-label">Pt. DOB</span>
       <input type="text" class="dob-input" id="dobInput"
@@ -1029,14 +1210,14 @@
       <button class="dob-reset-btn" onclick="resetDob()" title="Clear date of birth">✕</button>
       <span class="dob-age-badge" id="dobAgeBadge"></span>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div style="position:relative;">
       <button id="paBellBtn" onclick="toggleAlertNotifications(event)" title="Provider alert notifications" style="background:none;border:1.5px solid #334155;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;color:#CBD5E1;display:flex;align-items:center;justify-content:center;position:relative;">
         🔔
         <span id="paBellCount" style="display:none;position:absolute;top:-6px;right:-6px;background:#EF4444;color:white;font-size:10px;font-weight:700;border-radius:9px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;line-height:1;"></span>
       </button>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="tx-clock-wrap">
       <div class="tx-date" id="txDate">—</div>
       <div class="tx-day" id="txDay">Texas Time</div>
@@ -1466,7 +1647,7 @@
             <div class="pcard-avatar cn">VR</div>
             <div><div class="pcard-name">Valerie Ryse</div><div class="pcard-role">Marriage & Family Therapist · Age 18+</div></div>
           </div>
-          <div class="badge-row"><span class="badge badge-red">✗ Not accepting new</span></div>
+          <div class="badge-row"><span class="badge badge-green">✗ Not accepting new</span></div>
           <div class="schedule-block">
             <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Mon · Tue — 10:00 am to 3:00 pm</span></div>
           </div>
@@ -1547,7 +1728,7 @@
             <span class="badge badge-blue">New provider</span>
           </div>
           <div class="schedule-block">
-            <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Thu — 9:00 am to 4:00 pm <em>(Lunch at 12 pm)</em></span></div>
+            <div class="schedule-row"><span class="loc-tag fm" data-tag="fm">FM</span><span class="schedule-text">Thu — 9:00 am to 4:00 pm <em>(Lunch at 12 pm)</em> — <em>Effective from 07/23/2026</em></span></div>
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Wed — 9:00 am to 5:00 pm <em>(Lunch at 12 pm)</em></span></div>
             <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Fri — 9:00 am to 2:00 pm <em>(No lunch break)</em></span></div>
           </div>
@@ -1760,17 +1941,49 @@
 
 <!-- CALL LOG TAB -->
 <div class="info-tab" id="tab-calllog">
-  <div class="calllog-wrap">
+  <div class="cl-page-flex">
+
+    <!-- Call type sidebar -->
+    <aside class="cl-side-nav">
+      <div class="cl-side-title">Call Log</div>
+      <div class="cl-side-sub">Log a New Call</div>
+      <button class="cl-side-item" onclick="openCallForm('Follow-up','✅')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">✅</span>Follow-up</span>
+        <span class="cl-side-count" id="clSideCount-FollowUp">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Reschedule','🔄')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">🔄</span>Reschedule</span>
+        <span class="cl-side-count" id="clSideCount-Reschedule">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('New Patient','🆕')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">🆕</span>New Patient</span>
+        <span class="cl-side-count" id="clSideCount-NewPatient">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Cancelled','❌')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">❌</span>Cancelled</span>
+        <span class="cl-side-count" id="clSideCount-Cancelled">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Other / Transferred','📤')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">📤</span>Other/Transferred</span>
+        <span class="cl-side-count" id="clSideCount-Other">0</span>
+      </button>
+    </aside>
+
+    <div class="calllog-wrap">
 
     <div class="cl-header">
-      <div class="cl-greeting">👋 <span id="clStaffName"></span></div>
+      <div class="cl-greeting">📞 Call Log</div>
       <div class="cl-header-actions">
         <span class="cl-today-count" id="clTodayCount"></span>
+        <button class="cl-export-btn" onclick="downloadExcel()" title="Download styled Excel file">⬇ Export to Excel</button>
+        <div class="cl-staff-chip" id="clStaffChip">
+          <span class="cl-staff-chip-avatar" id="clStaffChipAvatar">?</span>
+          <div><div class="cl-staff-chip-name" id="clStaffChipName">—</div><div class="cl-staff-chip-role">Staff</div></div>
+        </div>
         <button class="cl-link-btn" onclick="changeStaffName()">Change name</button>
       </div>
     </div>
 
-    <div class="cl-section-title">📞 Enter New Call Log</div>
     <div class="cl-type-grid">
       <button class="cl-type-btn" style="--cl-color:#3B82F6;" onclick="openCallForm('Follow-up','✅')">
         <span class="cl-type-icon">✅</span><span>Follow-up</span>
@@ -1789,11 +2002,7 @@
       </button>
     </div>
 
-    <button class="cl-dashboard-toggle" onclick="toggleDashboard()">
-      <span>📊 Supervisor Dashboard</span><span class="cl-chevron" id="clDashChevron">▼</span>
-    </button>
-
-    <div class="cl-dashboard" id="clDashboard" style="display:none;">
+    <div class="cl-dashboard" id="clDashboard">
       <div class="cl-range-pills">
         <button class="cl-range-pill active" data-range="today" onclick="setDashRange('today', this)">Today</button>
         <button class="cl-range-pill" data-range="yesterday" onclick="setDashRange('yesterday', this)">Yesterday</button>
@@ -1804,14 +2013,28 @@
         <span class="cl-live-dot" id="clLiveDot" title="Auto-refreshing every 15 seconds"></span>
         <span class="cl-last-updated" id="clLastUpdated"></span>
         <button class="cl-refresh-btn" id="clRefreshBtn" onclick="loadDashboard(true)" title="Refresh">⟳ Refresh</button>
-        <button class="cl-refresh-btn" onclick="downloadExcel()" title="Download styled Excel file" style="background:#ECFDF5;border-color:#6EE7B7;color:#065F46;">⬇ Download Excel</button>
       </div>
-      <div class="cl-staff-filter-row">
-        <label class="cl-field-label" style="margin:0;white-space:nowrap;">👤 Staff:</label>
-        <select id="clStaffFilter" class="cl-staff-select" onchange="clLogPage=0; renderDashboard()">
+
+      <div class="cl-summary-grid" id="clSummaryGrid"></div>
+
+      <div class="cl-search-filter-row">
+        <div class="cl-search-input-wrap">
+          <span class="cl-search-icon">🔍</span>
+          <input type="text" id="clLogSearchInput" placeholder="Search provider name, phone, insurance..." oninput="clLogPage=0; renderDashboard()">
+        </div>
+        <select id="clStaffFilter" class="cl-filter-select" onchange="clLogPage=0; renderDashboard()">
           <option value="">All Staff</option>
         </select>
-        <button class="cl-refresh-btn" onclick="clearStaffFilter()" id="clStaffClearBtn" style="display:none;">✕ Clear</button>
+        <select id="clLogTypeSelect" class="cl-filter-select" onchange="setLogTypeFromSelect(this.value)">
+          <option value="All">All Call Types</option>
+          <option value="Follow-up">Follow-up</option>
+          <option value="Reschedule">Reschedule</option>
+          <option value="New Patient">New Patient</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Other / Transferred">Other/Transferred</option>
+          <option value="__trash__">🗑️ Trash</option>
+        </select>
+        <button class="cl-refresh-btn" onclick="clearStaffFilter()" id="clStaffClearBtn" style="display:none;">✕ Clear staff</button>
       </div>
       <div class="cl-custom-range" id="clCustomRange" style="display:none;">
         <label class="cl-field-label" style="margin-bottom:4px;">From</label>
@@ -1819,8 +2042,6 @@
         <label class="cl-field-label" style="margin-bottom:4px; margin-left:12px;">To</label>
         <input type="date" id="clRangeTo" class="cl-date-input" onchange="renderDashboard()">
       </div>
-
-      <div class="cl-summary-grid" id="clSummaryGrid"></div>
 
       <div class="cl-collapse-header" onclick="toggleSubSection('clStaffTableWrap','clStaffChevron')">
         <span class="cl-subsection-title">👥 Staff Breakdown</span>
@@ -1847,15 +2068,6 @@
         </div>
 
         <div id="clFullLogContent" style="display:none;">
-          <div class="cl-type-tabs" style="margin-bottom:12px;">
-            <button class="cl-type-tab active" onclick="setLogType('All',this)">All</button>
-            <button class="cl-type-tab" onclick="setLogType('Follow-up',this)">Follow-up</button>
-            <button class="cl-type-tab" onclick="setLogType('Reschedule',this)">Reschedule</button>
-            <button class="cl-type-tab" onclick="setLogType('New Patient',this)">New Patient</button>
-            <button class="cl-type-tab" onclick="setLogType('Cancelled',this)">Cancelled</button>
-            <button class="cl-type-tab" onclick="setLogType('Other / Transferred',this)">Other/Transferred</button>
-            <button class="cl-type-tab cl-trash-tab" onclick="setLogType('__trash__',this)">🗑️ Trash</button>
-          </div>
           <div class="cl-table-wrap" id="clLogTable"></div>
           <div id="clLogPager" style="display:none;align-items:center;justify-content:space-between;margin-top:12px;"></div>
         </div>
@@ -2683,10 +2895,9 @@ function isAnyModalOpen() {
   return (modal && modal.style.display !== 'none') || (confirm && confirm.style.display !== 'none') || (alerts && alerts.style.display !== 'none');
 }
 
-// ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-27';
+const TOOL_VERSION = '2026-07-13-50';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
@@ -3186,6 +3397,8 @@ let clPendingIcon = '';
 let clDashRange = 'today';
 let clAllEntries = [];
 let clLastFetched = 0;
+let clPollingTimer = null;
+let clTrashPollingTimer = null;
 
 // ── Load cached data from localStorage on startup (instant display) ──
 (function loadCachedEntries() {
@@ -3204,14 +3417,65 @@ const CL_LOG_PAGE_SIZE = 50;
 let clStaffFilter    = '';
 let clProviderListBuilt = false;
 
+function updateStaffChip(name) {
+  const nameEl = document.getElementById('clStaffChipName');
+  const avEl   = document.getElementById('clStaffChipAvatar');
+  if (nameEl) nameEl.textContent = name || '—';
+  if (avEl && name) {
+    avEl.textContent = staffInitials(name);
+    avEl.style.background = staffAvatarColor(name);
+  }
+}
+
+// Bulletproof mobile layout enforcement for the Call Log page — sets inline styles
+// directly (which always win over any stylesheet, regardless of any CSS caching or
+// specificity quirk), so the sidebar reliably stacks on top on narrow screens.
+function applyCallLogResponsiveLayout() {
+  const flex = document.querySelector('.cl-page-flex');
+  const nav  = document.querySelector('.cl-side-nav');
+  if (!flex) return;
+  if (window.innerWidth <= 700) {
+    flex.style.flexDirection = 'column';
+    if (nav) {
+      nav.style.width = '100%';
+      nav.style.height = 'auto';
+      nav.style.position = 'static';
+      nav.style.display = 'flex';
+      nav.style.flexWrap = 'wrap';
+    }
+  } else {
+    flex.style.flexDirection = '';
+    if (nav) {
+      nav.style.width = '';
+      nav.style.height = '';
+      nav.style.position = '';
+      nav.style.display = '';
+      nav.style.flexWrap = '';
+    }
+  }
+}
+window.addEventListener('resize', applyCallLogResponsiveLayout);
+document.addEventListener('DOMContentLoaded', applyCallLogResponsiveLayout);
+
 function initCallLog() {
+  applyCallLogResponsiveLayout();
   const name = localStorage.getItem('cl_staffName');
   if (name) {
     document.getElementById('namegateOverlay').style.display = 'none';
-    document.getElementById('clStaffName').textContent = name;
+    updateStaffChip(name);
   } else {
     document.getElementById('namegateOverlay').style.display = 'flex';
     document.getElementById('namegateInput').focus();
+  }
+  // Stats are always visible now — start loading + live polling once, don't stack timers
+  loadDashboard(false);
+  if (!clPollingTimer) {
+    clPollingTimer = setInterval(() => loadDashboard(true), 8000);
+  }
+  // Trash is fetched independently, on its own slower cycle — never blocks the fast main log
+  loadTrashData(false);
+  if (!clTrashPollingTimer) {
+    clTrashPollingTimer = setInterval(() => loadTrashData(false), 30000);
   }
   if (!clProviderListBuilt) {
     const sel = document.getElementById('clProvider');
@@ -3250,7 +3514,7 @@ function saveStaffName() {
   if (!val) { input.focus(); return; }
   localStorage.setItem('cl_staffName', val);
   document.getElementById('namegateOverlay').style.display = 'none';
-  document.getElementById('clStaffName').textContent = val;
+  updateStaffChip(val);
   refreshTodayCountDisplay();
 }
 
@@ -3395,6 +3659,19 @@ async function submitCallLog() {
     note:      isOther ? note : ''
   };
 
+  // Extra safety net: block resubmitting the exact same call within 15 seconds,
+  // independent of button-disabled state (in case that state ever gets reset
+  // unexpectedly, e.g. by a page re-render mid-submit).
+  const fingerprint = [entry.staff, entry.type, entry.phone, entry.provider].join('|||');
+  const lastFingerprint = sessionStorage.getItem('cl_lastSubmitFingerprint');
+  const lastSubmitTime  = parseInt(sessionStorage.getItem('cl_lastSubmitTime') || '0', 10);
+  if (lastFingerprint === fingerprint && (Date.now() - lastSubmitTime) < 15000) {
+    closeCallForm();
+    return;
+  }
+  sessionStorage.setItem('cl_lastSubmitFingerprint', fingerprint);
+  sessionStorage.setItem('cl_lastSubmitTime', String(Date.now()));
+
   const btn = document.getElementById('clSubmitBtn');
   clSubmitInFlight = true;
   btn.disabled = true; btn.textContent = 'Saving…';
@@ -3445,21 +3722,6 @@ function showCallToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-function toggleDashboard() {
-  const d   = document.getElementById('clDashboard');
-  const btn = document.getElementById('clDashChevron');
-  const isHidden = d.style.display === 'none';
-  d.style.display = isHidden ? 'block' : 'none';
-  if (btn) btn.textContent = isHidden ? '▲' : '▼';
-  if (isHidden) {
-    loadDashboard(false);
-    // Auto-refresh every 30 seconds while dashboard is open
-    clPollingTimer = setInterval(() => loadDashboard(true), 8000);
-  } else {
-    clearInterval(clPollingTimer);
-    clPollingTimer = null;
-  }
-}
 
 function setDashRange(range, btn) {
   clDashRange = range;
@@ -3502,12 +3764,14 @@ async function loadDashboard(forceRefresh) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
-    const res   = await fetch(CALL_LOG_API_URL + '?action=get', { signal: controller.signal });
+    // Only fetch the main sheet here — fast, single request. Trash is fetched on its
+    // own separate, slower cycle (see loadTrashData) so it never slows down the main log.
+    const res = await fetch(CALL_LOG_API_URL + '?action=get', { signal: controller.signal });
     clearTimeout(timer);
     const data = await res.json();
     if (Array.isArray(data)) {
       const prevCount = clAllEntries.length;
-      clAllEntries  = data;
+      mergeMainData(data);
       clLastFetched = Date.now();
       try {
         localStorage.setItem('cl_cachedEntries', JSON.stringify(data));
@@ -3536,6 +3800,45 @@ async function loadDashboard(forceRefresh) {
     }
   } finally {
     if (refreshBtn) { refreshBtn.disabled = false; refreshBtn.textContent = '⟳ Refresh'; }
+  }
+}
+
+// Merges fresh main-sheet data into clAllEntries, keeping whatever trash entries
+// (from the last loadTrashData call) are currently known — main sheet and trash
+// are fetched completely independently, so a slow/large trash sheet never delays
+// how fast new calls show up in the log.
+function mergeMainData(data) {
+  const knownTrashed = clAllEntries.filter(e => e.deleted === 'trash');
+  const mainKeys = new Set(data.map(e => e.timestamp + '|||' + e.staff));
+  // Drop a trashed entry from the carried-over set only if it reappeared in main
+  // data (i.e. it was actually restored) — otherwise keep showing it as trashed.
+  const stillTrashed = knownTrashed.filter(e => !mainKeys.has(e.timestamp + '|||' + e.staff));
+  clAllEntries = [...data, ...stillTrashed];
+}
+
+// ── TRASH — fetched independently on its own slower cycle ──
+let clTrashLastFetched = 0;
+async function loadTrashData(forceRefresh) {
+  const myName = localStorage.getItem('cl_staffName') || '';
+  const TRASH_TTL = 30000; // trash doesn't need to be as fresh as the main log
+  if (!forceRefresh && clTrashLastFetched && (Date.now() - clTrashLastFetched) < TRASH_TTL) return;
+  try {
+    const res = await fetch(CALL_LOG_API_URL + '?action=gettrash&staff=' + encodeURIComponent(myName));
+    const trashData = await res.json();
+    if (Array.isArray(trashData)) {
+      const freshTrashMarked = trashData.map(t => ({ ...t, deleted: 'trash' }));
+      const freshKeys = new Set(freshTrashMarked.map(e => e.timestamp + '|||' + e.staff));
+      // Keep any non-trash entries as-is, replace trash entries with the fresh set
+      // (plus anything locally marked trash this fetch didn't include yet, e.g. an
+      // optimistic soft-delete that hasn't propagated to Sheets in the last second or two).
+      const nonTrashed = clAllEntries.filter(e => e.deleted !== 'trash');
+      const recentlyOptimistic = clAllEntries.filter(e => e.deleted === 'trash' && !freshKeys.has(e.timestamp + '|||' + e.staff));
+      clAllEntries = [...nonTrashed, ...freshTrashMarked, ...recentlyOptimistic];
+      clTrashLastFetched = Date.now();
+      if (clLogTypeFilter === '__trash__' && !isAnyModalOpen()) renderDashboard();
+    }
+  } catch (e) {
+    // network hiccup — keep showing whatever trash state we last had
   }
 }
 
@@ -3594,7 +3897,15 @@ function setLogType(type, btn) {
   clLogTypeFilter = type;
   clLogPage = 0;
   document.querySelectorAll('.cl-type-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (type === '__trash__') loadTrashData(true);
+  renderDashboard();
+}
+
+function setLogTypeFromSelect(type) {
+  clLogTypeFilter = type;
+  clLogPage = 0;
+  if (type === '__trash__') loadTrashData(true);
   renderDashboard();
 }
 
@@ -3685,6 +3996,20 @@ function formatDob(val) {
   return s;
 }
 
+const CL_AVATAR_COLORS = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#06B6D4','#EF4444','#6366F1','#14B8A6','#F97316'];
+function staffAvatarColor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return CL_AVATAR_COLORS[Math.abs(hash) % CL_AVATAR_COLORS.length];
+}
+function staffInitials(name) {
+  const parts = name.trim().split(/\s+/);
+  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || '?';
+}
+function staffAvatarSmHtml(name) {
+  return `<span class="cl-avatar-circle-sm" style="background:${staffAvatarColor(name)};">${staffInitials(name)}</span>`;
+}
+
 function renderDashboard() {
   const dateFiltered = filterByRange(clAllEntries, clDashRange);
 
@@ -3702,23 +4027,34 @@ function renderDashboard() {
   const preFiltered = staffVal ? dateFiltered.filter(e => e.staff === staffVal) : dateFiltered;
   const filtered = preFiltered.filter(e => e.deleted !== 'trash');
 
-  let cardsHtml = `<div class="cl-summary-card cl-total"><div class="cl-card-num">${filtered.length}</div><div class="cl-card-label">Total Calls</div></div>`;
+  let cardsHtml = `<div class="cl-summary-card cl-total" style="--card-accent:#0F172A;"><div class="cl-card-num">${filtered.length}</div><div class="cl-card-label">Total Calls</div><div class="cl-card-pct">&nbsp;</div></div>`;
   CL_TYPES.forEach(t => {
     const count = filtered.filter(e => e.type === t).length;
+    const pct = filtered.length ? Math.round((count / filtered.length) * 100) : 0;
     const meta = CL_TYPE_META[t];
-    cardsHtml += `<div class="cl-summary-card" style="border-color:${meta.color}40;">
+    cardsHtml += `<div class="cl-summary-card" style="--card-accent:${meta.color};">
       <div class="cl-card-num" style="color:${meta.color};">${count}</div>
       <div class="cl-card-label">${meta.icon} ${t}</div>
+      <div class="cl-card-pct">${pct}% of total</div>
+      <div class="cl-card-bar-track"><div class="cl-card-bar-fill" style="width:${pct}%;background:${meta.color};"></div></div>
     </div>`;
   });
   document.getElementById('clSummaryGrid').innerHTML = cardsHtml;
+
+  // Sidebar counts always reflect TODAY (Texas time), regardless of the selected date-range filter above
+  const todaysEntries = filterByRange(clAllEntries, 'today').filter(e => e.deleted !== 'trash');
+  const sideIds = { 'Follow-up':'clSideCount-FollowUp', 'Reschedule':'clSideCount-Reschedule', 'New Patient':'clSideCount-NewPatient', 'Cancelled':'clSideCount-Cancelled', 'Other / Transferred':'clSideCount-Other' };
+  CL_TYPES.forEach(t => {
+    const el = document.getElementById(sideIds[t]);
+    if (el) el.textContent = todaysEntries.filter(e => e.type === t).length;
+  });
 
   const staffNames = [...new Set(filtered.map(e => e.staff))].sort();
   let staffHtml = '<table class="cl-table"><tr><th>Staff</th>' +
     CL_TYPES.map(t => `<th title="${t}">${CL_TYPE_META[t].icon}</th>`).join('') + '<th>Total</th></tr>';
   staffNames.forEach(name => {
     const rows = filtered.filter(e => e.staff === name);
-    staffHtml += `<tr><td>${escapeHtml(name)}</td>` +
+    staffHtml += `<tr><td>${staffAvatarSmHtml(name)}${escapeHtml(name)}</td>` +
       CL_TYPES.map(t => `<td>${rows.filter(r => r.type === t).length}</td>`).join('') +
       `<td><strong>${rows.length}</strong></td></tr>`;
   });
@@ -3726,7 +4062,19 @@ function renderDashboard() {
   document.getElementById('clStaffTable').innerHTML = staffNames.length ? staffHtml : '<div class="cl-empty">No entries for this range.</div>';
 
   const typeFiltered = clLogTypeFilter === 'All' ? filtered : filtered.filter(e => e.type === clLogTypeFilter);
-  const sorted = [...typeFiltered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const searchInput = document.getElementById('clLogSearchInput');
+  const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  const searchFiltered = searchVal
+    ? typeFiltered.filter(e =>
+        (e.phone || '').toLowerCase().includes(searchVal) ||
+        (e.provider || '').toLowerCase().includes(searchVal) ||
+        (e.insurance || '').toLowerCase().includes(searchVal) ||
+        (e.note || '').toLowerCase().includes(searchVal) ||
+        (e.location || '').toLowerCase().includes(searchVal) ||
+        (e.staff || '').toLowerCase().includes(searchVal)
+      )
+    : typeFiltered;
+  const sorted = [...searchFiltered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   const myName = localStorage.getItem('cl_staffName') || '';
 
   // ── Trash tab — show trashed entries with restore + hard-delete ──
@@ -3830,6 +4178,41 @@ function changeLogPage(delta) {
 
 // Custom confirm dialog — replaces browser confirm() which can be blocked
 let clConfirmResolve = () => {};
+// Self-contained confirm dialog for call-log delete/trash/restore actions.
+// Built and torn down fresh each time (like the provider-alerts popup) — no shared
+// static overlay, no stuck-state risk, and it can never collide with the Edit/Add
+// call form or any other popup in the tool.
+function clDynConfirm(icon, title, sub, okLabel, okColor) {
+  return new Promise(resolve => {
+    const existing = document.getElementById('clDynConfirmOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'clDynConfirmOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20050;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border-radius:14px;padding:26px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.25);font-family:Inter,sans-serif;';
+    box.addEventListener('click', ev => ev.stopPropagation());
+    box.innerHTML = `
+      <div style="font-size:26px;margin-bottom:6px;">${icon}</div>
+      <div style="font-weight:700;font-size:15px;color:#0F172A;margin-bottom:4px;">${escapeHtml(title)}</div>
+      <div style="font-size:13px;color:#64748B;margin-bottom:18px;">${escapeHtml(sub)}</div>
+      <div style="display:flex;gap:10px;">
+        <button id="clDynConfCancel" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid #E2E8F0;background:white;color:#64748B;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">Cancel</button>
+        <button id="clDynConfOk" style="flex:1;padding:10px;border-radius:8px;border:none;background:${okColor};color:white;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">${escapeHtml(okLabel)}</button>
+      </div>`;
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    const cleanup = (result) => { overlay.remove(); resolve(result); };
+    box.querySelector('#clDynConfCancel').onclick = () => cleanup(false);
+    box.querySelector('#clDynConfOk').onclick     = () => cleanup(true);
+    overlay.addEventListener('click', ev => { if (ev.target === overlay) cleanup(false); });
+  });
+}
+
 function clConfirm(icon, msg, sub, okLabel, okColor) {
   return new Promise(resolve => {
     document.getElementById('clConfirmIcon').textContent = icon;
@@ -3850,14 +4233,14 @@ function clConfirm(icon, msg, sub, okLabel, okColor) {
 
 async function softDeleteEntry(entry) {
   if (!entry) { alert('This row is out of date — the list just refreshed. Please try again.'); renderDashboard(); return; }
-  const ok = await clConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
+  const ok = await clDynConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
   if (!ok) return;
   try {
     // Optimistic local update — mark as trash immediately
     const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
     if (idx !== -1) clAllEntries[idx].deleted = 'trash';
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('🗑️ Moved to Trash');
 
     // Send to backend
@@ -3879,7 +4262,7 @@ async function restoreEntry(entry) {
     const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
     if (idx !== -1) clAllEntries[idx].deleted = '';
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('↩️ Entry restored');
 
     const params = new URLSearchParams({ action:'restore', timestamp: String(entry.timestamp), staff: entry.staff });
@@ -3892,13 +4275,13 @@ async function restoreEntry(entry) {
 
 async function hardDeleteEntry(entry) {
   if (!entry) { alert('This row is out of date — the list just refreshed. Please try again.'); renderDashboard(); return; }
-  const ok = await clConfirm('⚠️', 'Delete Forever?', 'This entry will be moved to the Trash sheet in Google Sheets and cannot be recovered from here.', 'Delete Forever', '#7F1D1D');
+  const ok = await clDynConfirm('⚠️', 'Delete Forever?', 'This entry will be moved to the Trash sheet in Google Sheets and cannot be recovered from here.', 'Delete Forever', '#7F1D1D');
   if (!ok) return;
   try {
     // Remove from local state entirely
     clAllEntries = clAllEntries.filter(e => !(e.timestamp === entry.timestamp && e.staff === entry.staff));
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('🗑️ Permanently deleted');
 
     const params = new URLSearchParams({ action:'harddelete', timestamp: String(entry.timestamp), staff: entry.staff });
@@ -4080,8 +4463,34 @@ function buildAndDownloadExcel() {
       .map(e => tab.row(e));
 
     const ws = XLSX.utils.aoa_to_sheet([tab.cols, ...rows]);
-    ws['!cols'] = tab.widths.map(w => ({ wch: w }));
-    ws['!rows'] = [{ hpt: 22 }, ...rows.map(() => ({ hpt: 20 }))];
+
+    // Find the free-text comment/concern column for this tab (the one that can get long)
+    const commentColIdx = tab.cols.findIndex(c => c === 'Comments' || c === 'Concern');
+
+    // Auto-widen the comment column if the longest note needs more room than the default
+    const colWidths = tab.widths.slice();
+    if (commentColIdx !== -1) {
+      const longest = rows.reduce((max, r) => Math.max(max, String(r[commentColIdx] || '').length), 0);
+      const neededWidth = Math.min(90, Math.max(colWidths[commentColIdx], Math.ceil(longest * 0.95) + 4));
+      colWidths[commentColIdx] = neededWidth;
+    }
+    ws['!cols'] = colWidths.map(w => ({ wch: w }));
+
+    // Auto-height each row based on how many wrapped lines ANY column in that row will
+    // need at its final column width — so long text in Comments, Insurance, Provider,
+    // etc. never gets clipped or overlaps into the row below.
+    const headerRowHeight = 22;
+    const rowHeights = rows.map(row => {
+      let maxLines = 1;
+      row.forEach((cell, ci) => {
+        const text = String(cell || '');
+        const charsPerLine = Math.max(8, colWidths[ci] - 2);
+        const lines = Math.max(1, Math.ceil(text.length / charsPerLine));
+        if (lines > maxLines) maxLines = lines;
+      });
+      return { hpt: Math.max(20, maxLines * 15 + 6) };
+    });
+    ws['!rows'] = [{ hpt: headerRowHeight }, ...rowHeights];
 
     // Apply header styles
     tab.cols.forEach((_, ci) => {
@@ -4146,6 +4555,6 @@ setTimeout(() => {
 }, 2000);
 
 </script>
-<footer style="text-align:center;padding:10px;font-size:11px;color:var(--chrome-sub-text);background:var(--chrome-2);border-top:1px solid var(--chrome-border);">Created by Khizar Babar - ID: 1531</footer>
+<footer style="position:fixed;bottom:0;left:0;right:0;z-index:9000;height:28px;line-height:28px;text-align:center;font-size:11px;color:#94A3B8;background:#0A121F;border-top:1px solid #1E2C41;overflow:hidden;">Created by Khizar Babar - ID: 1531</footer>
 </body>
 </html>
