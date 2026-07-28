@@ -1386,16 +1386,25 @@
       </div>
 
       <!-- Transfer NPs -->
-      <div class="pcard" data-type="NP" data-loc="lv" data-days="Mon Tue Wed Thu Fri" data-accepting="unknown" data-transfer="yes" data-id="SS">
+      <div class="pcard" data-type="NP" data-loc="lv" data-days="Mon Tue Thu Fri" data-accepting="yes" data-id="SS" data-min-age="12">
         <div class="pcard-accent np"></div>
         <div class="pcard-body">
-          <div class="transfer-card" style="margin:0;border:none;background:transparent;padding:0;">
-            <div class="transfer-icon">↗</div>
-            <div>
-              <div class="transfer-name">NP Shelly Sanders</div>
-              <div class="transfer-info">Transfer all appointment concerns → <strong>Lewisville front desk</strong> (IVR Press 2)</div>
-            </div>
+          <div class="pcard-header">
+            <div class="pcard-avatar np">SS</div>
+            <div><div class="pcard-name">NP Shelly Sanders</div><div class="pcard-role">Nurse Practitioner · Age 12+</div></div>
           </div>
+          <div class="badge-row">
+            <span class="badge badge-green">✓ Accepting new</span>
+            <span class="badge badge-red">⚠ New patients only — no follow-ups</span>
+          </div>
+          <div class="schedule-block">
+            <div class="schedule-row"><span class="loc-tag lv" data-tag="lv">LV</span><span class="schedule-text">Mon · Tue · Thu — 9:00 am to 4:00 pm</span></div>
+            <div class="schedule-row"><span class="loc-tag ev" data-tag="lv">LV E-visit</span><span class="schedule-text">Fri — 9:00 am to 1:00 pm <em>(E-visits only)</em></span></div>
+          </div>
+        </div>
+        <div class="pcard-footer">
+          <span class="appt-tag">⏱ New pt: 60 min</span>
+          <span class="appt-tag" style="color:#B45309;background:#FFFBEB;border-color:#FDE68A;">💵 No-show: $50 new patient only</span>
         </div>
       </div>
 
@@ -2104,7 +2113,14 @@ const PROVIDERS = {
     ],
     appt: 'Follow-up 15 min · New pt 30 min'
   },
-  SS: { name: 'NP Shelly Sanders', role: 'NP', accepting: null, transfer: 'Lewisville front desk (IVR Press 2)', schedule: [] },
+  SS: {
+    name: 'NP Shelly Sanders', role: 'NP · Age 12+', accepting: true,
+    schedule: [
+      { loc: 'lv', label: 'Lewisville', text: 'Mon · Tue · Thu — 9 am–4 pm' },
+      { loc: 'ev', label: 'LV E-visit', text: 'Fri — 9 am–1 pm (e-visits only)' }
+    ],
+    appt: 'New pt: 60 min · New patients only — no follow-ups', note: '$50 no-show fee (new patient only)'
+  },
   MW: { name: 'NP Michelle White', role: 'NP · No no-show fee', accepting: null, transfer: 'Flower Mound front desk (IVR Press 3)', schedule: [] },
   BM: { name: 'Bret M. Menassa', role: 'Counselor', accepting: null, transfer: 'Denton front desk (IVR Press 4)', schedule: [] },
   CB: {
@@ -2348,7 +2364,7 @@ const DAY_LOC_MAP = {
   RC:  { Mon:['fm'], Tue:['dn'], Wed:['fm'], Thu:['dn'] },
   BS:  { Mon:['lv'], Tue:['lv'], Wed:['lv'] },
   JM:  { Mon:['fm'], Thu:['lv'], Fri:['dn'] },
-  SS:  { Mon:['lv'], Tue:['lv'], Wed:['lv'], Thu:['lv'], Fri:['lv'] },
+  SS:  { Mon:['lv'], Tue:['lv'], Thu:['lv'], Fri:['ev'] },
   MW:  { Mon:['fm'], Tue:['fm'], Wed:['fm'], Thu:['fm'], Fri:['fm'] },
   BM:  { Mon:['dn'], Tue:['dn'], Wed:['dn'], Thu:['dn'] },
   CB:  { Mon:['fm'], Tue:['fm'], Wed:['fm'], Thu:['fm'] },
@@ -2670,7 +2686,7 @@ function isAnyModalOpen() {
 // ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-26';
+const TOOL_VERSION = '2026-07-13-27';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
