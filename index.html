@@ -119,7 +119,7 @@
   .font-size-display { font-size: 11px; color: #64748B; min-width: 28px; text-align: center; }
 
   /* DOB control (top right) */
-  .dob-ctrl { display: flex; align-items: center; gap: 7px; }
+  .dob-ctrl { display: flex; align-items: center; gap: 7px; position: relative; }
   .dob-input {
     background: #1E293B; border: 1px solid #334155; color: #E2E8F0;
     border-radius: 6px; padding: 6px 9px; font-size: 12px;
@@ -135,6 +135,25 @@
     font-size: 12px; line-height: 1; transition: all 0.15s; flex-shrink: 0;
   }
   .dob-reset-btn:hover { background: #EF4444; border-color: #EF4444; color: white; }
+  .spravato-banner {
+    display: none; width: 100%; text-align: center;
+    padding: 8px 14px; font-size: 12.5px; font-weight: 700;
+    letter-spacing: 0.2px; font-family: 'Inter', sans-serif;
+    align-items: center; justify-content: center; gap: 6px;
+    animation: spravatoBannerIn 0.18s ease-out;
+  }
+  .spravato-banner.show { display: flex; }
+  .spravato-banner.found {
+    background: #ECFDF5; color: #065F46; border-bottom: 1px solid #A7F3D0;
+  }
+  .spravato-banner.notfound {
+    background: #FEF2F2; color: #7F1D1D; border-bottom: 1px solid #FECACA;
+  }
+  @keyframes spravatoBannerIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #spravatoBtn.has-patients { border-color: #A855F7 !important; color: #D8B4FE !important; }
 
   /* Tab nav */
   .tab-nav {
@@ -1031,6 +1050,12 @@
     </div>
     <div style="width:1px;height:28px;background:#1E293B;"></div>
     <div style="position:relative;">
+      <button id="spravatoBtn" onclick="openSpravatoManager()" title="Manage SPRAVATO do-not-schedule list" style="background:none;border:1.5px solid #334155;border-radius:8px;height:34px;padding:0 10px;cursor:pointer;font-size:12px;font-weight:700;color:#CBD5E1;display:flex;align-items:center;gap:6px;">
+        💊 SPRAVATO
+      </button>
+    </div>
+    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="position:relative;">
       <button id="paBellBtn" onclick="toggleAlertNotifications(event)" title="Provider alert notifications" style="background:none;border:1.5px solid #334155;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;color:#CBD5E1;display:flex;align-items:center;justify-content:center;position:relative;">
         🔔
         <span id="paBellCount" style="display:none;position:absolute;top:-6px;right:-6px;background:#EF4444;color:white;font-size:10px;font-weight:700;border-radius:9px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;line-height:1;"></span>
@@ -1043,6 +1068,9 @@
     </div>
   </div>
 </header>
+
+<!-- SPRAVATO status banner — full width, appears only when a DOB is entered -->
+<div id="spravatoBanner" class="spravato-banner"></div>
 
 <!-- TAB NAV -->
 <nav class="tab-nav">
@@ -2251,6 +2279,7 @@ function resetDob() {
   document.getElementById('dobInput').value = '';
   document.getElementById('dobAgeBadge').textContent = '';
   document.getElementById('dobAgeBadge').style.color = '#64748B';
+  hideSpravatoStatus();
   state.age = null;
   applyFilters();
 }
@@ -2301,18 +2330,278 @@ function applyDob(raw) {
     state.age = null;
     badge.textContent = '';
     badge.style.color = '#64748B';
+    hideSpravatoStatus();
   } else if (!dob) {
     state.age = null;
     badge.textContent = '⚠ Invalid';
     badge.style.color = '#EF4444';
+    hideSpravatoStatus();
   } else {
     const age = calcAge(dob);
     state.age = age;
     badge.textContent = `Age: ${age}`;
     badge.style.color = '#10B981';
+    checkSpravatoStatus(dob);
   }
   applyFilters();
 }
+
+// ── SPRAVATO do-not-schedule list ──
+// Stored locally per-device (localStorage). List holds { name, dob } where
+// dob is stored as a normalized MM/DD/YYYY string for reliable comparison.
+const SPRAVATO_KEY = 'npp_spravato_list';
+const SPRAVATO_SEEDED_KEY = 'npp_spravato_seeded';
+
+// One-time seed with the patients from Mary's 07/30 do-not-schedule email.
+// Runs only once per browser — after that, the list is fully user-managed.
+(function seedSpravatoListOnce() {
+  try {
+    if (localStorage.getItem(SPRAVATO_SEEDED_KEY)) return;
+    if (localStorage.getItem(SPRAVATO_KEY)) { localStorage.setItem(SPRAVATO_SEEDED_KEY, '1'); return; }
+    const seed = [
+      { name: 'Mary Adams',      dob: '02/02/1971' },
+      { name: 'Marcos Alvarez',  dob: '04/22/1995' },
+      { name: 'Anna Bird',       dob: '11/04/1992' },
+      { name: 'Jeff Fillhaber',  dob: '08/09/1968' },
+      { name: 'Antonio Lizalde', dob: '01/06/1973' },
+      { name: 'Shaun Lush',      dob: '01/06/1973' },
+      { name: 'Craig Mcknight',  dob: '05/26/1966' },
+      { name: 'Cindy Meyers',    dob: '06/09/1964' },
+      { name: 'Amyna Nanjee',    dob: '02/22/1996' },
+      { name: 'Larissa Root',    dob: '11/29/1997' },
+      { name: 'Emy Smith',       dob: '03/15/1977' },
+      { name: 'Tricia West',     dob: '05/24/1968' },
+    ];
+    localStorage.setItem(SPRAVATO_KEY, JSON.stringify(seed));
+    localStorage.setItem(SPRAVATO_SEEDED_KEY, '1');
+  } catch (e) {}
+})();
+
+function getSpravatoList() {
+  try {
+    const raw = localStorage.getItem(SPRAVATO_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+
+function saveSpravatoList(list) {
+  try { localStorage.setItem(SPRAVATO_KEY, JSON.stringify(list)); } catch (e) {}
+  refreshSpravatoBtnState();
+}
+
+function dobToKey(dob) {
+  // dob is a Date object -> normalized MM/DD/YYYY string
+  const mm = String(dob.getMonth() + 1).padStart(2, '0');
+  const dd = String(dob.getDate()).padStart(2, '0');
+  const yyyy = dob.getFullYear();
+  return `${mm}/${dd}/${yyyy}`;
+}
+
+function hideSpravatoStatus() {
+  const el = document.getElementById('spravatoBanner');
+  el.classList.remove('show', 'found', 'notfound');
+  el.textContent = '';
+}
+
+function checkSpravatoStatus(dob) {
+  const el = document.getElementById('spravatoBanner');
+  const key = dobToKey(dob);
+  const list = getSpravatoList();
+  const match = list.find(p => p.dob === key);
+  el.classList.remove('found', 'notfound');
+  if (match) {
+    el.textContent = `✔ Spravato Patient Found — ${match.name} (DOB: ${match.dob})`;
+    el.classList.add('show', 'found');
+  } else {
+    el.textContent = '✘ Spravato Patient Not Found';
+    el.classList.add('show', 'notfound');
+  }
+}
+
+function refreshSpravatoBtnState() {
+  const btn = document.getElementById('spravatoBtn');
+  if (!btn) return;
+  const has = getSpravatoList().length > 0;
+  btn.classList.toggle('has-patients', has);
+}
+
+function openSpravatoManager() {
+  closeSpravatoManager();
+  const overlay = document.createElement('div');
+  overlay.id = 'spravatoOverlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:16px;';
+  overlay.addEventListener('click', (ev) => { if (ev.target === overlay) closeSpravatoManager(); });
+
+  const box = document.createElement('div');
+  box.style.cssText = 'background:white;border-radius:12px;width:440px;max-width:100%;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.3);font-family:Inter,sans-serif;';
+  box.innerHTML = `
+    <div style="padding:14px 16px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div style="font-weight:700;font-size:15px;color:#0F172A;">💊 SPRAVATO — Do Not Schedule</div>
+      <button id="spravatoCloseBtn" style="background:none;border:none;font-size:18px;cursor:pointer;color:#64748B;line-height:1;padding:4px;">✕</button>
+    </div>
+    <div style="padding:10px 16px;font-size:12px;color:#64748B;border-bottom:1px solid #E2E8F0;flex-shrink:0;">
+      Patients on this list should not be scheduled. Entering their DOB in the top toolbar will flag them automatically.
+    </div>
+    <div id="spravatoListBox" style="flex:1;overflow-y:auto;padding:8px 10px;min-height:80px;"></div>
+    <div style="border-top:1px solid #E2E8F0;flex-shrink:0;">
+      <div style="display:flex;">
+        <button id="spravatoTabSingle" class="spravato-mode-tab active-mode" style="flex:1;padding:10px;font-size:12.5px;font-weight:700;background:none;border:none;cursor:pointer;color:#0F172A;border-bottom:2px solid #0F172A;">+ Add One</button>
+        <button id="spravatoTabBulk" class="spravato-mode-tab" style="flex:1;padding:10px;font-size:12.5px;font-weight:700;background:none;border:none;cursor:pointer;color:#94A3B8;border-bottom:2px solid transparent;">📋 Paste List</button>
+      </div>
+      <div id="spravatoSinglePane" style="padding:12px 16px;display:flex;flex-direction:column;gap:8px;">
+        <input id="spravatoNameInput" type="text" placeholder="Patient name" style="padding:8px 10px;border:1px solid #CBD5E1;border-radius:8px;font-size:13px;font-family:Inter,sans-serif;">
+        <input id="spravatoDobInput" type="text" placeholder="DOB (MM/DD/YYYY)" maxlength="10" style="padding:8px 10px;border:1px solid #CBD5E1;border-radius:8px;font-size:13px;font-family:Inter,sans-serif;">
+        <button id="spravatoAddBtn" style="padding:9px;border-radius:8px;border:none;background:#0F172A;color:white;font-weight:600;font-size:13px;cursor:pointer;">+ Add Patient</button>
+      </div>
+      <div id="spravatoBulkPane" style="padding:12px 16px;display:none;flex-direction:column;gap:8px;">
+        <textarea id="spravatoBulkInput" rows="6" placeholder="-Mary Adams (DOB: 02/02/1971)&#10;-Marcos Alvarez (DOB: 04/22/1995)&#10;-Anna Bird (DOB: 11/04/1992)" style="padding:8px 10px;border:1px solid #CBD5E1;border-radius:8px;font-size:12.5px;font-family:Inter,sans-serif;resize:vertical;line-height:1.5;"></textarea>
+        <div style="font-size:11px;color:#94A3B8;">One patient per line: <code>-Name (DOB: MM/DD/YYYY)</code></div>
+        <button id="spravatoBulkAddBtn" style="padding:9px;border-radius:8px;border:none;background:#0F172A;color:white;font-weight:600;font-size:13px;cursor:pointer;">+ Add List</button>
+      </div>
+    </div>
+  `;
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  box.querySelector('#spravatoCloseBtn').onclick = closeSpravatoManager;
+  box.querySelector('#spravatoAddBtn').onclick = submitSpravatoPatient;
+  box.querySelector('#spravatoBulkAddBtn').onclick = submitSpravatoBulkList;
+  box.querySelector('#spravatoDobInput').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9\/\-\.]/g, '');
+  });
+  box.querySelector('#spravatoDobInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitSpravatoPatient();
+  });
+
+  const tabSingle = box.querySelector('#spravatoTabSingle');
+  const tabBulk   = box.querySelector('#spravatoTabBulk');
+  const paneSingle = box.querySelector('#spravatoSinglePane');
+  const paneBulk   = box.querySelector('#spravatoBulkPane');
+  tabSingle.onclick = () => {
+    tabSingle.style.color = '#0F172A'; tabSingle.style.borderBottomColor = '#0F172A';
+    tabBulk.style.color = '#94A3B8'; tabBulk.style.borderBottomColor = 'transparent';
+    paneSingle.style.display = 'flex'; paneBulk.style.display = 'none';
+  };
+  tabBulk.onclick = () => {
+    tabBulk.style.color = '#0F172A'; tabBulk.style.borderBottomColor = '#0F172A';
+    tabSingle.style.color = '#94A3B8'; tabSingle.style.borderBottomColor = 'transparent';
+    paneBulk.style.display = 'flex'; paneSingle.style.display = 'none';
+  };
+
+  renderSpravatoList();
+}
+
+function closeSpravatoManager() {
+  const el = document.getElementById('spravatoOverlay');
+  if (el) el.remove();
+}
+
+function sortSpravatoList(list) {
+  return [...list].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+}
+
+function renderSpravatoList() {
+  const box = document.getElementById('spravatoListBox');
+  if (!box) return;
+  const list = sortSpravatoList(getSpravatoList());
+  if (list.length === 0) {
+    box.innerHTML = '<div style="padding:20px 8px;text-align:center;color:#94A3B8;font-size:13px;">No patients on the list yet.</div>';
+    return;
+  }
+  box.innerHTML = list.map((p) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 8px;border-bottom:1px solid #F1F5F9;">
+      <div>
+        <div style="font-weight:600;font-size:13px;color:#0F172A;">${escapeHtml(p.name)}</div>
+        <div style="font-size:11px;color:#64748B;">DOB: ${escapeHtml(p.dob)}</div>
+      </div>
+      <button data-name="${escapeHtml(p.name)}" data-dob="${escapeHtml(p.dob)}" class="spravatoRemoveBtn" style="background:none;border:1px solid #FCA5A5;color:#DC2626;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;flex-shrink:0;">Remove</button>
+    </div>
+  `).join('');
+  box.querySelectorAll('.spravatoRemoveBtn').forEach(btn => {
+    btn.onclick = () => removeSpravatoPatient(btn.dataset.name, btn.dataset.dob);
+  });
+}
+
+function refreshCurrentDobStatus() {
+  const currentDobRaw = document.getElementById('dobInput').value;
+  const currentDob = parseDob(currentDobRaw);
+  if (currentDob) checkSpravatoStatus(currentDob);
+}
+
+function submitSpravatoPatient() {
+  const nameInput = document.getElementById('spravatoNameInput');
+  const dobInput  = document.getElementById('spravatoDobInput');
+  const name = nameInput.value.trim();
+  const dobRaw = dobInput.value.trim();
+  if (!name) { alert('Please enter the patient name.'); return; }
+  const dob = parseDob(dobRaw);
+  if (!dob) { alert('Please enter a valid DOB (MM/DD/YYYY).'); return; }
+
+  const list = getSpravatoList();
+  const key = dobToKey(dob);
+  if (list.some(p => p.dob === key && p.name.toLowerCase() === name.toLowerCase())) {
+    alert('This patient is already on the list.');
+    return;
+  }
+  list.push({ name, dob: key });
+  saveSpravatoList(list);
+  nameInput.value = '';
+  dobInput.value = '';
+  renderSpravatoList();
+  refreshCurrentDobStatus();
+}
+
+// Parses lines like "-Mary Adams (DOB: 02/02/1971)" — the dash and parens
+// are optional, so plain "Mary Adams 02/02/1971" style lines also work.
+function parseSpravatoBulkLine(line) {
+  const cleaned = line.trim().replace(/^-+\s*/, '');
+  if (!cleaned) return null;
+  const m = cleaned.match(/^(.+?)\s*\(?\s*(?:DOB[:\s]*)?([\d]{1,2}[\/\-\.][\d]{1,2}[\/\-\.][\d]{2,4}|\d{8})\s*\)?\s*$/i);
+  if (!m) return null;
+  const name = m[1].trim().replace(/[,;-]+$/, '');
+  const dob = parseDob(m[2]);
+  if (!name || !dob) return null;
+  return { name, dob: dobToKey(dob) };
+}
+
+function submitSpravatoBulkList() {
+  const textarea = document.getElementById('spravatoBulkInput');
+  const lines = textarea.value.split('\n').map(l => l.trim()).filter(Boolean);
+  if (lines.length === 0) { alert('Please paste at least one patient line.'); return; }
+
+  const list = getSpravatoList();
+  let added = 0, skipped = 0;
+  lines.forEach(line => {
+    const parsed = parseSpravatoBulkLine(line);
+    if (!parsed) { skipped++; return; }
+    const dup = list.some(p => p.dob === parsed.dob && p.name.toLowerCase() === parsed.name.toLowerCase());
+    if (dup) { skipped++; return; }
+    list.push(parsed);
+    added++;
+  });
+
+  saveSpravatoList(list);
+  textarea.value = '';
+  renderSpravatoList();
+  refreshCurrentDobStatus();
+
+  let msg = `${added} patient${added !== 1 ? 's' : ''} added.`;
+  if (skipped > 0) msg += ` ${skipped} line${skipped !== 1 ? 's' : ''} skipped (duplicate or unrecognized format).`;
+  alert(msg);
+}
+
+function removeSpravatoPatient(name, dob) {
+  const list = getSpravatoList();
+  const idx = list.findIndex(p => p.name === name && p.dob === dob);
+  if (idx === -1) return;
+  list.splice(idx, 1);
+  saveSpravatoList(list);
+  renderSpravatoList();
+  refreshCurrentDobStatus();
+}
+
+
+document.addEventListener('DOMContentLoaded', refreshSpravatoBtnState);
 
 function onDobInput(input) {
   // Auto-insert slashes while typing MM/DD/YYYY
@@ -4003,7 +4292,13 @@ function buildAndDownloadExcel() {
   if (!filtered.length) { alert('No entries found for the selected date range.'); return; }
   if (typeof XLSX === 'undefined') { alert('Excel library not loaded. Check internet and try again.'); return; }
 
-  const dateTag = new Date().toLocaleDateString('en-CA', { timeZone:'America/Chicago' });
+  // Build MM-DD-YYYY (Chicago time) for filename + report date
+  const nowParts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).formatToParts(new Date());
+  const pv   = t => nowParts.find(p => p.type === t).value;
+  const MM   = pv('month'), DD = pv('day'), YYYY = pv('year');
+  const dateTagDash = `${MM}-${DD}-${YYYY}`;
 
   // Auto-fill comment based on call type and location
   function defaultComment(e) {
@@ -4014,11 +4309,12 @@ function buildAndDownloadExcel() {
     return e.note || '';
   }
 
-  // ── Tab definitions ──
+  // ── Tab definitions (colors match the polished report style) ──
   const TABS = [
     {
       key:   'New Patient',
       label: 'New Patient',
+      accent: '1E7145', tint: 'E7F3EC',
       cols:  ['Phone Number', 'DOB', 'Provider', 'Comments', 'Insurance'],
       widths:[22, 18, 26, 48, 26],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.provider||'', e.note || defaultComment(e), e.insurance||'']
@@ -4026,6 +4322,7 @@ function buildAndDownloadExcel() {
     {
       key:   'Follow-up',
       label: 'Follow Up',
+      accent: '1F3864', tint: 'E6EBF5',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
@@ -4033,6 +4330,7 @@ function buildAndDownloadExcel() {
     {
       key:   'Cancelled',
       label: 'Cancel',
+      accent: '9E2A2B', tint: 'F7E8E8',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
@@ -4040,6 +4338,7 @@ function buildAndDownloadExcel() {
     {
       key:   'Reschedule',
       label: 'Reschedule',
+      accent: '9C6F00', tint: 'FBF1DC',
       cols:  ['Phone Number', 'DOB', 'Location', 'Comments', 'Provider'],
       widths:[22, 18, 22, 48, 36],
       row:   (e) => [e.phone||'', formatDob(e.dob)||'', e.location||'', e.note || defaultComment(e), e.provider||'']
@@ -4047,56 +4346,132 @@ function buildAndDownloadExcel() {
     {
       key:   'Other / Transferred',
       label: 'Other Concerns',
+      accent: '4B5563', tint: 'EEEFF1',
       cols:  ['Phone Number', 'Location', 'Concern'],
       widths:[22, 22, 65],
       row:   (e) => [e.phone||'', e.location||'', e.note||'']
     }
   ];
 
-  // Border style reused
-  const BORDER = {
-    top:    { style: 'thin', color: { rgb: '000000' } },
-    bottom: { style: 'thin', color: { rgb: '000000' } },
-    left:   { style: 'thin', color: { rgb: '000000' } },
-    right:  { style: 'thin', color: { rgb: '000000' } }
-  };
+  const BORDER_THIN  = { style: 'thin',   color: { rgb: 'C9D2E0' } };
+  const BORDER_MED   = { style: 'medium', color: { rgb: '9AA7C2' } };
+  const FULL_BORDER  = { top: BORDER_THIN, bottom: BORDER_THIN, left: BORDER_THIN, right: BORDER_THIN };
 
-  const headerStyle = {
-    font:      { bold: true, color: { rgb: '000000' }, sz: 12, name: 'Aptos Narrow' },
-    fill:      { fgColor: { rgb: 'FFFF00' } },
-    alignment: { horizontal: 'center', vertical: 'center' },
-    border:    BORDER
-  };
+  function headerStyle(accent) {
+    return {
+      font:      { bold: true, color: { rgb: 'FFFFFF' }, sz: 12, name: 'Calibri' },
+      fill:      { fgColor: { rgb: accent } },
+      alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+      border:    { top: BORDER_THIN, left: BORDER_THIN, right: BORDER_THIN, bottom: { style: 'medium', color: { rgb: accent } } }
+    };
+  }
 
-  const dataStyle = {
-    font:      { sz: 12, name: 'Aptos Narrow' },
-    alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
-    border:    BORDER
-  };
+  function dataStyle(fillRgb, edge) {
+    const b = { top: BORDER_THIN, bottom: BORDER_THIN, left: BORDER_THIN, right: BORDER_THIN };
+    if (edge && edge.left)   b.left   = BORDER_MED;
+    if (edge && edge.right)  b.right  = BORDER_MED;
+    if (edge && edge.bottom) b.bottom = BORDER_MED;
+    return {
+      font:      { sz: 12, name: 'Calibri', color: { rgb: '222831' } },
+      alignment: { horizontal: 'center', vertical: 'center', wrapText: true },
+      fill:      { fgColor: { rgb: fillRgb } },
+      border:    b
+    };
+  }
+
+  function titleBandStyle(accent) {
+    return {
+      font: { bold: true, sz: 18, color: { rgb: 'FFFFFF' }, name: 'Calibri' },
+      fill: { fgColor: { rgb: accent } },
+      alignment: { horizontal: 'left', vertical: 'center', indent: 1 }
+    };
+  }
+  function metaStyle(tint) {
+    return {
+      font: { italic: true, sz: 10, color: { rgb: '6B7280' }, name: 'Calibri' },
+      fill: { fgColor: { rgb: tint } },
+      alignment: { horizontal: 'left', vertical: 'center', indent: 1 }
+    };
+  }
 
   function makeSheet(tab, entries) {
     const rows = [...entries]
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
       .map(e => tab.row(e));
 
-    const ws = XLSX.utils.aoa_to_sheet([tab.cols, ...rows]);
+    const nCols = tab.cols.length;
+    const nCalls = rows.length;
+    const HEADER_ROW = 3; // 0-indexed row for header (row 0 = title band, row 1 = meta, row 2 = spacer)
+    const lastDataRow = HEADER_ROW + nCalls;
+
+    const aoa = [
+      ['North Pointe Psychiatry — Call Log'],
+      [`${nCalls} call${nCalls !== 1 ? 's' : ''} logged   |   Report date: ${MM}/${DD}/${YYYY}`],
+      [],
+      tab.cols,
+      ...rows
+    ];
+
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
     ws['!cols'] = tab.widths.map(w => ({ wch: w }));
-    ws['!rows'] = [{ hpt: 22 }, ...rows.map(() => ({ hpt: 20 }))];
 
-    // Apply header styles
+    // Merge the title + meta rows across all columns
+    ws['!merges'] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: nCols - 1 } },
+      { s: { r: 1, c: 0 }, e: { r: 1, c: nCols - 1 } }
+    ];
+
+    // Style title band + meta strip (full-width color fill, not just row 1 text)
+    for (let c = 0; c < nCols; c++) {
+      const r0 = XLSX.utils.encode_cell({ r: 0, c });
+      const r1 = XLSX.utils.encode_cell({ r: 1, c });
+      if (!ws[r0]) ws[r0] = { v: '', t: 's' };
+      if (!ws[r1]) ws[r1] = { v: '', t: 's' };
+      ws[r0].s = titleBandStyle(tab.accent);
+      ws[r1].s = metaStyle(tab.tint);
+    }
+
+    // Style header row
     tab.cols.forEach((_, ci) => {
-      const ref = XLSX.utils.encode_cell({ r: 0, c: ci });
-      if (ws[ref]) ws[ref].s = headerStyle;
+      const ref = XLSX.utils.encode_cell({ r: HEADER_ROW, c: ci });
+      if (ws[ref]) ws[ref].s = headerStyle(tab.accent);
     });
 
-    // Apply data row styles — all rows, all columns
+    // Style data rows with alternating tint + compute auto row height + outer frame
+    const rowHeights = [{ hpt: 30 }, { hpt: 18 }, { hpt: 6 }, { hpt: 26 }];
     rows.forEach((row, ri) => {
-      row.forEach((_, ci) => {
-        const ref = XLSX.utils.encode_cell({ r: ri + 1, c: ci });
+      const stripe = ri % 2 === 1;
+      const fillRgb = stripe ? tab.tint : 'FFFFFF';
+      const isLastRow = ri === rows.length - 1;
+      let maxLines = 1;
+      row.forEach((val, ci) => {
+        const ref = XLSX.utils.encode_cell({ r: HEADER_ROW + 1 + ri, c: ci });
         if (!ws[ref]) ws[ref] = { v: '', t: 's' };
-        ws[ref].s = dataStyle;
+        ws[ref].s = dataStyle(fillRgb, {
+          left:   ci === 0,
+          right:  ci === nCols - 1,
+          bottom: isLastRow
+        });
+        if (val) {
+          const charsPerLine = Math.max(tab.widths[ci] - 2, 5);
+          const linesNeeded = Math.ceil(String(val).length / charsPerLine);
+          if (linesNeeded > maxLines) maxLines = linesNeeded;
+        }
       });
+      rowHeights.push({ hpt: Math.max(20, maxLines * 15 + 6) });
     });
+    ws['!rows'] = rowHeights;
+
+    // Left/right medium frame on header row too
+    for (let ci = 0; ci < nCols; ci++) {
+      const ref = XLSX.utils.encode_cell({ r: HEADER_ROW, c: ci });
+      if (ci === 0)          ws[ref].s.border.left  = BORDER_MED;
+      if (ci === nCols - 1)  ws[ref].s.border.right = BORDER_MED;
+    }
+
+    // Auto-filter on the header row
+    const lastColLetter = XLSX.utils.encode_col(nCols - 1);
+    ws['!autofilter'] = { ref: `A${HEADER_ROW + 1}:${lastColLetter}${lastDataRow}` };
 
     return ws;
   }
@@ -4118,7 +4493,7 @@ function buildAndDownloadExcel() {
 
     const wbout = XLSX.write(wb, { bookType:'xlsx', type:'array' });
     const blob  = new Blob([wbout], { type:'application/octet-stream' });
-    const fname = `NorthPointe_CallLog_${dateTag}.xlsx`;
+    const fname = `Daily Activity Report ${dateTagDash}.xlsx`;
     const url   = URL.createObjectURL(blob);
     const a     = document.createElement('a');
     a.href = url; a.download = fname; a.style.display = 'none';
