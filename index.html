@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -4476,13 +4477,41 @@ function buildAndDownloadExcel() {
     return ws;
   }
 
+  // Inject <tabColor> into each sheet's XML so the Excel sheet tabs themselves
+  // are colored to match each category (xlsx-js-style can't write this natively).
+  function colorSheetTabs(zip, accents) {
+    accents.forEach((rgb, idx) => {
+      const path = `xl/worksheets/sheet${idx + 1}.xml`;
+      const file = zip.file(path);
+      if (!file) return;
+      zip.file(path, file.async('string').then(xml => {
+        let out;
+        if (/<sheetPr[ >]/.test(xml)) {
+          out = xml.replace(/<sheetPr([^>]*?)(\/?)>/, (m, attrs, selfClose) => {
+            if (selfClose === '/') return `<sheetPr${attrs}><tabColor rgb="${rgb}"/></sheetPr>`;
+            return `<sheetPr${attrs}><tabColor rgb="${rgb}"/>`;
+          });
+        } else {
+          out = xml.replace(/(<worksheet[^>]*>)/, `$1<sheetPr><tabColor rgb="${rgb}"/></sheetPr>`);
+        }
+        // Encode explicitly as UTF-8 bytes — passing a raw JS string here would let
+        // JSZip mis-handle multi-byte characters (e.g. the "—" in the title band),
+        // corrupting the file and triggering Excel's "repair" prompt.
+        return new TextEncoder().encode(out);
+      }));
+    });
+    return zip;
+  }
+
   try {
     const wb = XLSX.utils.book_new();
+    const sheetAccents = [];
 
     TABS.forEach(tab => {
       const entries = filtered.filter(e => e.type === tab.key);
       if (entries.length > 0) {
         XLSX.utils.book_append_sheet(wb, makeSheet(tab, entries), tab.label);
+        sheetAccents.push(tab.accent);
       }
     });
 
@@ -4492,13 +4521,25 @@ function buildAndDownloadExcel() {
     }
 
     const wbout = XLSX.write(wb, { bookType:'xlsx', type:'array' });
-    const blob  = new Blob([wbout], { type:'application/octet-stream' });
     const fname = `Daily Activity Report ${dateTagDash}.xlsx`;
-    const url   = URL.createObjectURL(blob);
-    const a     = document.createElement('a');
-    a.href = url; a.download = fname; a.style.display = 'none';
-    document.body.appendChild(a); a.click();
-    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+
+    const triggerDownload = (blob) => {
+      const url = URL.createObjectURL(blob);
+      const a   = document.createElement('a');
+      a.href = url; a.download = fname; a.style.display = 'none';
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+    };
+
+    if (typeof JSZip === 'undefined') {
+      // Fallback: still exports fine, just without colored sheet tabs
+      triggerDownload(new Blob([wbout], { type:'application/octet-stream' }));
+    } else {
+      JSZip.loadAsync(wbout)
+        .then(zip => colorSheetTabs(zip, sheetAccents).generateAsync({ type: 'blob' }))
+        .then(triggerDownload)
+        .catch(() => triggerDownload(new Blob([wbout], { type:'application/octet-stream' })));
+    }
 
   } catch(err) {
     alert('Export failed: ' + err.message + '\nPlease try again.');
