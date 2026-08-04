@@ -865,7 +865,10 @@
     z-index: 8000; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 16px; box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .cl-modal-overlay.cl-modal-open { opacity: 1; }
   .cl-modal-box {
     background: white; border-radius: 14px; padding: 28px 26px;
     width: 100%; max-width: 420px;
@@ -873,6 +876,14 @@
     box-shadow: 0 16px 48px rgba(0,0,0,0.18);
     max-height: 90vh; overflow-y: auto;
     position: relative;
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cl-modal-overlay.cl-modal-open .cl-modal-box {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
   .cl-modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 18px; }
   .cl-field-label { display: block; font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
@@ -1917,7 +1928,8 @@
     <!-- DOB — all except Other/Transferred -->
     <div id="clDobRow">
       <label class="cl-field-label">&#x1F382; Date of Birth <span class="req">*</span></label>
-      <input type="text" id="clDob" class="cl-text-input" placeholder="e.g. 01/15/1990" onblur="this.value=normalizeDob(this.value)">
+      <input type="text" id="clDob" class="cl-text-input" placeholder="MM/DD/YYYY" maxlength="10"
+        oninput="formatDobInput(this)">
     </div>
 
     <!-- Appt Type badge — all except Other/Transferred -->
@@ -2605,10 +2617,22 @@ function removeSpravatoPatient(name, dob) {
 document.addEventListener('DOMContentLoaded', refreshSpravatoBtnState);
 
 function onDobInput(input) {
-  // Auto-insert slashes while typing MM/DD/YYYY
-  let v = input.value.replace(/[^0-9\/\-\.]/g, '');
-  // Auto-format only when user is typing (not pasting full string)
+  // Auto-insert slashes while typing, forcing MM/DD/YYYY — same approach as
+  // the call-log DOB field so behavior is consistent everywhere.
+  const cursor = input.selectionStart;
+  const prev = input.value;
+  const digits = prev.replace(/\D/g, '').substring(0, 8);
+  let v = '';
+  if (digits.length === 0) v = '';
+  else if (digits.length <= 2) v = digits;
+  else if (digits.length <= 4) v = digits.substring(0,2) + '/' + digits.substring(2);
+  else v = digits.substring(0,2) + '/' + digits.substring(2,4) + '/' + digits.substring(4);
   input.value = v;
+  try {
+    const diff = v.length - prev.length;
+    const newCursor = Math.max(0, cursor + diff);
+    input.setSelectionRange(newCursor, newCursor);
+  } catch(e) {}
   document.getElementById('providerSelect').value = '';
   document.getElementById('providerInfoBox').classList.remove('show');
   document.querySelectorAll('.pcard').forEach(c => c.classList.remove('spotlight'));
@@ -2619,8 +2643,13 @@ function onDobPaste(e) {
   e.preventDefault();
   const pasted = (e.clipboardData || window.clipboardData).getData('text');
   const input = document.getElementById('dobInput');
-  // Clean and auto-format the pasted value
-  const cleaned = pasted.trim();
+  // Normalize whatever was pasted (digits, dashes, dots, MMDDYYYY, etc.)
+  // into a clean MM/DD/YYYY the same way the typed-input formatter would.
+  const digits = pasted.replace(/\D/g, '').substring(0, 8);
+  let cleaned = '';
+  if (digits.length <= 2) cleaned = digits;
+  else if (digits.length <= 4) cleaned = digits.substring(0,2) + '/' + digits.substring(2);
+  else cleaned = digits.substring(0,2) + '/' + digits.substring(2,4) + '/' + digits.substring(4);
   input.value = cleaned;
   document.getElementById('providerSelect').value = '';
   document.getElementById('providerInfoBox').classList.remove('show');
@@ -3509,7 +3538,7 @@ function initCallLog() {
     const groups = { MD: [], NP: [], CN: [] };
     document.querySelectorAll('.pcard[data-type]').forEach(card => {
       const type = card.dataset.type;
-      const nameEl = card.querySelector('.pcard-name');
+      const nameEl = card.querySelector('.pcard-name') || card.querySelector('.transfer-name');
       if (!nameEl || !groups[type]) return;
       // Remove 'NP ' prefix for display
       let name = nameEl.textContent.trim().replace(/^NP\s+/, '');
@@ -3554,6 +3583,7 @@ function openCallForm(type, icon) {
   const alertsPopup = document.getElementById('paOverlayDynamic');
   if (alertsPopup && alertsPopup.style.display !== 'none') return; // don't stack on top of alerts popup
   if (!localStorage.getItem('cl_staffName')) { changeStaffName(); return; }
+  if (clSubmitInFlight) return; // a submit just fired — don't let a new form open mid-cooldown
   clPendingType = type; clPendingIcon = icon;
   document.getElementById('clModalTitle').textContent = `${icon} ${type}`;
 
@@ -3579,11 +3609,20 @@ function openCallForm(type, icon) {
   document.getElementById('clNoteRow').style.display = isOther ? 'block' : 'none';
 
   document.getElementById('clModalOverlay').style.display = 'flex';
+  // Force a reflow so the browser registers the starting state before we
+  // add the "open" class — otherwise the transition would just snap.
+  const overlay = document.getElementById('clModalOverlay');
+  overlay.offsetHeight;
+  overlay.classList.add('cl-modal-open');
   setTimeout(() => document.getElementById('clPhone').focus(), 50);
 }
 
 function closeCallForm() {
-  document.getElementById('clModalOverlay').style.display = 'none';
+  const overlay = document.getElementById('clModalOverlay');
+  overlay.classList.remove('cl-modal-open');
+  // Wait for the fade/scale-out transition to finish before hiding, so the
+  // close feels like a real animation instead of an instant disappear.
+  setTimeout(() => { overlay.style.display = 'none'; }, 220);
   if (clPendingRerender && !isAnyModalOpen()) { clPendingRerender = false; renderDashboard(); }
   // Clear validation highlights
   ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote'].forEach(id => {
@@ -3645,7 +3684,9 @@ async function submitCallLog() {
   if (isOther) markField('clNote',      !note);
 
   if (!phone)                  errors.push('Phone Number');
+  if (phone && !isPhoneComplete(phone)) errors.push('Phone Number (10 digits required)');
   if (!isOther && !dob)        errors.push('Date of Birth');
+  if (!isOther && dob && !isDobComplete(dob)) errors.push('Date of Birth (use MM/DD/YYYY)');
   if (!isOther && !provider)   errors.push('Provider');
   if (!isOther && !location)   errors.push('Location');
   if (isNew    && !insurance)  errors.push('Insurance Name');
@@ -3657,6 +3698,9 @@ async function submitCallLog() {
     btn.style.animation = 'none';
     btn.offsetHeight; // reflow
     btn.style.animation = 'cl-shake 0.35s ease';
+    // Highlight phone/DOB specifically when they're the reason (present but invalid)
+    if (phone && !isPhoneComplete(phone)) markField('clPhone', true);
+    if (!isOther && dob && !isDobComplete(dob)) markField('clDob', true);
     // Focus first empty field
     const firstEmpty = ['clPhone','clDob','clProvider','clLocation','clInsurance','clNote']
       .find(id => {
@@ -3674,6 +3718,10 @@ async function submitCallLog() {
   });
 
   const staff = localStorage.getItem('cl_staffName') || 'Unknown';
+  // Unique ID per submission attempt — sent to the backend so it can reject
+  // a second request that carries the same reqId (true duplicate protection
+  // has to live in the Apps Script backend; see note below).
+  const reqId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
   const entry = {
     staff,
     type:      clPendingType,
@@ -3686,33 +3734,49 @@ async function submitCallLog() {
   };
 
   const btn = document.getElementById('clSubmitBtn');
+  // Guard immediately — button is disabled and clSubmitInFlight is true
+  // before anything else happens, so a second click/Enter/tap in the same
+  // instant is a no-op no matter how fast the user is.
   clSubmitInFlight = true;
   btn.disabled = true; btn.textContent = 'Saving…';
-  try {
-    const params = new URLSearchParams({
-      action: 'add',
-      staff:     entry.staff,
-      type:      entry.type,
-      phone:     entry.phone,
-      dob:       entry.dob,
-      provider:  entry.provider,
-      location:  entry.location,
-      insurance: entry.insurance,
-      note:      entry.note
+
+  const params = new URLSearchParams({
+    action: 'add',
+    reqId,
+    staff:     entry.staff,
+    type:      entry.type,
+    phone:     entry.phone,
+    dob:       entry.dob,
+    provider:  entry.provider,
+    location:  entry.location,
+    insurance: entry.insurance,
+    note:      entry.note
+  });
+
+  // Fire the network call in the background instead of making the user
+  // stare at "Saving…" for however long Apps Script takes to respond.
+  // The UI updates instantly (optimistic); the request still only fires
+  // once because of the guard above.
+  fetch(CALL_LOG_API_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
+    .catch(() => {
+      showCallToast('⚠️ Connection issue — please check the log and re-enter if missing.');
     });
-    await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
-    clearCallDraft(clPendingType);
-    closeCallForm();
-    bumpTodayCount();
-    showCallToast(`${clPendingIcon} ${clPendingType} logged ✓`);
-    if (document.getElementById('clDashboard').style.display !== 'none') {
-      loadDashboard(true);
-    }
-  } catch (err) {
-    alert('Save nahi hua — internet connection check karein aur dobara try karein.');
+
+  clearCallDraft(clPendingType);
+  closeCallForm();
+  bumpTodayCount();
+  showCallToast(`${clPendingIcon} ${clPendingType} logged ✓`);
+  if (document.getElementById('clDashboard').style.display !== 'none') {
+    setTimeout(() => loadDashboard(true), 1200);
   }
-  clSubmitInFlight = false;
-  btn.disabled = false; btn.textContent = 'Log Call';
+
+  // Short cooldown before the form can be used again — this is just an
+  // extra buffer against accidental rapid re-opens; it does not need to
+  // match the backend's actual response time anymore.
+  setTimeout(() => {
+    clSubmitInFlight = false;
+    btn.disabled = false; btn.textContent = 'Log Call';
+  }, 600);
 }
 
 function bumpTodayCount() {
@@ -3857,6 +3921,52 @@ function formatPhoneInput(input) {
     const newCursor = Math.max(0, cursor + diff);
     input.setSelectionRange(newCursor, newCursor);
   } catch(e) {}
+}
+
+// True only when the phone field holds a complete 10-digit US number —
+// used to block saving a call log with a partial/missing number.
+function isPhoneComplete(val) {
+  return (val || '').replace(/\D/g, '').length === 10;
+}
+
+// Live formatter for the call-log DOB field — forces MM/DD/YYYY as the user
+// types, regardless of what they type (digits, dashes, dots, pasted text).
+// Mirrors formatPhoneInput's approach so behavior feels consistent.
+function formatDobInput(input) {
+  const cursor = input.selectionStart;
+  const prev   = input.value;
+
+  const digits = prev.replace(/\D/g, '').substring(0, 8);
+
+  let formatted = '';
+  if (digits.length === 0) {
+    formatted = '';
+  } else if (digits.length <= 2) {
+    formatted = digits;
+  } else if (digits.length <= 4) {
+    formatted = digits.substring(0,2) + '/' + digits.substring(2);
+  } else {
+    formatted = digits.substring(0,2) + '/' + digits.substring(2,4) + '/' + digits.substring(4);
+  }
+
+  input.value = formatted;
+
+  try {
+    const diff = formatted.length - prev.length;
+    const newCursor = Math.max(0, cursor + diff);
+    input.setSelectionRange(newCursor, newCursor);
+  } catch(e) {}
+}
+
+// True only when the DOB field holds a complete, plausible MM/DD/YYYY date.
+function isDobComplete(val) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec((val || '').trim());
+  if (!m) return false;
+  const mm = parseInt(m[1], 10), dd = parseInt(m[2], 10), yyyy = parseInt(m[3], 10);
+  if (mm < 1 || mm > 12) return false;
+  if (dd < 1 || dd > 31) return false;
+  if (yyyy < 1900 || yyyy > new Date().getFullYear()) return false;
+  return true;
 }
 
 function normalizeDob(val) {
@@ -4243,22 +4353,44 @@ function openEditForm(entry) {
   btn.onclick = submitEditLog;
 
   document.getElementById('clModalOverlay').style.display = 'flex';
+  const editOverlay = document.getElementById('clModalOverlay');
+  editOverlay.offsetHeight;
+  editOverlay.classList.add('cl-modal-open');
   document.getElementById('clPhone').focus();
 }
 
 async function submitEditLog() {
   if (!clEditEntry) return;
-  const btn = document.getElementById('clSubmitBtn');
-  btn.disabled = true; btn.textContent = 'Saving…';
   const isOther = clPendingType === 'Other / Transferred';
   const isNew   = clPendingType === 'New Patient';
+
+  const editPhone = document.getElementById('clPhone').value.trim();
+  const editDob   = document.getElementById('clDob').value.trim();
+  const editErrors = [];
+  if (editPhone && !isPhoneComplete(editPhone)) editErrors.push('Phone Number (10 digits required)');
+  if (!isOther && editDob && !isDobComplete(editDob)) editErrors.push('Date of Birth (use MM/DD/YYYY)');
+  if (editErrors.length) {
+    const btn = document.getElementById('clSubmitBtn');
+    btn.style.animation = 'none'; btn.offsetHeight; btn.style.animation = 'cl-shake 0.35s ease';
+    if (editPhone && !isPhoneComplete(editPhone)) {
+      const el = document.getElementById('clPhone');
+      el.style.borderColor = '#EF4444'; el.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)'; el.focus();
+    } else if (!isOther && editDob && !isDobComplete(editDob)) {
+      const el = document.getElementById('clDob');
+      el.style.borderColor = '#EF4444'; el.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)'; el.focus();
+    }
+    return;
+  }
+
+  const btn = document.getElementById('clSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
   const params  = new URLSearchParams({
     action:    'update',
     timestamp: String(clEditEntry.timestamp),
     staff:     clEditEntry.staff,
     type:      clPendingType,
-    phone:     document.getElementById('clPhone').value,
-    dob:       isOther ? '' : normalizeDob(document.getElementById('clDob').value),
+    phone:     editPhone,
+    dob:       isOther ? '' : normalizeDob(editDob),
     provider:  isOther ? '' : (document.getElementById('clProvider').value || ''),
     location:  isOther ? '' : (document.getElementById('clLocation').value || ''),
     insurance: isNew   ? (document.getElementById('clInsurance')?.value || '') : '',
