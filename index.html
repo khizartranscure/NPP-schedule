@@ -4361,6 +4361,7 @@ function openEditForm(entry) {
 
 async function submitEditLog() {
   if (!clEditEntry) return;
+  if (clSubmitInFlight) return; // same hard guard as submitCallLog — blocks double-click/double-Enter
   const isOther = clPendingType === 'Other / Transferred';
   const isNew   = clPendingType === 'New Patient';
 
@@ -4383,6 +4384,9 @@ async function submitEditLog() {
   }
 
   const btn = document.getElementById('clSubmitBtn');
+  // Guard immediately, before the await — a second click/Enter in the same
+  // instant is now a no-op, matching the protection submitCallLog already had.
+  clSubmitInFlight = true;
   btn.disabled = true; btn.textContent = 'Saving…';
   const params  = new URLSearchParams({
     action:    'update',
@@ -4404,6 +4408,7 @@ async function submitEditLog() {
   } catch(err) {
     alert('Update failed. Check internet and try again.');
   } finally {
+    clSubmitInFlight = false;
     btn.disabled = false; btn.textContent = 'Update';
     btn.onclick  = submitCallLog;
     clEditEntry  = null;
