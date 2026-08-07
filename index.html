@@ -3718,6 +3718,24 @@ async function submitCallLog() {
   });
 
   const staff = localStorage.getItem('cl_staffName') || 'Unknown';
+
+  // Client-side awareness of very recent identical submissions. This is NOT
+  // the real duplicate protection (that lives in the backend, see Code.gs) —
+  // it exists purely to give honest feedback instead of silence, because
+  // silence is exactly what caused staff to keep re-submitting in the past:
+  // they had no way to tell the difference between "it worked" and "it did
+  // nothing," so they kept trying for several minutes straight.
+  const fingerprint = `${staff}|${clPendingType}|${phone}|${isOther ? '' : provider}`;
+  const lastSent = window.clRecentSubmits && window.clRecentSubmits[fingerprint];
+  if (lastSent && (Date.now() - lastSent) < 180000) {
+    const secsAgo = Math.round((Date.now() - lastSent) / 1000);
+    showCallToast(`⚠️ Already logged ${secsAgo}s ago — not logging again`);
+    closeCallForm();
+    return;
+  }
+  window.clRecentSubmits = window.clRecentSubmits || {};
+  window.clRecentSubmits[fingerprint] = Date.now();
+
   // Unique ID per submission attempt — sent to the backend so it can reject
   // a second request that carries the same reqId (true duplicate protection
   // has to live in the Apps Script backend; see note below).
@@ -3763,20 +3781,27 @@ async function submitCallLog() {
     });
 
   clearCallDraft(clPendingType);
-  closeCallForm();
   bumpTodayCount();
   showCallToast(`${clPendingIcon} ${clPendingType} logged ✓`);
   if (document.getElementById('clDashboard').style.display !== 'none') {
     setTimeout(() => loadDashboard(true), 1200);
   }
 
-  // Short cooldown before the form can be used again — this is just an
-  // extra buffer against accidental rapid re-opens; it does not need to
-  // match the backend's actual response time anymore.
+  // Show a clear, unmissable "Logged ✓" state on the button itself for a beat
+  // before closing the form — the modal snapping shut instantly was the real
+  // reason staff kept re-submitting: nothing on screen confirmed it worked.
+  btn.textContent = '✓ Logged';
+  btn.style.background = '#16A34A';
+  setTimeout(() => { closeCallForm(); }, 550);
+
+  // Cooldown before the form can be used again — long enough that an
+  // uncertain, repeated re-click/re-open genuinely can't fire a second
+  // request in the window where someone might doubt it worked.
   setTimeout(() => {
     clSubmitInFlight = false;
     btn.disabled = false; btn.textContent = 'Log Call';
-  }, 600);
+    btn.style.background = '';
+  }, 2500);
 }
 
 function bumpTodayCount() {
@@ -3796,7 +3821,7 @@ function showCallToast(msg) {
   const t = document.getElementById('clToast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  setTimeout(() => t.classList.remove('show'), 3200);
 }
 
 function toggleDashboard() {
