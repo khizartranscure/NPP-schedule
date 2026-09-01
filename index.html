@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>North Pointe Psychiatry — Provider Schedule</title>
@@ -19,6 +18,10 @@
     --sidebar: #0A121F;
     --sidebar-card: #131D2E;
     --sidebar-border: #26374F;
+    --sidebar-text: #94A3B8;
+    --sidebar-text-muted: #64748B;
+    --sidebar-hover-bg: #263348;
+    --sidebar-hover-text: #CBD5E1;
     --accent: #1E5F74;
     --accent-light: #2D7A94;
     --text: #0F172A;
@@ -38,46 +41,84 @@
     --chrome-2: #0A121F;      /* topbar gradient bottom / sidebar base */
     --chrome-border: #1E2C41;
     --chrome-tabnav: #0A121F;
+    --chrome-text: white;
     --chrome-sub-text: #7C8CA6;
     --chrome-hover-text: #C3CEDD;
     --chrome-accent: #2D7A94;
+    --chrome-badge-bg: rgba(255,255,255,0.12);
+    --chrome-badge-text: white;
+    --chrome-item-bg: rgba(255,255,255,0.04);
+    --chrome-item-bg-hover: rgba(255,255,255,0.09);
     --logo-grad-1: #1E3A5F;
     --logo-grad-2: #1E5F74;
   }
 
-  [data-theme="charcoal"] {
-    --chrome-1: #16181D; --chrome-2: #111318; --chrome-border: #262A33;
-    --chrome-tabnav: #111318; --chrome-sub-text: #8A93A3; --chrome-hover-text: #D3D8E0;
-    --chrome-accent: #5B7A99; --logo-grad-1: #2C333F; --logo-grad-2: #5B7A99;
-  }
+  /* "Blue shade" family — kept as the original dark navy/blue tones */
   [data-theme="indigo"] {
     --chrome-1: #131736; --chrome-2: #0F1229; --chrome-border: #262C56;
     --chrome-tabnav: #0F1229; --chrome-sub-text: #9094C4; --chrome-hover-text: #D6D8F5;
     --chrome-accent: #5558D6; --logo-grad-1: #26305F; --logo-grad-2: #5558D6;
-  }
-  [data-theme="forest"] {
-    --chrome-1: #10201A; --chrome-2: #0B1712; --chrome-border: #1E3A2E;
-    --chrome-tabnav: #0B1712; --chrome-sub-text: #82A895; --chrome-hover-text: #CBE8D9;
-    --chrome-accent: #2F9E6E; --logo-grad-1: #163326; --logo-grad-2: #2F9E6E;
-  }
-  [data-theme="wine"] {
-    --chrome-1: #241419; --chrome-2: #1A0E12; --chrome-border: #3A222A;
-    --chrome-tabnav: #1A0E12; --chrome-sub-text: #B08893; --chrome-hover-text: #EBD3D8;
-    --chrome-accent: #9F4757; --logo-grad-1: #3A2029; --logo-grad-2: #9F4757;
+    --sidebar-card: #1B2050; --sidebar-border: #33397A;
+    --sidebar-text: #A0A4D8; --sidebar-text-muted: #7377AD;
+    --sidebar-hover-bg: #262C6B; --sidebar-hover-text: #E0E1F7;
   }
   [data-theme="slate"] {
     --chrome-1: #1E2937; --chrome-2: #17212E; --chrome-border: #2E3D4F;
     --chrome-tabnav: #17212E; --chrome-sub-text: #93A3B5; --chrome-hover-text: #DAE3EC;
     --chrome-accent: #4A8FBF; --logo-grad-1: #263646; --logo-grad-2: #4A8FBF;
+    --sidebar-card: #24313F; --sidebar-border: #3A4A5C;
+    --sidebar-text: #A7B4C2; --sidebar-text-muted: #7C8A99;
+    --sidebar-hover-bg: #2E3E4F; --sidebar-hover-text: #E4EAF0;
   }
 
-  html { font-size: var(--fs); }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; font-size: 1rem; }
+  /* Light themes — background lightened, text/fonts flipped to dark for readability */
+  [data-theme="charcoal"] {
+    --chrome-1: #E4E7EB; --chrome-2: #D6DAE1; --chrome-border: #C1C7D1;
+    --chrome-tabnav: #D6DAE1; --chrome-text: #1F2937; --chrome-sub-text: #55606E; --chrome-hover-text: #0F172A;
+    --chrome-accent: #475569; --logo-grad-1: #334155; --logo-grad-2: #64748B;
+    --chrome-badge-bg: rgba(15,23,42,0.10); --chrome-badge-text: #1F2937;
+    --chrome-item-bg: rgba(15,23,42,0.045); --chrome-item-bg-hover: rgba(15,23,42,0.09);
+    --chrome-swatch-border: rgba(15,23,42,0.25);
+    --sidebar-card: #F1F2F4; --sidebar-border: #D3D7DC;
+    --sidebar-text: #4B5563; --sidebar-text-muted: #6B7280;
+    --sidebar-hover-bg: #E6E8EB; --sidebar-hover-text: #111827;
+  }
+  [data-theme="forest"] {
+    --chrome-1: #DCEEE3; --chrome-2: #C9E4D3; --chrome-border: #A9D2B9;
+    --chrome-tabnav: #C9E4D3; --chrome-text: #14532D; --chrome-sub-text: #3F6E52; --chrome-hover-text: #0F3D22;
+    --chrome-accent: #1F7A52; --logo-grad-1: #14532D; --logo-grad-2: #2F9E6E;
+    --chrome-badge-bg: rgba(20,83,45,0.12); --chrome-badge-text: #14532D;
+    --chrome-item-bg: rgba(20,83,45,0.05); --chrome-item-bg-hover: rgba(20,83,45,0.10);
+    --chrome-swatch-border: rgba(20,83,45,0.3);
+    --sidebar-card: #EAF5EE; --sidebar-border: #C3DFCD;
+    --sidebar-text: #386148; --sidebar-text-muted: #4B7A63;
+    --sidebar-hover-bg: #DCEEE3; --sidebar-hover-text: #0F3D22;
+  }
+  [data-theme="wine"] {
+    --chrome-1: #F3DCE1; --chrome-2: #ECC9D0; --chrome-border: #DDABB5;
+    --chrome-tabnav: #ECC9D0; --chrome-text: #6B1B2B; --chrome-sub-text: #8C4C57; --chrome-hover-text: #4A1220;
+    --chrome-accent: #7A3540; --logo-grad-1: #6B1B2B; --logo-grad-2: #9F4757;
+    --chrome-badge-bg: rgba(107,27,43,0.12); --chrome-badge-text: #6B1B2B;
+    --chrome-item-bg: rgba(107,27,43,0.05); --chrome-item-bg-hover: rgba(107,27,43,0.10);
+    --chrome-swatch-border: rgba(107,27,43,0.3);
+    --sidebar-card: #F7E9EC; --sidebar-border: #E4C2CA;
+    --sidebar-text: #7A3D48; --sidebar-text-muted: #8C4C57;
+    --sidebar-hover-bg: #F0DCE1; --sidebar-hover-text: #4A1220;
+  }
+
+  html { font-size: var(--fs); height: 100%; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; font-size: 1rem;
+    margin: 0; padding: 0;
+  }
 
   /* ── TOP BAR ── */
   .topbar {
     background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
-    color: white;
+    color: var(--chrome-text);
     padding: 0 20px; height: 58px;
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 200;
@@ -103,44 +144,55 @@
   .font-ctrl { display: flex; align-items: center; gap: 6px; }
   .theme-swatch {
     width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
-    border: 1.5px solid rgba(255,255,255,0.25); padding: 0; transition: transform 0.12s, border-color 0.12s;
+    border: 1.5px solid var(--chrome-swatch-border, rgba(255,255,255,0.25)); padding: 0; transition: transform 0.12s, border-color 0.12s;
   }
   .theme-swatch:hover { transform: scale(1.15); }
-  .theme-swatch.active { border-color: white; box-shadow: 0 0 0 2px rgba(255,255,255,0.2); }
-  .font-ctrl-label { font-size: 10px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .theme-swatch.active { border-color: var(--chrome-text); box-shadow: 0 0 0 2px rgba(128,128,128,0.25); }
+  .font-ctrl-label { font-size: 10px; color: var(--chrome-sub-text); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
   .font-btns { display: flex; gap: 3px; }
   .font-btn {
-    width: 28px; height: 28px; border-radius: 6px; border: 1px solid #334155;
-    background: #1E293B; color: #94A3B8; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--sidebar-border);
+    background: var(--sidebar-card); color: var(--sidebar-text); cursor: pointer;
     font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
   .font-btn:hover { background: #3B82F6; border-color: #3B82F6; color: white; }
-  .font-size-display { font-size: 11px; color: #64748B; min-width: 28px; text-align: center; }
+  .font-size-display { font-size: 11px; color: var(--sidebar-text-muted); min-width: 28px; text-align: center; }
 
   /* DOB control (top right) */
-  .dob-ctrl { display: flex; align-items: center; gap: 7px; position: relative; }
+  .dob-ctrl { display: flex; align-items: center; gap: 7px; }
   .dob-input {
-    background: #1E293B; border: 1px solid #334155; color: #E2E8F0;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border); color: var(--sidebar-hover-text);
     border-radius: 6px; padding: 6px 9px; font-size: 12px;
     font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.15s;
-    color-scheme: dark;
   }
   .dob-input:focus { border-color: #3B82F6; }
-  .dob-age-badge { font-size: 11px; font-weight: 600; min-width: 64px; color: #64748B; }
+  .dob-age-badge { font-size: 11px; font-weight: 600; min-width: 64px; color: var(--sidebar-text-muted); }
   .dob-reset-btn {
-    width: 22px; height: 22px; border-radius: 6px; border: 1px solid #334155;
-    background: #1E293B; color: #94A3B8; cursor: pointer;
+    width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--sidebar-border);
+    background: var(--sidebar-card); color: var(--sidebar-text); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-size: 12px; line-height: 1; transition: all 0.15s; flex-shrink: 0;
   }
   .dob-reset-btn:hover { background: #EF4444; border-color: #EF4444; color: white; }
+  #spravatoBtn {
+    background: var(--chrome-item-bg);
+    border: 1.5px solid var(--chrome-swatch-border, rgba(255,255,255,0.25)) !important;
+    color: var(--chrome-hover-text) !important;
+  }
+  #spravatoBtn:hover { background: var(--chrome-item-bg-hover); }
+  #spravatoBtn.has-patients {
+    background: #F5E9FE !important;
+    border-color: #A855F7 !important;
+    color: #6B21A8 !important;
+  }
   .spravato-banner {
     display: none; width: 100%; text-align: center;
-    padding: 8px 14px; font-size: 12.5px; font-weight: 700;
+    padding: 9px 14px; font-size: 12.5px; font-weight: 700;
     letter-spacing: 0.2px; font-family: 'Inter', sans-serif;
     align-items: center; justify-content: center; gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     animation: spravatoBannerIn 0.18s ease-out;
   }
   .spravato-banner.show { display: flex; }
@@ -154,7 +206,7 @@
     from { opacity: 0; transform: translateY(-4px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  #spravatoBtn.has-patients { border-color: #A855F7 !important; color: #D8B4FE !important; }
+
 
   /* Tab nav */
   .tab-nav {
@@ -169,7 +221,7 @@
     transition: all 0.15s; white-space: nowrap;
   }
   .tab-btn:hover { color: var(--chrome-hover-text); }
-  .tab-btn.active { color: white; border-bottom-color: var(--chrome-accent); }
+  .tab-btn.active { color: var(--chrome-text); border-bottom-color: var(--chrome-accent); }
 
   /* ── LAYOUT ── */
   .app-body { display: flex; flex: 1; }
@@ -191,13 +243,13 @@
   .filter-section { margin-bottom: 22px; }
   .filter-label {
     font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: #475569; margin-bottom: 9px;
+    text-transform: uppercase; color: var(--chrome-sub-text); margin-bottom: 9px;
   }
 
   /* Provider dropdown */
   .provider-select {
     width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #CBD5E1; border-radius: var(--radius-sm); padding: 9px 10px;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 9px 10px;
     font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
     outline: none; transition: border-color 0.15s; appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
@@ -205,16 +257,16 @@
     padding-right: 30px;
   }
   .provider-select:focus { border-color: #3B82F6; }
-  .provider-select option { background: #1E293B; color: #CBD5E1; }
+  .provider-select option { background: var(--sidebar-card); color: var(--sidebar-text); }
 
   /* Provider quick info box */
   .provider-info-box {
-    background: var(--sidebar-card); border: 1px solid #334155;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 10px 11px; margin-top: 8px;
     display: none;
   }
   .provider-info-box.show { display: block; }
-  .pib-name { font-size: 13px; font-weight: 600; color: #F1F5F9; margin-bottom: 6px; }
+  .pib-name { font-size: 13px; font-weight: 600; color: var(--sidebar-hover-text); margin-bottom: 6px; }
   .pib-row { display: flex; align-items: flex-start; gap: 7px; margin-bottom: 5px; }
   .pib-loc {
     font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
@@ -224,23 +276,23 @@
   .pib-loc.lv { background: #065F46; color: white; }
   .pib-loc.dn { background: #92400E; color: white; }
   .pib-loc.ev { background: #4C1D95; color: white; }
-  .pib-text { font-size: 11px; color: #94A3B8; line-height: 1.5; }
-  .pib-footer { margin-top: 8px; padding-top: 7px; border-top: 1px solid #334155; font-size: 11px; color: #64748B; }
+  .pib-text { font-size: 11px; color: var(--sidebar-text-muted); line-height: 1.5; }
+  .pib-footer { margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--sidebar-border); font-size: 11px; color: var(--sidebar-text-muted); }
 
   /* Day picker */
   .day-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 6px; }
   .day-btn {
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #94A3B8; border-radius: var(--radius-sm); padding: 7px 0;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 7px 0;
     font-size: 11px; font-weight: 500; cursor: pointer; text-align: center;
     transition: all 0.15s; font-family: 'Inter', sans-serif;
   }
-  .day-btn:hover { background: #263348; color: white; }
+  .day-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .day-btn.active { background: #3B82F6; border-color: #3B82F6; color: white; }
 
   .date-input {
     width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
-    color: #CBD5E1; border-radius: var(--radius-sm); padding: 8px 10px;
+    color: var(--sidebar-text); border-radius: var(--radius-sm); padding: 8px 10px;
     font-size: 13px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.15s;
   }
   .date-input:focus { border-color: #3B82F6; }
@@ -252,9 +304,9 @@
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 9px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .loc-pill:hover { background: #263348; color: #CBD5E1; }
+  .loc-pill:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .loc-pill.active { border-color: transparent; color: white; }
   .loc-pill.active.fm { background: #1D4ED8; border-color: #3B82F6; }
   .loc-pill.active.lv { background: #065F46; border-color: #10B981; }
@@ -270,9 +322,9 @@
     background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: var(--radius-sm); padding: 8px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .type-btn:hover { background: #263348; color: #CBD5E1; }
+  .type-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .type-btn.active { color: white; border-color: transparent; }
   .type-btn.active.md { background: #7F1D1D; border-color: #EF4444; }
   .type-btn.active.np { background: #1E3A5F; border-color: #3B82F6; }
@@ -529,33 +581,34 @@
 
   .ins-sidebar {
     width: 255px; flex-shrink: 0;
-    background: var(--sidebar);
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
     padding: 18px 14px;
     position: sticky; top: 97px;
     height: calc(100vh - 97px);
     overflow-y: auto;
+    border-right: 1px solid var(--chrome-border);
   }
 
   .ins-search-wrap { position: relative; margin-bottom: 14px; }
   .ins-search {
-    width: 100%; background: #1E293B; border: 1px solid #334155;
-    color: #CBD5E1; border-radius: 8px; padding: 9px 10px 9px 34px;
+    width: 100%; background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text); border-radius: 8px; padding: 9px 10px 9px 34px;
     font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
     transition: border-color 0.15s;
   }
   .ins-search:focus { border-color: #3B82F6; }
-  .ins-search::placeholder { color: #475569; }
-  .ins-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 15px; pointer-events: none; }
+  .ins-search::placeholder { color: var(--sidebar-text-muted); }
+  .ins-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--sidebar-text-muted); font-size: 15px; pointer-events: none; }
 
   .ins-type-btns { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
   .ins-type-btn {
     display: flex; align-items: center; gap: 9px;
-    background: #1E293B; border: 1px solid #334155;
+    background: var(--sidebar-card); border: 1px solid var(--sidebar-border);
     border-radius: 6px; padding: 8px 11px;
     cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
-    color: #94A3B8; font-size: 13px; font-weight: 500;
+    color: var(--sidebar-text); font-size: 13px; font-weight: 500;
   }
-  .ins-type-btn:hover { background: #263348; color: #CBD5E1; }
+  .ins-type-btn:hover { background: var(--sidebar-hover-bg); color: var(--sidebar-hover-text); }
   .ins-type-btn.active { color: white; }
   .ins-type-btn.active.all  { background: #1E3A5F; border-color: #3B82F6; }
   .ins-type-btn.active.md   { background: #7F1D1D; border-color: #EF4444; }
@@ -568,12 +621,12 @@
   .ins-dot.cn  { background: #8B5CF6; }
 
   .ins-reset {
-    width: 100%; background: transparent; border: 1px dashed #334155;
-    color: #475569; border-radius: 6px; padding: 8px;
+    width: 100%; background: transparent; border: 1px dashed var(--sidebar-border);
+    color: var(--sidebar-text-muted); border-radius: 6px; padding: 8px;
     font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .ins-reset:hover { border-color: #64748B; color: #94A3B8; }
+  .ins-reset:hover { border-color: var(--sidebar-text); color: var(--sidebar-text); }
 
   .ins-main { flex: 1; padding: 18px 22px; overflow-y: auto; }
   .ins-results-line { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
@@ -624,10 +677,22 @@
 
   /* TX Date/Clock */
   .tx-clock-wrap { text-align: right; flex-shrink: 0; }
-  .tx-date { font-size: 14px; font-weight: 800; color: #F1F5F9; line-height: 1.2; }
-  .tx-day  { font-size: 10px; color: #FFFFF7; margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .tx-date { font-size: 14px; font-weight: 800; color: var(--chrome-text); line-height: 1.2; }
+  .tx-day  { font-size: 10px; color: var(--chrome-sub-text); margin-top: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
 
   @media (max-width: 900px) {
+    .cl-page-flex { flex-direction: column !important; min-height: 0 !important; }
+    .cl-side-nav {
+      width: 100% !important; height: auto !important; min-height: 0 !important;
+      position: static !important; padding: 14px 12px !important;
+      display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px;
+      align-content: start; border-right: none; overflow: visible !important;
+    }
+    .cl-side-title, .cl-side-sub { grid-column: 1 / -1; width: 100%; margin: 0 0 2px; }
+    .cl-side-sub { margin-bottom: 4px; }
+    .cl-side-item { width: auto !important; margin-bottom: 0 !important; }
+    .cl-side-item:last-child { grid-column: 1 / -1; }
+
     .topbar {
       flex-wrap: wrap; height: auto; padding: 10px 14px; row-gap: 8px;
       position: static;
@@ -730,8 +795,34 @@
     .appt-tag { font-size: 0.7rem; }
   }
 /* ══════════ CALL LOG TAB ══════════ */
+  .cl-page-flex { display: flex; width: 100%; min-height: calc(100vh - 97px); }
+
+  /* Dark call-type sidebar — full height to bottom, same theme color */
+  .cl-side-nav {
+    width: 230px; flex-shrink: 0; background: linear-gradient(180deg, var(--chrome-1), var(--chrome-2));
+    padding: 20px 14px; border-right: 1px solid var(--chrome-border);
+    position: sticky; top: 97px; height: calc(100vh - 97px); min-height: calc(100vh - 97px);
+    overflow-y: auto; box-sizing: border-box;
+  }
+  .cl-side-title { font-size: 11px; font-weight: 700; color: var(--chrome-sub-text); letter-spacing: 0.1em; text-transform: uppercase; }
+  .cl-side-sub { font-size: 16px; font-weight: 700; color: var(--chrome-text); margin: 3px 0 16px; }
+  .cl-side-item {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 11px 12px; margin-bottom: 6px; border-radius: 9px;
+    background: var(--chrome-item-bg); border: none; cursor: pointer;
+    color: var(--chrome-sub-text); font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif;
+    transition: background 0.15s, color 0.15s; text-align: left;
+  }
+  .cl-side-item:hover { background: var(--chrome-item-bg-hover); color: var(--chrome-hover-text); }
+  .cl-side-item .cl-side-item-label { display: flex; align-items: center; gap: 9px; }
+  .cl-side-item .cl-side-item-icon { font-size: 15px; }
+  .cl-side-count {
+    background: var(--chrome-badge-bg); color: var(--chrome-badge-text); font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center;
+  }
+
   .calllog-wrap {
-    flex: 1; padding: 24px 28px; width: 100%;
+    flex: 1; padding: 24px 28px; width: 100%; min-width: 0;
     display: flex; flex-direction: column; gap: 20px;
   }
   .cl-header {
@@ -740,14 +831,30 @@
     padding: 14px 18px; box-shadow: var(--shadow); flex-wrap: wrap; gap: 8px;
   }
   .cl-greeting { font-size: 15px; font-weight: 600; color: var(--text); }
-  .cl-header-actions { display: flex; align-items: center; gap: 14px; }
+  .cl-header-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .cl-today-count { font-size: 12px; color: #10B981; font-weight: 600; }
   .cl-link-btn {
     font-size: 12px; color: #64748B; background: none; border: none;
     cursor: pointer; text-decoration: underline; padding: 0;
   }
+  .cl-staff-chip {
+    display: flex; align-items: center; gap: 9px; background: #F8FAFC;
+    border: 1px solid var(--border); border-radius: 24px; padding: 5px 14px 5px 5px;
+  }
+  .cl-staff-chip-avatar {
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .cl-staff-chip-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.15; }
+  .cl-staff-chip-role { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cl-export-btn {
+    display: flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 9px;
+    border: 1px solid var(--border); background: white; color: #334155; font-weight: 600;
+    font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s;
+  }
+  .cl-export-btn:hover { background: #F8FAFC; }
   .cl-section-title { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-  .cl-type-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .cl-type-grid { display: none; }
   .cl-type-btn {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 8px; padding: 18px 10px; border-radius: var(--radius); cursor: pointer;
@@ -757,6 +864,18 @@
   }
   .cl-type-btn:hover { background: var(--cl-color, #3B82F6); color: white; transform: translateY(-2px); }
   .cl-type-icon { font-size: 22px; }
+
+  .cl-search-filter-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .cl-search-input-wrap { position: relative; flex: 1; min-width: 220px; }
+  .cl-search-input-wrap input {
+    width: 100%; box-sizing: border-box; padding: 10px 14px 10px 36px; border-radius: 9px;
+    border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif;
+  }
+  .cl-search-input-wrap .cl-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-size: 14px; }
+  .cl-filter-select {
+    padding: 10px 14px; border-radius: 9px; border: 1px solid var(--border);
+    font-size: 13px; font-family: 'Inter', sans-serif; background: white; color: var(--text); cursor: pointer;
+  }
 
   .cl-dashboard-toggle {
     display: flex; align-items: center; justify-content: space-between;
@@ -804,14 +923,116 @@
   }
   .cl-staff-select:focus { border-color: #3B82F6; }
   .cl-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .cl-summary-card {
-    background: white; border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 16px; text-align: center; box-shadow: var(--shadow);
+
+  /* Professional metrics row (donut charts + top staff) */
+  .cl-metrics-row { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 14px; margin-bottom: 20px; }
+  .cl-metric-card {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; box-shadow: var(--shadow);
   }
-  .cl-total { border-color: #0F172A; }
-  .cl-card-num { font-size: 30px; font-weight: 700; color: var(--text); }
+  .cl-metric-title {
+    font-size: 11px; font-weight: 700; color: #64748B; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .cl-donut-wrap { position: relative; height: 148px; display: flex; align-items: center; justify-content: center; }
+  .cl-donut-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center; pointer-events: none;
+  }
+  .cl-donut-center .num { font-size: 22px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .cl-donut-center .lbl { font-size: 9.5px; color: #94A3B8; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cl-legend-row {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; padding: 4px 0; color: #334155;
+  }
+  .cl-legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 7px; flex-shrink: 0; }
+  .cl-legend-left { display: flex; align-items: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cl-legend-count { font-weight: 700; color: #0F172A; margin-left: 8px; flex-shrink: 0; }
+  .cl-topstaff-row { padding: 8px 0; border-bottom: 1px solid #F1F5F9; }
+  .cl-topstaff-row:last-child { border-bottom: none; }
+  .cl-topstaff-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px; }
+  .cl-topstaff-name { font-weight: 600; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+  .cl-topstaff-count { font-weight: 700; color: #0F172A; }
+  .cl-topstaff-bar-track { height: 6px; border-radius: 4px; background: #F1F5F9; overflow: hidden; }
+  .cl-topstaff-bar-fill { height: 100%; border-radius: 4px; }
+  .cl-avatar-circle {
+    width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 9.5px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .cl-summary-card {
+    background: #fff;
+    border: 1px solid #E8EEF5;
+    border-radius: 14px;
+    padding: 16px 18px 14px;
+    text-align: left;
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .cl-summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--card-accent, #0F172A);
+    border-radius: 14px 0 0 14px;
+  }
+  .cl-summary-card:hover {
+    border-color: #D0D8E4;
+    background: #FAFBFC;
+  }
+  .cl-summary-card.active {
+    border-color: var(--card-accent, #0F172A);
+    background: #FAFBFC;
+  }
+  .cl-summary-card:active { background: #F8FAFC; }
+  .cl-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .cl-card-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
   .cl-total .cl-card-num { color: #0F172A; }
-  .cl-card-label { font-size: 11px; color: #64748B; font-weight: 600; margin-top: 4px; }
+  .cl-card-label {
+    font-size: 12.5px;
+    color: #64748B;
+    font-weight: 500;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.2;
+  }
+  .cl-card-pct {
+    font-size: 12px;
+    color: #94A3B8;
+    font-weight: 500;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .cl-card-bar-track {
+    height: 3px;
+    border-radius: 3px;
+    background: #F1F5F9;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+  .cl-card-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.35s ease;
+  }
+  .cl-card-hint { display: none; }
   .cl-subsection-title { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 22px; margin-bottom: 10px; }
   .cl-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 6px; }
   .cl-collapse-header {
@@ -824,6 +1045,13 @@
   .cl-table th { background: #F8FAFC; color: #64748B; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
   .cl-table td { padding: 12px 18px; border-bottom: 1px solid #F1F5F9; color: var(--text); vertical-align: middle; }
   .cl-table tr:last-child td { border-bottom: none; }
+  .cl-table tbody tr:nth-child(even) { background: #FAFBFC; }
+  .cl-table tbody tr:hover { background: #F1F5F9; }
+  .cl-avatar-circle-sm {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 8.5px; font-weight: 700; color: white; flex-shrink: 0;
+    margin-right: 7px; vertical-align: middle;
+  }
   .cl-table tbody tr:hover { background: #F8FAFC; }
   .cl-empty { padding: 24px; text-align: center; color: #94A3B8; font-size: 13px; }
   .cl-type-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; margin-top: 6px; }
@@ -857,6 +1085,110 @@
     cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s;
   }
   .namegate-btn:hover { background: #3B82F6; }
+
+  /* Auth / HIPAA login gate */
+  .auth-overlay {
+    position: fixed; inset: 0; z-index: 9500;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59,130,246,0.18), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(15,23,42,0.5), transparent 50%),
+      linear-gradient(165deg, #0B1220 0%, #111827 45%, #0F172A 100%);
+    display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+  }
+  .auth-card {
+    width: 100%; max-width: 400px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 0 0 1px rgba(15,23,42,0.04),
+      0 20px 50px rgba(0,0,0,0.28),
+      0 4px 12px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+  .auth-header {
+    background: transparent;
+    color: #0F172A;
+    padding: 28px 28px 8px;
+    text-align: center;
+  }
+  .auth-brand-mark {
+    width: 40px; height: 40px; margin: 0 auto 14px;
+    border-radius: 11px;
+    background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+    color: #F8FAFC;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.25);
+  }
+  .auth-header h1 {
+    font-size: 17px; font-weight: 650; margin: 0 0 6px;
+    letter-spacing: -0.02em; color: #0F172A;
+  }
+  .auth-header p {
+    margin: 0; font-size: 12.5px; color: #64748B; line-height: 1.45; font-weight: 450;
+  }
+  .auth-tabs {
+    display: flex; gap: 4px;
+    margin: 18px 28px 0;
+    padding: 4px;
+    background: #F1F5F9;
+    border-radius: 10px;
+    border-bottom: none;
+  }
+  .auth-tab {
+    flex: 1; padding: 9px 10px; border: none; background: transparent; cursor: pointer;
+    font-family: Inter, sans-serif; font-size: 12.5px; font-weight: 600; color: #64748B;
+    border-radius: 8px; transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  .auth-tab:hover { color: #334155; }
+  .auth-tab.active {
+    color: #0F172A; background: #fff;
+    border-bottom: none;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.08), 0 1px 2px rgba(15,23,42,0.04);
+  }
+  .auth-body { padding: 20px 28px 28px; }
+  .auth-field { margin-bottom: 16px; text-align: left; }
+  .auth-field label {
+    display: block; font-size: 12px; font-weight: 550; color: #334155;
+    margin-bottom: 7px; letter-spacing: 0.01em;
+  }
+  .auth-field input {
+    width: 100%; box-sizing: border-box;
+    border: 1px solid #E2E8F0; border-radius: 9px;
+    padding: 11px 13px; font-size: 14px; font-family: Inter, sans-serif;
+    outline: none; background: #FAFBFC; color: #0F172A;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .auth-field input::placeholder { color: #94A3B8; }
+  .auth-field input:hover { border-color: #CBD5E1; }
+  .auth-field input:focus {
+    border-color: #94A3B8; background: #fff;
+    box-shadow: 0 0 0 3px rgba(15,23,42,0.06);
+  }
+  .auth-hint { font-size: 11px; color: #94A3B8; margin-top: 5px; }
+  .auth-error {
+    display: none; background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA;
+    border-radius: 8px; padding: 10px 12px; font-size: 12.5px; margin-bottom: 14px; text-align: left;
+  }
+  .auth-success {
+    display: none; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0;
+    border-radius: 8px; padding: 10px 12px; font-size: 12.5px; margin-bottom: 14px; text-align: left;
+  }
+  .auth-submit {
+    width: 100%; border: none; border-radius: 9px; padding: 12px 14px; margin-top: 6px;
+    background: #0F172A; color: #fff; font-weight: 600; font-size: 13.5px; cursor: pointer;
+    font-family: Inter, sans-serif; letter-spacing: 0.01em;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .auth-submit:hover { background: #1E293B; }
+  .auth-submit:active { transform: scale(0.985); }
+  .auth-submit:disabled { opacity: 0.55; cursor: default; transform: none; }
+  .auth-footer {
+    font-size: 11px; color: #94A3B8; text-align: center; margin-top: 18px;
+    line-height: 1.55; padding-top: 16px; border-top: 1px solid #F1F5F9;
+  }
+  .auth-domain { font-weight: 700; color: #0F172A; }
 
   /* Call entry modal */
   .cl-modal-overlay {
@@ -931,24 +1263,77 @@
 
   /* Call Log responsive */
   @media (max-width: 700px) {
-    .calllog-wrap { padding: 14px; gap: 14px; }
+    .cl-page-flex { flex-direction: column !important; min-height: 0 !important; }
+    .calllog-wrap { padding: 14px; gap: 14px; width: 100% !important; }
 
-    /* Header stacks vertically */
-    .cl-header { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px; }
-    .cl-header-actions { width: 100%; justify-content: space-between; }
+    /* Call-type bar: compact 2-column grid (no full-viewport stretch / gaps) */
+    .cl-side-nav {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      position: static !important;
+      padding: 14px 12px !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      align-content: start;
+      border-right: none;
+      border-bottom: 1px solid var(--chrome-border);
+      overflow: visible !important;
+    }
+    .cl-side-title {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin: 0;
+    }
+    .cl-side-sub {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+    .cl-side-item {
+      width: auto !important;
+      flex: none !important;
+      margin-bottom: 0 !important;
+      padding: 10px 10px;
+      font-size: 12px;
+      min-width: 0;
+    }
+    /* Other/Transferred spans full width on last row */
+    .cl-side-item:last-child {
+      grid-column: 1 / -1;
+    }
+    .cl-side-item .cl-side-item-icon { font-size: 13px; }
 
-    /* Call type buttons: 2 columns on phone */
+    /* Header stacks vertically, actions wrap and shrink */
+    .cl-header { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 14px; }
+    .cl-greeting { font-size: 14px; }
+    .cl-header-actions { width: 100%; gap: 8px; }
+    .cl-staff-chip { padding: 4px 10px 4px 4px; gap: 6px; }
+    .cl-staff-chip-avatar { width: 24px; height: 24px; font-size: 10px; }
+    .cl-staff-chip-name { font-size: 12px; }
+    .cl-staff-chip-role { font-size: 9px; }
+    .cl-export-btn { padding: 8px 12px; font-size: 12px; }
+    .cl-today-count { font-size: 11px; }
+    .cl-link-btn { font-size: 11px; }
+
+    /* Search + filter row stacks to full width */
+    .cl-search-filter-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .cl-search-input-wrap { min-width: 0; width: 100%; }
+    .cl-filter-select { width: 100%; }
+    #clStaffClearBtn { width: 100%; }
+
+    /* Call type buttons (legacy grid, kept hidden but safe if ever shown) */
     .cl-type-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .cl-type-btn { padding: 14px 8px; font-size: 12px; }
     .cl-type-icon { font-size: 18px; }
 
-    /* Dashboard toggle */
-    .cl-dashboard-toggle { font-size: 13px; padding: 12px 14px; }
-
-    /* Range pills wrap nicely */
-    .cl-range-pills { gap: 6px; }
-    .cl-range-pill { padding: 5px 11px; font-size: 11px; }
-    .cl-refresh-btn { padding: 5px 10px; font-size: 11px; }
+    /* Range pills wrap nicely, scroll if needed */
+    .cl-range-pills { gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; padding-bottom: 2px; }
+    .cl-range-pill { padding: 5px 11px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+    .cl-refresh-btn { padding: 5px 10px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+    .cl-last-updated { white-space: nowrap; }
 
     /* Custom date range stacks */
     .cl-custom-range { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -956,11 +1341,12 @@
 
     /* Summary cards: 2 columns */
     .cl-summary-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .cl-card-num { font-size: 24px; }
+    .cl-card-num { font-size: 22px; }
+    .cl-summary-card { padding: 14px 14px 12px; border-radius: 12px; }
 
-    /* Type tabs for full log */
-    .cl-type-tabs { gap: 5px; }
-    .cl-type-tab { padding: 5px 10px; font-size: 11px; }
+    /* Collapsible section headers */
+    .cl-collapse-header { padding: 5px 2px; }
+    .cl-subsection-title { font-size: 11px; }
 
     /* Table: horizontal scroll with readable min-widths */
     .cl-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -970,6 +1356,9 @@
 
     /* Staff table simpler */
     .cl-table td:nth-child(1) { font-weight: 600; }
+
+    /* Pagination controls stack/shrink */
+    #clLogPager { flex-wrap: wrap; gap: 8px; }
 
     /* Modal: centered on mobile */
     .cl-modal-overlay { padding: 12px; }
@@ -988,6 +1377,15 @@
 
     /* Appt type badge */
     .cl-appt-type-badge { font-size: 13px; padding: 7px 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .cl-side-nav { grid-template-columns: 1fr 1fr; gap: 7px; padding: 12px 10px !important; }
+    .cl-side-item { padding: 9px 8px; font-size: 11.5px; }
+    .cl-header-actions { flex-direction: column; align-items: stretch; }
+    .cl-staff-chip { justify-content: center; }
+    .cl-export-btn { width: 100%; justify-content: center; }
+    .cl-today-count, .cl-link-btn { text-align: center; }
   }
 
   @media (max-width: 380px) {
@@ -1021,14 +1419,14 @@
       <span class="font-ctrl-label">Theme</span>
       <div style="display:flex;gap:5px;">
         <button class="theme-swatch" data-theme="navy" onclick="setChromeTheme('navy')" style="background:linear-gradient(135deg,#1E3A5F,#1E5F74);" title="Navy Teal"></button>
-        <button class="theme-swatch" data-theme="charcoal" onclick="setChromeTheme('charcoal')" style="background:linear-gradient(135deg,#2C333F,#5B7A99);" title="Charcoal"></button>
+        <button class="theme-swatch" data-theme="charcoal" onclick="setChromeTheme('charcoal')" style="background:linear-gradient(135deg,#E4E7EB,#64748B);" title="Charcoal (Light)"></button>
         <button class="theme-swatch" data-theme="slate" onclick="setChromeTheme('slate')" style="background:linear-gradient(135deg,#263646,#4A8FBF);" title="Slate Blue"></button>
         <button class="theme-swatch" data-theme="indigo" onclick="setChromeTheme('indigo')" style="background:linear-gradient(135deg,#26305F,#5558D6);" title="Deep Indigo"></button>
-        <button class="theme-swatch" data-theme="forest" onclick="setChromeTheme('forest')" style="background:linear-gradient(135deg,#163326,#2F9E6E);" title="Forest"></button>
-        <button class="theme-swatch" data-theme="wine" onclick="setChromeTheme('wine')" style="background:linear-gradient(135deg,#3A2029,#9F4757);" title="Wine"></button>
+        <button class="theme-swatch" data-theme="forest" onclick="setChromeTheme('forest')" style="background:linear-gradient(135deg,#DCEEE3,#2F9E6E);" title="Forest (Light)"></button>
+        <button class="theme-swatch" data-theme="wine" onclick="setChromeTheme('wine')" style="background:linear-gradient(135deg,#F3DCE1,#9F4757);" title="Wine (Light)"></button>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="font-ctrl">
       <span class="font-ctrl-label">Text</span>
       <div class="font-btns">
@@ -1037,7 +1435,7 @@
         <button class="font-btn" onclick="changeFont(1)" title="Larger">A+</button>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div style="display:flex;gap:18px;" id="topStats">
       <div class="stat-item">
         <div class="stat-num" id="stat-showing">—</div>
@@ -1048,7 +1446,7 @@
         <div class="stat-label">Accepting new</div>
       </div>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="dob-ctrl">
       <span class="font-ctrl-label">Pt. DOB</span>
       <input type="text" class="dob-input" id="dobInput"
@@ -1060,20 +1458,20 @@
       <button class="dob-reset-btn" onclick="resetDob()" title="Clear date of birth">✕</button>
       <span class="dob-age-badge" id="dobAgeBadge"></span>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div style="position:relative;">
       <button id="spravatoBtn" onclick="openSpravatoManager()" title="Manage SPRAVATO do-not-schedule list" style="background:none;border:1.5px solid #334155;border-radius:8px;height:34px;padding:0 10px;cursor:pointer;font-size:12px;font-weight:700;color:#CBD5E1;display:flex;align-items:center;gap:6px;">
         💊 SPRAVATO
       </button>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div style="position:relative;">
       <button id="paBellBtn" onclick="toggleAlertNotifications(event)" title="Provider alert notifications" style="background:none;border:1.5px solid #334155;border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;color:#CBD5E1;display:flex;align-items:center;justify-content:center;position:relative;">
         🔔
         <span id="paBellCount" style="display:none;position:absolute;top:-6px;right:-6px;background:#EF4444;color:white;font-size:10px;font-weight:700;border-radius:9px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;line-height:1;"></span>
       </button>
     </div>
-    <div style="width:1px;height:28px;background:#1E293B;"></div>
+    <div style="width:1px;height:28px;background:var(--chrome-border);"></div>
     <div class="tx-clock-wrap">
       <div class="tx-date" id="txDate">—</div>
       <div class="tx-day" id="txDay">Texas Time</div>
@@ -1277,7 +1675,7 @@
           <div class="note-box">
             <strong>New patient scheduling:</strong><br>
             Thursday — new patients (all)<br>
-            Mon · Tue · Wed after 5:00 pm — female patients only
+            Mon · Tue · Wed · Fri after 5:00 pm — female patients only
           </div>
           <div class="note-box restriction">⚠ No male patients after 4 pm Thursday</div>
         </div>
@@ -1798,17 +2196,49 @@
 
 <!-- CALL LOG TAB -->
 <div class="info-tab" id="tab-calllog">
-  <div class="calllog-wrap">
+  <div class="cl-page-flex">
+
+    <!-- Call type sidebar -->
+    <aside class="cl-side-nav">
+      <div class="cl-side-title">Call Log</div>
+      <div class="cl-side-sub">Log a New Call</div>
+      <button class="cl-side-item" onclick="openCallForm('Follow-up','✅')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">✅</span>Follow-up</span>
+        <span class="cl-side-count" id="clSideCount-FollowUp">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Reschedule','🔄')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">🔄</span>Reschedule</span>
+        <span class="cl-side-count" id="clSideCount-Reschedule">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('New Patient','🆕')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">🆕</span>New Patient</span>
+        <span class="cl-side-count" id="clSideCount-NewPatient">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Cancelled','❌')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">❌</span>Cancelled</span>
+        <span class="cl-side-count" id="clSideCount-Cancelled">0</span>
+      </button>
+      <button class="cl-side-item" onclick="openCallForm('Other / Transferred','📤')">
+        <span class="cl-side-item-label"><span class="cl-side-item-icon">📤</span>Other/Transferred</span>
+        <span class="cl-side-count" id="clSideCount-Other">0</span>
+      </button>
+    </aside>
+
+    <div class="calllog-wrap">
 
     <div class="cl-header">
-      <div class="cl-greeting">👋 <span id="clStaffName"></span></div>
+      <div class="cl-greeting">📞 Call Log</div>
       <div class="cl-header-actions">
         <span class="cl-today-count" id="clTodayCount"></span>
+        <button class="cl-export-btn" onclick="downloadExcel()" title="Download styled Excel file">⬇ Export to Excel</button>
+        <div class="cl-staff-chip" id="clStaffChip">
+          <span class="cl-staff-chip-avatar" id="clStaffChipAvatar">?</span>
+          <div><div class="cl-staff-chip-name" id="clStaffChipName">—</div><div class="cl-staff-chip-role">Staff</div></div>
+        </div>
         <button class="cl-link-btn" onclick="changeStaffName()">Change name</button>
       </div>
     </div>
 
-    <div class="cl-section-title">📞 Enter New Call Log</div>
     <div class="cl-type-grid">
       <button class="cl-type-btn" style="--cl-color:#3B82F6;" onclick="openCallForm('Follow-up','✅')">
         <span class="cl-type-icon">✅</span><span>Follow-up</span>
@@ -1827,11 +2257,7 @@
       </button>
     </div>
 
-    <button class="cl-dashboard-toggle" onclick="toggleDashboard()">
-      <span>📊 Supervisor Dashboard</span><span class="cl-chevron" id="clDashChevron">▼</span>
-    </button>
-
-    <div class="cl-dashboard" id="clDashboard" style="display:none;">
+    <div class="cl-dashboard" id="clDashboard">
       <div class="cl-range-pills">
         <button class="cl-range-pill active" data-range="today" onclick="setDashRange('today', this)">Today</button>
         <button class="cl-range-pill" data-range="yesterday" onclick="setDashRange('yesterday', this)">Yesterday</button>
@@ -1842,14 +2268,28 @@
         <span class="cl-live-dot" id="clLiveDot" title="Auto-refreshing every 15 seconds"></span>
         <span class="cl-last-updated" id="clLastUpdated"></span>
         <button class="cl-refresh-btn" id="clRefreshBtn" onclick="loadDashboard(true)" title="Refresh">⟳ Refresh</button>
-        <button class="cl-refresh-btn" onclick="downloadExcel()" title="Download styled Excel file" style="background:#ECFDF5;border-color:#6EE7B7;color:#065F46;">⬇ Download Excel</button>
       </div>
-      <div class="cl-staff-filter-row">
-        <label class="cl-field-label" style="margin:0;white-space:nowrap;">👤 Staff:</label>
-        <select id="clStaffFilter" class="cl-staff-select" onchange="clLogPage=0; renderDashboard()">
+
+      <div class="cl-summary-grid" id="clSummaryGrid"></div>
+
+      <div class="cl-search-filter-row">
+        <div class="cl-search-input-wrap">
+          <span class="cl-search-icon">🔍</span>
+          <input type="text" id="clLogSearchInput" placeholder="Search phone, DOB, provider, location, insurance..." oninput="clLogPage=0; renderDashboard()">
+        </div>
+        <select id="clStaffFilter" class="cl-filter-select" onchange="clLogPage=0; renderDashboard()">
           <option value="">All Staff</option>
         </select>
-        <button class="cl-refresh-btn" onclick="clearStaffFilter()" id="clStaffClearBtn" style="display:none;">✕ Clear</button>
+        <select id="clLogTypeSelect" class="cl-filter-select" onchange="setLogTypeFromSelect(this.value)">
+          <option value="All">All Call Types</option>
+          <option value="Follow-up">Follow-up</option>
+          <option value="Reschedule">Reschedule</option>
+          <option value="New Patient">New Patient</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Other / Transferred">Other/Transferred</option>
+          <option value="__trash__">🗑️ Trash</option>
+        </select>
+        <button class="cl-refresh-btn" onclick="clearStaffFilter()" id="clStaffClearBtn" style="display:none;">✕ Clear staff</button>
       </div>
       <div class="cl-custom-range" id="clCustomRange" style="display:none;">
         <label class="cl-field-label" style="margin-bottom:4px;">From</label>
@@ -1857,8 +2297,6 @@
         <label class="cl-field-label" style="margin-bottom:4px; margin-left:12px;">To</label>
         <input type="date" id="clRangeTo" class="cl-date-input" onchange="renderDashboard()">
       </div>
-
-      <div class="cl-summary-grid" id="clSummaryGrid"></div>
 
       <div class="cl-collapse-header" onclick="toggleSubSection('clStaffTableWrap','clStaffChevron')">
         <span class="cl-subsection-title">👥 Staff Breakdown</span>
@@ -1885,15 +2323,6 @@
         </div>
 
         <div id="clFullLogContent" style="display:none;">
-          <div class="cl-type-tabs" style="margin-bottom:12px;">
-            <button class="cl-type-tab active" onclick="setLogType('All',this)">All</button>
-            <button class="cl-type-tab" onclick="setLogType('Follow-up',this)">Follow-up</button>
-            <button class="cl-type-tab" onclick="setLogType('Reschedule',this)">Reschedule</button>
-            <button class="cl-type-tab" onclick="setLogType('New Patient',this)">New Patient</button>
-            <button class="cl-type-tab" onclick="setLogType('Cancelled',this)">Cancelled</button>
-            <button class="cl-type-tab" onclick="setLogType('Other / Transferred',this)">Other/Transferred</button>
-            <button class="cl-type-tab cl-trash-tab" onclick="setLogType('__trash__',this)">🗑️ Trash</button>
-          </div>
           <div class="cl-table-wrap" id="clLogTable"></div>
           <div id="clLogPager" style="display:none;align-items:center;justify-content:space-between;margin-top:12px;"></div>
         </div>
@@ -1903,13 +2332,66 @@
   </div>
 </div>
 
-<!-- Name gate overlay -->
+<!-- Name gate overlay (legacy — kept for compatibility, auth gate is primary) -->
 <div class="namegate-overlay" id="namegateOverlay" style="display:none;">
   <div class="namegate-box">
     <div class="namegate-title">👋 Enter Your Name</div>
     <div class="namegate-sub">You only need to do this once. Your name will be saved on this device and attached to every call you log.</div>
     <input type="text" id="namegateInput" class="namegate-input" placeholder="e.g. Ayesha">
     <button class="namegate-btn" onclick="saveStaffName()">Get Started →</button>
+  </div>
+</div>
+
+<!-- Staff auth gate — daily session -->
+<div class="auth-overlay" id="authOverlay" style="display:none;">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-brand-mark" aria-hidden="true">NPP</div>
+      <h1>North Pointe Psychiatry</h1>
+      <p>Staff access · Work email only</p>
+    </div>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" id="authTabSignIn" onclick="authShowTab('signin')">Sign In</button>
+      <button type="button" class="auth-tab" id="authTabRegister" onclick="authShowTab('register')">New User</button>
+    </div>
+    <div class="auth-body">
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-success" id="authSuccess"></div>
+
+      <div id="authSignInForm">
+        <div class="auth-field">
+          <label>Work email</label>
+          <input type="email" id="authSignInEmail" placeholder="Your work email" autocomplete="username">
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="authSignInPassword" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter') authSignIn()">
+        </div>
+        <button type="button" class="auth-submit" id="authSignInBtn" onclick="authSignIn()">Sign in</button>
+      </div>
+
+      <div id="authRegisterForm" style="display:none;">
+        <div class="auth-field">
+          <label>Full name</label>
+          <input type="text" id="authRegName" placeholder="As shown on call logs" autocomplete="name">
+        </div>
+        <div class="auth-field">
+          <label>Work email</label>
+          <input type="email" id="authRegEmail" placeholder="Your work email" autocomplete="username">
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="authRegPassword" placeholder="At least 8 characters" autocomplete="new-password">
+        </div>
+        <div class="auth-field">
+          <label>Confirm password</label>
+          <input type="password" id="authRegPassword2" placeholder="Re-enter password" autocomplete="new-password" onkeydown="if(event.key==='Enter') authRegister()">
+        </div>
+        <button type="button" class="auth-submit" id="authRegBtn" onclick="authRegister()">Create account</button>
+      </div>
+
+      <div class="auth-footer">Session ends each calendar day (Texas time).<br>Use only your assigned work account.</div>
+    </div>
   </div>
 </div>
 
@@ -1964,7 +2446,8 @@
     <!-- Note — Other/Transferred only -->
     <div id="clNoteRow" style="display:none;">
       <label class="cl-field-label">&#x1F4DD; Note <span class="req">*</span></label>
-      <input type="text" id="clNote" class="cl-text-input" placeholder="Transfer details or any other info">
+      <input type="text" id="clNote" class="cl-text-input" placeholder="Transfer details or any other info" list="clNoteHistoryList" autocomplete="off">
+      <datalist id="clNoteHistoryList"></datalist>
     </div>
 
     <div class="cl-modal-actions">
@@ -2401,7 +2884,6 @@ function saveSpravatoList(list) {
 }
 
 function dobToKey(dob) {
-  // dob is a Date object -> normalized MM/DD/YYYY string
   const mm = String(dob.getMonth() + 1).padStart(2, '0');
   const dd = String(dob.getDate()).padStart(2, '0');
   const yyyy = dob.getFullYear();
@@ -2610,7 +3092,6 @@ function removeSpravatoPatient(name, dob) {
   renderSpravatoList();
   refreshCurrentDobStatus();
 }
-
 
 document.addEventListener('DOMContentLoaded', refreshSpravatoBtnState);
 
@@ -3000,10 +3481,9 @@ function isAnyModalOpen() {
   return (modal && modal.style.display !== 'none') || (confirm && confirm.style.display !== 'none') || (alerts && alerts.style.display !== 'none');
 }
 
-// ── VERSION CHECK ──
 // IMPORTANT: bump this string every time you push an update to GitHub.
 // Any format works as long as it changes (date, number, etc.) — e.g. '2026-07-13-2'.
-const TOOL_VERSION = '2026-07-13-29';
+const TOOL_VERSION = '2026-07-13-50';
 
 let clVersionBannerShown = false;
 async function checkForNewVersion() {
@@ -3492,17 +3972,49 @@ function loadCallDraft(type) {
 function clearCallDraft(type) {
   try { localStorage.removeItem(clDraftKey(type)); } catch (e) {}
 }
+
+// ── NOTE HISTORY (Other/Transferred) ──
+// Chrome doesn't reliably remember what's typed into the Note field the way
+// some other browsers autofill text inputs, so staff kept retyping the same
+// recurring concerns from scratch. This keeps our own list of recently used
+// notes and offers them back as suggestions (native <datalist> dropdown),
+// independent of the browser's own autocomplete behavior.
+const CL_NOTE_HISTORY_KEY = 'cl_noteHistory';
+const CL_NOTE_HISTORY_MAX = 30;
+function loadNoteHistory() {
+  try { return JSON.parse(localStorage.getItem(CL_NOTE_HISTORY_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function saveNoteToHistory(note) {
+  note = (note || '').trim();
+  if (!note) return;
+  let history = loadNoteHistory();
+  history = history.filter(n => n.toLowerCase() !== note.toLowerCase()); // dedupe, most-recent-first
+  history.unshift(note);
+  if (history.length > CL_NOTE_HISTORY_MAX) history = history.slice(0, CL_NOTE_HISTORY_MAX);
+  try { localStorage.setItem(CL_NOTE_HISTORY_KEY, JSON.stringify(history)); } catch (e) {}
+  populateNoteHistoryList();
+}
+function populateNoteHistoryList() {
+  const list = document.getElementById('clNoteHistoryList');
+  if (!list) return;
+  const history = loadNoteHistory();
+  list.innerHTML = history.map(n => `<option value="${n.replace(/"/g, '&quot;')}"></option>`).join('');
+}
 document.addEventListener('DOMContentLoaded', function() {
   CL_DRAFT_FIELDS.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', saveCallDraft);
   });
+  populateNoteHistoryList();
 });
 let clEditEntry   = null; // holds original entry being edited (null = new entry mode)
 let clPendingIcon = '';
 let clDashRange = 'today';
 let clAllEntries = [];
 let clLastFetched = 0;
+let clPollingTimer = null;
+let clTrashPollingTimer = null;
 
 // ── Load cached data from localStorage on startup (instant display) ──
 (function loadCachedEntries() {
@@ -3510,7 +4022,8 @@ let clLastFetched = 0;
     const cached = localStorage.getItem('cl_cachedEntries');
     const ts     = parseInt(localStorage.getItem('cl_cacheTs') || '0', 10);
     if (cached) {
-      clAllEntries = JSON.parse(cached);
+      const parsed = JSON.parse(cached);
+      clAllEntries = Array.isArray(parsed) ? parsed.map(sanitizeCallEntry) : [];
       clLastFetched = ts;
     }
   } catch(e) {}
@@ -3521,14 +4034,84 @@ const CL_LOG_PAGE_SIZE = 50;
 let clStaffFilter    = '';
 let clProviderListBuilt = false;
 
+function updateStaffChip(name) {
+  name = (name && String(name).trim()) || '';
+  const display = name || '—';
+  const nameEl = document.getElementById('clStaffChipName');
+  const avEl   = document.getElementById('clStaffChipAvatar');
+  if (nameEl) nameEl.textContent = display;
+  if (avEl) {
+    if (name) {
+      avEl.textContent = staffInitials(name);
+      avEl.style.background = staffAvatarColor(name);
+    } else {
+      avEl.textContent = '?';
+      avEl.style.background = '#334155';
+    }
+  }
+}
+
+// Bulletproof mobile layout enforcement for the Call Log page — sets inline styles
+// directly (which always win over any stylesheet, regardless of any CSS caching or
+// specificity quirk), so the sidebar reliably stacks on top on narrow screens.
+function applyCallLogResponsiveLayout() {
+  const flex = document.querySelector('.cl-page-flex');
+  const nav  = document.querySelector('.cl-side-nav');
+  if (!flex) return;
+  if (window.innerWidth <= 900) {
+    flex.style.flexDirection = 'column';
+    flex.style.minHeight = '0';
+    if (nav) {
+      nav.style.width = '100%';
+      nav.style.height = 'auto';
+      nav.style.minHeight = '0';
+      nav.style.position = 'static';
+      nav.style.display = 'grid';
+      nav.style.gridTemplateColumns = '1fr 1fr';
+      nav.style.gap = '8px';
+      nav.style.flexWrap = '';
+      nav.style.overflow = 'visible';
+    }
+  } else {
+    flex.style.flexDirection = '';
+    flex.style.minHeight = '';
+    if (nav) {
+      nav.style.width = '';
+      nav.style.height = '';
+      nav.style.minHeight = '';
+      nav.style.position = '';
+      nav.style.display = '';
+      nav.style.gridTemplateColumns = '';
+      nav.style.gap = '';
+      nav.style.flexWrap = '';
+      nav.style.overflow = '';
+    }
+  }
+}
+window.addEventListener('resize', applyCallLogResponsiveLayout);
+document.addEventListener('DOMContentLoaded', applyCallLogResponsiveLayout);
+
 function initCallLog() {
+  applyCallLogResponsiveLayout();
+  // Daily auth first — blocks tool use until valid work-email session for today (TX)
+  if (!authEnsureSession()) {
+    return; // auth overlay is showing; call log stays gated
+  }
   const name = localStorage.getItem('cl_staffName');
   if (name) {
-    document.getElementById('namegateOverlay').style.display = 'none';
-    document.getElementById('clStaffName').textContent = name;
-  } else {
-    document.getElementById('namegateOverlay').style.display = 'flex';
-    document.getElementById('namegateInput').focus();
+    const ng = document.getElementById('namegateOverlay');
+    if (ng) ng.style.display = 'none';
+    updateStaffChip(name);
+  }
+  // Stats are always visible now — start loading + live polling once, don't stack timers
+  loadDashboard(false);
+  if (!clPollingTimer) {
+    clPollingTimer = setInterval(() => loadDashboard(true), 8000);
+  }
+  // Trash is fetched independently, on its own slower cycle — never blocks the fast main log
+  loadTrashData(false);
+  if (!clTrashPollingTimer) {
+    clTrashPollingTimer = setInterval(() => loadTrashData(false), 30000);
   }
   if (!clProviderListBuilt) {
     const sel = document.getElementById('clProvider');
@@ -3567,20 +4150,277 @@ function saveStaffName() {
   if (!val) { input.focus(); return; }
   localStorage.setItem('cl_staffName', val);
   document.getElementById('namegateOverlay').style.display = 'none';
-  document.getElementById('clStaffName').textContent = val;
+  updateStaffChip(val);
   refreshTodayCountDisplay();
 }
 
 function changeStaffName() {
-  document.getElementById('namegateInput').value = localStorage.getItem('cl_staffName') || '';
-  document.getElementById('namegateOverlay').style.display = 'flex';
-  document.getElementById('namegateInput').focus();
+  // Prefer full sign-out / re-auth for HIPAA rather than only renaming
+  authLogout(true);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Staff AUTH — work email only, daily Texas-time session
+// Backend actions (add to Apps Script): auth_register, auth_login
+// ═══════════════════════════════════════════════════════════════
+const AUTH_ALLOWED_DOMAINS = ['transcure.biz', 'transcure.net'];
+const AUTH_SESSION_KEY = 'npp_auth_session_v1';
+
+function authChicagoDate() {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date()); // YYYY-MM-DD
+  } catch (e) {
+    const d = new Date();
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+function authReadSession() {
+  try {
+    const raw = localStorage.getItem(AUTH_SESSION_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) { return null; }
+}
+
+function authWriteSession(session) {
+  try { localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session)); } catch (e) {}
+}
+
+function authClearSession() {
+  try { localStorage.removeItem(AUTH_SESSION_KEY); } catch (e) {}
+}
+
+function authIsEmailAllowed(email) {
+  email = String(email || '').trim().toLowerCase();
+  const at = email.lastIndexOf('@');
+  if (at < 1) return false;
+  const domain = email.slice(at + 1);
+  return AUTH_ALLOWED_DOMAINS.indexOf(domain) !== -1;
+}
+
+function authEnsureSession() {
+  const s = authReadSession();
+  const today = authChicagoDate();
+  if (s && s.email && s.username && s.loginDate === today && authIsEmailAllowed(s.email)) {
+    localStorage.setItem('cl_staffName', s.username);
+    updateStaffChip(s.username);
+    const ov = document.getElementById('authOverlay');
+    if (ov) ov.style.display = 'none';
+    return true;
+  }
+  // Expired or missing — force login
+  authClearSession();
+  updateStaffChip('—');
+  authShowOverlay();
+  return false;
+}
+
+function authShowOverlay() {
+  const ov = document.getElementById('authOverlay');
+  if (!ov) return;
+  ov.style.display = 'flex';
+  authShowTab('signin');
+  authSetError('');
+  authSetSuccess('');
+  const ng = document.getElementById('namegateOverlay');
+  if (ng) ng.style.display = 'none';
+  setTimeout(() => {
+    const el = document.getElementById('authSignInEmail');
+    if (el) el.focus();
+  }, 50);
+}
+
+function authHideOverlay() {
+  const ov = document.getElementById('authOverlay');
+  if (ov) ov.style.display = 'none';
+}
+
+function authShowTab(which) {
+  const signIn = which !== 'register';
+  const tabIn = document.getElementById('authTabSignIn');
+  const tabReg = document.getElementById('authTabRegister');
+  if (tabIn) tabIn.classList.toggle('active', signIn);
+  if (tabReg) tabReg.classList.toggle('active', !signIn);
+  const fIn = document.getElementById('authSignInForm');
+  const fReg = document.getElementById('authRegisterForm');
+  if (fIn) fIn.style.display = signIn ? 'block' : 'none';
+  if (fReg) fReg.style.display = signIn ? 'none' : 'block';
+  authSetError('');
+  authSetSuccess('');
+}
+
+function authSetError(msg) {
+  const el = document.getElementById('authError');
+  if (!el) return;
+  if (msg) { el.style.display = 'block'; el.textContent = msg; }
+  else { el.style.display = 'none'; el.textContent = ''; }
+}
+
+function authSetSuccess(msg) {
+  const el = document.getElementById('authSuccess');
+  if (!el) return;
+  if (msg) { el.style.display = 'block'; el.textContent = msg; }
+  else { el.style.display = 'none'; el.textContent = ''; }
+}
+
+async function authSha256(text) {
+  const data = new TextEncoder().encode(String(text));
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function authApi(action, params) {
+  const qs = new URLSearchParams({ action, ...params });
+  const url = CALL_LOG_API_URL + '?' + qs.toString();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(url, { method: 'GET', signal: controller.signal });
+    clearTimeout(timer);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
+  }
+}
+
+function authCompleteLogin(username, email) {
+  username = String(username || '').trim();
+  email = String(email || '').trim().toLowerCase();
+  authWriteSession({
+    username,
+    email,
+    loginDate: authChicagoDate(),
+    loginAt: new Date().toISOString()
+  });
+  localStorage.setItem('cl_staffName', username);
+  authHideOverlay();
+  updateStaffChip(username);
+  refreshTodayCountDisplay();
+  // Now that auth passed, load dashboard data
+  loadDashboard(false);
+  if (!clPollingTimer) {
+    clPollingTimer = setInterval(() => loadDashboard(true), 8000);
+  }
+  loadTrashData(false);
+  if (!clTrashPollingTimer) {
+    clTrashPollingTimer = setInterval(() => loadTrashData(false), 30000);
+  }
+}
+
+function authLogout(showGate) {
+  authClearSession();
+  // Keep cl_staffName cleared so call log can't attach wrong name after expiry
+  try { localStorage.removeItem('cl_staffName'); } catch (e) {}
+  updateStaffChip('—');
+  if (showGate !== false) authShowOverlay();
+}
+
+async function authSignIn() {
+  const emailEl = document.getElementById('authSignInEmail');
+  const passEl = document.getElementById('authSignInPassword');
+  const btn = document.getElementById('authSignInBtn');
+  const email = (emailEl && emailEl.value || '').trim().toLowerCase();
+  const password = (passEl && passEl.value || '');
+  authSetError(''); authSetSuccess('');
+  if (!authIsEmailAllowed(email)) {
+    authSetError('Please use your assigned work email to sign in.');
+    if (emailEl) emailEl.focus();
+    return;
+  }
+  if (!password || password.length < 8) {
+    authSetError('Enter your password (minimum 8 characters).');
+    if (passEl) passEl.focus();
+    return;
+  }
+  if (btn) { btn.disabled = true; btn.textContent = 'Signing in…'; }
+  try {
+    const passwordHash = await authSha256(password + '|' + email);
+    const data = await authApi('auth_login', { email, passwordHash });
+    if (!data || data.ok !== true) {
+      authSetError((data && data.error) || 'Invalid email or password.');
+      return;
+    }
+    authCompleteLogin(data.username || email.split('@')[0], email);
+    if (passEl) passEl.value = '';
+  } catch (err) {
+    authSetError('Could not reach the server. Check internet and try again.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Sign In →'; }
+  }
+}
+
+async function authRegister() {
+  const nameEl = document.getElementById('authRegName');
+  const emailEl = document.getElementById('authRegEmail');
+  const passEl = document.getElementById('authRegPassword');
+  const pass2El = document.getElementById('authRegPassword2');
+  const btn = document.getElementById('authRegBtn');
+  const username = (nameEl && nameEl.value || '').trim();
+  const email = (emailEl && emailEl.value || '').trim().toLowerCase();
+  const password = (passEl && passEl.value || '');
+  const password2 = (pass2El && pass2El.value || '');
+  authSetError(''); authSetSuccess('');
+  if (!username || username.length < 2) {
+    authSetError('Enter your full name (at least 2 characters).');
+    if (nameEl) nameEl.focus();
+    return;
+  }
+  if (!authIsEmailAllowed(email)) {
+    authSetError('Please use your assigned work email to register.');
+    if (emailEl) emailEl.focus();
+    return;
+  }
+  if (!password || password.length < 8) {
+    authSetError('Password must be at least 8 characters.');
+    if (passEl) passEl.focus();
+    return;
+  }
+  if (password !== password2) {
+    authSetError('Passwords do not match.');
+    if (pass2El) pass2El.focus();
+    return;
+  }
+  if (btn) { btn.disabled = true; btn.textContent = 'Creating…'; }
+  try {
+    const passwordHash = await authSha256(password + '|' + email);
+    const data = await authApi('auth_register', {
+      email, passwordHash, username
+    });
+    if (!data || data.ok !== true) {
+      authSetError((data && data.error) || 'Could not create account.');
+      return;
+    }
+    authSetSuccess('Account created. Signing you in…');
+    authCompleteLogin(username, email);
+    if (passEl) passEl.value = '';
+    if (pass2El) pass2El.value = '';
+  } catch (err) {
+    authSetError('Could not reach the server. Check internet and try again.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Create Account →'; }
+  }
+}
+
+// Midnight / next-day guard — if tab stays open past Texas midnight, force re-login
+setInterval(function () {
+  const s = authReadSession();
+  if (!s) return;
+  if (s.loginDate !== authChicagoDate()) {
+    authLogout(true);
+  }
+}, 60000);
+
 
 function openCallForm(type, icon) {
   const alertsPopup = document.getElementById('paOverlayDynamic');
   if (alertsPopup && alertsPopup.style.display !== 'none') return; // don't stack on top of alerts popup
-  if (!localStorage.getItem('cl_staffName')) { changeStaffName(); return; }
+  if (!authEnsureSession()) return;
+  if (!localStorage.getItem('cl_staffName')) { authShowOverlay(); return; }
   if (clSubmitInFlight) return; // a submit just fired — don't let a new form open mid-cooldown
   clPendingType = type; clPendingIcon = icon;
   document.getElementById('clModalTitle').textContent = `${icon} ${type}`;
@@ -3605,6 +4445,7 @@ function openCallForm(type, icon) {
   });
   document.getElementById('clInsuranceRow').style.display = type === 'New Patient' ? 'block' : 'none';
   document.getElementById('clNoteRow').style.display = isOther ? 'block' : 'none';
+  if (isOther) populateNoteHistoryList();
 
   document.getElementById('clModalOverlay').style.display = 'flex';
   // Force a reflow so the browser registers the starting state before we
@@ -3612,12 +4453,16 @@ function openCallForm(type, icon) {
   const overlay = document.getElementById('clModalOverlay');
   overlay.offsetHeight;
   overlay.classList.add('cl-modal-open');
+  const creditBar = document.getElementById('callFormCreditBar');
+  if (creditBar) creditBar.style.display = 'block';
   setTimeout(() => document.getElementById('clPhone').focus(), 50);
 }
 
 function closeCallForm() {
   const overlay = document.getElementById('clModalOverlay');
   overlay.classList.remove('cl-modal-open');
+  const creditBar = document.getElementById('callFormCreditBar');
+  if (creditBar) creditBar.style.display = 'none';
   // Wait for the fade/scale-out transition to finish before hiding, so the
   // close feels like a real animation instead of an instant disappear.
   setTimeout(() => { overlay.style.display = 'none'; }, 220);
@@ -3778,6 +4623,8 @@ async function submitCallLog() {
       showCallToast('⚠️ Connection issue — please check the log and re-enter if missing.');
     });
 
+  if (isOther && note) saveNoteToHistory(note);
+
   clearCallDraft(clPendingType);
   bumpTodayCount();
   showCallToast(`${clPendingIcon} ${clPendingType} logged ✓`);
@@ -3819,24 +4666,9 @@ function showCallToast(msg) {
   const t = document.getElementById('clToast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3200);
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-function toggleDashboard() {
-  const d   = document.getElementById('clDashboard');
-  const btn = document.getElementById('clDashChevron');
-  const isHidden = d.style.display === 'none';
-  d.style.display = isHidden ? 'block' : 'none';
-  if (btn) btn.textContent = isHidden ? '▲' : '▼';
-  if (isHidden) {
-    loadDashboard(false);
-    // Auto-refresh every 30 seconds while dashboard is open
-    clPollingTimer = setInterval(() => loadDashboard(true), 8000);
-  } else {
-    clearInterval(clPollingTimer);
-    clPollingTimer = null;
-  }
-}
 
 function setDashRange(range, btn) {
   clDashRange = range;
@@ -3879,15 +4711,17 @@ async function loadDashboard(forceRefresh) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
-    const res   = await fetch(CALL_LOG_API_URL + '?action=get', { signal: controller.signal });
+    // Only fetch the main sheet here — fast, single request. Trash is fetched on its
+    // own separate, slower cycle (see loadTrashData) so it never slows down the main log.
+    const res = await fetch(CALL_LOG_API_URL + '?action=get', { signal: controller.signal });
     clearTimeout(timer);
     const data = await res.json();
     if (Array.isArray(data)) {
       const prevCount = clAllEntries.length;
-      clAllEntries  = data;
+      mergeMainData(data);
       clLastFetched = Date.now();
       try {
-        localStorage.setItem('cl_cachedEntries', JSON.stringify(data));
+        localStorage.setItem('cl_cachedEntries', JSON.stringify(clAllEntries.filter(e => e.deleted !== 'trash')));
         localStorage.setItem('cl_cacheTs', String(clLastFetched));
       } catch(e) {}
       if (isAnyModalOpen()) {
@@ -3913,6 +4747,46 @@ async function loadDashboard(forceRefresh) {
     }
   } finally {
     if (refreshBtn) { refreshBtn.disabled = false; refreshBtn.textContent = '⟳ Refresh'; }
+  }
+}
+
+// Merges fresh main-sheet data into clAllEntries, keeping whatever trash entries
+// (from the last loadTrashData call) are currently known — main sheet and trash
+// are fetched completely independently, so a slow/large trash sheet never delays
+// how fast new calls show up in the log.
+function mergeMainData(data) {
+  const clean = (Array.isArray(data) ? data : []).map(sanitizeCallEntry);
+  const knownTrashed = clAllEntries.filter(e => e.deleted === 'trash');
+  const mainKeys = new Set(clean.map(e => e.timestamp + '|||' + e.staff));
+  // Drop a trashed entry from the carried-over set only if it reappeared in main
+  // data (i.e. it was actually restored) — otherwise keep showing it as trashed.
+  const stillTrashed = knownTrashed.filter(e => !mainKeys.has(e.timestamp + '|||' + e.staff));
+  clAllEntries = [...clean, ...stillTrashed];
+}
+
+// ── TRASH — fetched independently on its own slower cycle ──
+let clTrashLastFetched = 0;
+async function loadTrashData(forceRefresh) {
+  const myName = localStorage.getItem('cl_staffName') || '';
+  const TRASH_TTL = 30000; // trash doesn't need to be as fresh as the main log
+  if (!forceRefresh && clTrashLastFetched && (Date.now() - clTrashLastFetched) < TRASH_TTL) return;
+  try {
+    const res = await fetch(CALL_LOG_API_URL + '?action=gettrash&staff=' + encodeURIComponent(myName));
+    const trashData = await res.json();
+    if (Array.isArray(trashData)) {
+      const freshTrashMarked = trashData.map(t => sanitizeCallEntry({ ...t, deleted: 'trash' }));
+      const freshKeys = new Set(freshTrashMarked.map(e => e.timestamp + '|||' + e.staff));
+      // Keep any non-trash entries as-is, replace trash entries with the fresh set
+      // (plus anything locally marked trash this fetch didn't include yet, e.g. an
+      // optimistic soft-delete that hasn't propagated to Sheets in the last second or two).
+      const nonTrashed = clAllEntries.filter(e => e.deleted !== 'trash');
+      const recentlyOptimistic = clAllEntries.filter(e => e.deleted === 'trash' && !freshKeys.has(e.timestamp + '|||' + e.staff));
+      clAllEntries = [...nonTrashed, ...freshTrashMarked, ...recentlyOptimistic];
+      clTrashLastFetched = Date.now();
+      if (clLogTypeFilter === '__trash__' && !isAnyModalOpen()) renderDashboard();
+    }
+  } catch (e) {
+    // network hiccup — keep showing whatever trash state we last had
   }
 }
 
@@ -4013,11 +4887,43 @@ function normalizeDob(val) {
   return val; // return as-is if can't parse
 }
 
+function filterByStatCard(type) {
+  // Clicking a summary card filters the call log below (and toggles off if already active)
+  if (type !== 'All' && clLogTypeFilter === type) type = 'All';
+  clLogTypeFilter = type || 'All';
+  clLogPage = 0;
+  const sel = document.getElementById('clLogTypeSelect');
+  if (sel) sel.value = clLogTypeFilter === '__trash__' ? '__trash__' : (clLogTypeFilter || 'All');
+  document.querySelectorAll('.cl-type-tab').forEach(b => {
+    const tabType = b.getAttribute('data-type') || b.textContent.trim();
+    b.classList.toggle('active', tabType === clLogTypeFilter || (clLogTypeFilter === 'All' && (tabType === 'All' || tabType === 'All Types')));
+  });
+  // Prefer explicit data-type on tabs when present
+  document.querySelectorAll('.cl-type-tab').forEach(b => {
+    if (b.classList.contains('cl-trash-tab')) {
+      b.classList.toggle('active', clLogTypeFilter === '__trash__');
+    }
+  });
+  renderDashboard();
+  const logEl = document.getElementById('clLogTable');
+  if (logEl) {
+    try { logEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  }
+}
+
 function setLogType(type, btn) {
   clLogTypeFilter = type;
   clLogPage = 0;
   document.querySelectorAll('.cl-type-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (type === '__trash__') loadTrashData(true);
+  renderDashboard();
+}
+
+function setLogTypeFromSelect(type) {
+  clLogTypeFilter = type;
+  clLogPage = 0;
+  if (type === '__trash__') loadTrashData(true);
   renderDashboard();
 }
 
@@ -4098,6 +5004,25 @@ function filterByRange(entries, range) {
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function isIsoTimestampValue(s) {
+  return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(String(s || '').trim());
+}
+function isRealStaffName(s) {
+  const n = String(s || '').trim();
+  if (!n) return false;
+  if (isIsoTimestampValue(n)) return false;
+  if (!/[A-Za-z]/.test(n)) return false;
+  if (n.length > 60) return false;
+  return true;
+}
+function sanitizeCallEntry(e) {
+  if (!e || typeof e !== 'object') return e;
+  const staff = String(e.staff == null ? '' : e.staff).trim();
+  if (isRealStaffName(staff)) {
+    return e.staff === staff ? e : Object.assign({}, e, { staff: staff });
+  }
+  return Object.assign({}, e, { staff: '' });
+}
 function formatDob(val) {
   if (!val) return '';
   const s = String(val).trim();
@@ -4108,16 +5033,31 @@ function formatDob(val) {
   return s;
 }
 
+const CL_AVATAR_COLORS = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899','#06B6D4','#EF4444','#6366F1','#14B8A6','#F97316'];
+function staffAvatarColor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return CL_AVATAR_COLORS[Math.abs(hash) % CL_AVATAR_COLORS.length];
+}
+function staffInitials(name) {
+  const parts = name.trim().split(/\s+/);
+  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || '?';
+}
+function staffAvatarSmHtml(name) {
+  return `<span class="cl-avatar-circle-sm" style="background:${staffAvatarColor(name)};">${staffInitials(name)}</span>`;
+}
+
 function renderDashboard() {
   const dateFiltered = filterByRange(clAllEntries, clDashRange);
 
-  // Populate staff dropdown
+  // Populate staff dropdown — real names only (never ISO timestamps / junk cells)
   const staffSelect = document.getElementById('clStaffFilter');
   if (staffSelect) {
-    const selectedStaff = staffSelect.value;
-    const names = [...new Set(dateFiltered.map(e => e.staff).filter(Boolean))].sort();
+    let selectedStaff = staffSelect.value;
+    if (selectedStaff && !isRealStaffName(selectedStaff)) selectedStaff = '';
+    const names = [...new Set(dateFiltered.map(e => e.staff).filter(isRealStaffName))].sort((a, b) => a.localeCompare(b));
     staffSelect.innerHTML = '<option value="">All Staff</option>' +
-      names.map(n => `<option value="${n}" ${n===selectedStaff?'selected':''}>${n}</option>`).join('');
+      names.map(n => `<option value="${escapeHtml(n)}" ${n===selectedStaff?'selected':''}>${escapeHtml(n)}</option>`).join('');
     const clearBtn = document.getElementById('clStaffClearBtn');
     if (clearBtn) clearBtn.style.display = selectedStaff ? 'inline-block' : 'none';
   }
@@ -4125,23 +5065,46 @@ function renderDashboard() {
   const preFiltered = staffVal ? dateFiltered.filter(e => e.staff === staffVal) : dateFiltered;
   const filtered = preFiltered.filter(e => e.deleted !== 'trash');
 
-  let cardsHtml = `<div class="cl-summary-card cl-total"><div class="cl-card-num">${filtered.length}</div><div class="cl-card-label">Total Calls</div></div>`;
+  const activeType = clLogTypeFilter || 'All';
+  const totalActive = activeType === 'All' ? ' active' : '';
+  let cardsHtml = `<div class="cl-summary-card cl-total${totalActive}" style="--card-accent:#0F172A;" onclick="filterByStatCard('All')" title="Show all calls">
+      <div class="cl-card-top">
+        <div class="cl-card-num">${filtered.length}</div>
+        <div class="cl-card-pct">${activeType === 'All' ? '' : 'All'}</div>
+      </div>
+      <div class="cl-card-label">Total Calls</div>
+      <div class="cl-card-bar-track"><div class="cl-card-bar-fill" style="width:100%;background:#0F172A;"></div></div>
+    </div>`;
   CL_TYPES.forEach(t => {
     const count = filtered.filter(e => e.type === t).length;
+    const pct = filtered.length ? Math.round((count / filtered.length) * 100) : 0;
     const meta = CL_TYPE_META[t];
-    cardsHtml += `<div class="cl-summary-card" style="border-color:${meta.color}40;">
-      <div class="cl-card-num" style="color:${meta.color};">${count}</div>
-      <div class="cl-card-label">${meta.icon} ${t}</div>
+    const isActive = activeType === t ? ' active' : '';
+    cardsHtml += `<div class="cl-summary-card${isActive}" style="--card-accent:${meta.color};" onclick="filterByStatCard('${t.replace(/'/g, "\\'")}')" title="Filter call log to ${t}">
+      <div class="cl-card-top">
+        <div class="cl-card-num" style="color:${meta.color};">${count}</div>
+        <div class="cl-card-pct">${pct}%</div>
+      </div>
+      <div class="cl-card-label"><span>${meta.icon}</span><span>${t}</span></div>
+      <div class="cl-card-bar-track"><div class="cl-card-bar-fill" style="width:${pct}%;background:${meta.color};"></div></div>
     </div>`;
   });
   document.getElementById('clSummaryGrid').innerHTML = cardsHtml;
 
-  const staffNames = [...new Set(filtered.map(e => e.staff))].sort();
+  // Sidebar counts always reflect TODAY (Texas time), regardless of the selected date-range filter above
+  const todaysEntries = filterByRange(clAllEntries, 'today').filter(e => e.deleted !== 'trash');
+  const sideIds = { 'Follow-up':'clSideCount-FollowUp', 'Reschedule':'clSideCount-Reschedule', 'New Patient':'clSideCount-NewPatient', 'Cancelled':'clSideCount-Cancelled', 'Other / Transferred':'clSideCount-Other' };
+  CL_TYPES.forEach(t => {
+    const el = document.getElementById(sideIds[t]);
+    if (el) el.textContent = todaysEntries.filter(e => e.type === t).length;
+  });
+
+  const staffNames = [...new Set(filtered.map(e => e.staff).filter(isRealStaffName))].sort((a, b) => a.localeCompare(b));
   let staffHtml = '<table class="cl-table"><tr><th>Staff</th>' +
     CL_TYPES.map(t => `<th title="${t}">${CL_TYPE_META[t].icon}</th>`).join('') + '<th>Total</th></tr>';
   staffNames.forEach(name => {
     const rows = filtered.filter(e => e.staff === name);
-    staffHtml += `<tr><td>${escapeHtml(name)}</td>` +
+    staffHtml += `<tr><td>${staffAvatarSmHtml(name)}${escapeHtml(name)}</td>` +
       CL_TYPES.map(t => `<td>${rows.filter(r => r.type === t).length}</td>`).join('') +
       `<td><strong>${rows.length}</strong></td></tr>`;
   });
@@ -4149,7 +5112,26 @@ function renderDashboard() {
   document.getElementById('clStaffTable').innerHTML = staffNames.length ? staffHtml : '<div class="cl-empty">No entries for this range.</div>';
 
   const typeFiltered = clLogTypeFilter === 'All' ? filtered : filtered.filter(e => e.type === clLogTypeFilter);
-  const sorted = [...typeFiltered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const searchInput = document.getElementById('clLogSearchInput');
+  const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  const searchDigits = searchVal.replace(/\D/g, '');
+  const searchFiltered = searchVal
+    ? typeFiltered.filter(e => {
+        const phoneDigits = (e.phone || '').replace(/\D/g, '');
+        const dobDigits   = (e.dob   || '').replace(/\D/g, '');
+        return (e.phone || '').toLowerCase().includes(searchVal) ||
+          (searchDigits && phoneDigits.includes(searchDigits)) ||
+          (e.dob || '').toLowerCase().includes(searchVal) ||
+          (searchDigits && dobDigits.includes(searchDigits)) ||
+          (e.provider || '').toLowerCase().includes(searchVal) ||
+          (e.insurance || '').toLowerCase().includes(searchVal) ||
+          (e.note || '').toLowerCase().includes(searchVal) ||
+          (e.location || '').toLowerCase().includes(searchVal) ||
+          (e.staff || '').toLowerCase().includes(searchVal) ||
+          (e.type || '').toLowerCase().includes(searchVal);
+      })
+    : typeFiltered;
+  const sorted = [...searchFiltered].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   const myName = localStorage.getItem('cl_staffName') || '';
 
   // ── Trash tab — show trashed entries with restore + hard-delete ──
@@ -4253,6 +5235,41 @@ function changeLogPage(delta) {
 
 // Custom confirm dialog — replaces browser confirm() which can be blocked
 let clConfirmResolve = () => {};
+// Self-contained confirm dialog for call-log delete/trash/restore actions.
+// Built and torn down fresh each time (like the provider-alerts popup) — no shared
+// static overlay, no stuck-state risk, and it can never collide with the Edit/Add
+// call form or any other popup in the tool.
+function clDynConfirm(icon, title, sub, okLabel, okColor) {
+  return new Promise(resolve => {
+    const existing = document.getElementById('clDynConfirmOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'clDynConfirmOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20050;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border-radius:14px;padding:26px 22px;width:100%;max-width:320px;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.25);font-family:Inter,sans-serif;';
+    box.addEventListener('click', ev => ev.stopPropagation());
+    box.innerHTML = `
+      <div style="font-size:26px;margin-bottom:6px;">${icon}</div>
+      <div style="font-weight:700;font-size:15px;color:#0F172A;margin-bottom:4px;">${escapeHtml(title)}</div>
+      <div style="font-size:13px;color:#64748B;margin-bottom:18px;">${escapeHtml(sub)}</div>
+      <div style="display:flex;gap:10px;">
+        <button id="clDynConfCancel" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid #E2E8F0;background:white;color:#64748B;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">Cancel</button>
+        <button id="clDynConfOk" style="flex:1;padding:10px;border-radius:8px;border:none;background:${okColor};color:white;font-weight:600;font-size:13px;cursor:pointer;font-family:Inter,sans-serif;">${escapeHtml(okLabel)}</button>
+      </div>`;
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    const cleanup = (result) => { overlay.remove(); resolve(result); };
+    box.querySelector('#clDynConfCancel').onclick = () => cleanup(false);
+    box.querySelector('#clDynConfOk').onclick     = () => cleanup(true);
+    overlay.addEventListener('click', ev => { if (ev.target === overlay) cleanup(false); });
+  });
+}
+
 function clConfirm(icon, msg, sub, okLabel, okColor) {
   return new Promise(resolve => {
     document.getElementById('clConfirmIcon').textContent = icon;
@@ -4273,14 +5290,14 @@ function clConfirm(icon, msg, sub, okLabel, okColor) {
 
 async function softDeleteEntry(entry) {
   if (!entry) { alert('This row is out of date — the list just refreshed. Please try again.'); renderDashboard(); return; }
-  const ok = await clConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
+  const ok = await clDynConfirm('🗑️', 'Move to Trash?', 'This entry will move to your Trash. You can restore it later.', 'Move to Trash', '#EF4444');
   if (!ok) return;
   try {
     // Optimistic local update — mark as trash immediately
     const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
     if (idx !== -1) clAllEntries[idx].deleted = 'trash';
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('🗑️ Moved to Trash');
 
     // Send to backend
@@ -4302,7 +5319,7 @@ async function restoreEntry(entry) {
     const idx = clAllEntries.findIndex(e => e.timestamp === entry.timestamp && e.staff === entry.staff);
     if (idx !== -1) clAllEntries[idx].deleted = '';
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('↩️ Entry restored');
 
     const params = new URLSearchParams({ action:'restore', timestamp: String(entry.timestamp), staff: entry.staff });
@@ -4315,13 +5332,13 @@ async function restoreEntry(entry) {
 
 async function hardDeleteEntry(entry) {
   if (!entry) { alert('This row is out of date — the list just refreshed. Please try again.'); renderDashboard(); return; }
-  const ok = await clConfirm('⚠️', 'Delete Forever?', 'This entry will be moved to the Trash sheet in Google Sheets and cannot be recovered from here.', 'Delete Forever', '#7F1D1D');
+  const ok = await clDynConfirm('⚠️', 'Delete Forever?', 'This entry will be moved to the Trash sheet in Google Sheets and cannot be recovered from here.', 'Delete Forever', '#7F1D1D');
   if (!ok) return;
   try {
     // Remove from local state entirely
     clAllEntries = clAllEntries.filter(e => !(e.timestamp === entry.timestamp && e.staff === entry.staff));
     try { localStorage.setItem('npp_calllog_cache', JSON.stringify(clAllEntries)); } catch(e) {}
-    renderCallLog();
+    renderDashboard();
     showCallToast('🗑️ Permanently deleted');
 
     const params = new URLSearchParams({ action:'harddelete', timestamp: String(entry.timestamp), staff: entry.staff });
@@ -4379,6 +5396,8 @@ function openEditForm(entry) {
   const editOverlay = document.getElementById('clModalOverlay');
   editOverlay.offsetHeight;
   editOverlay.classList.add('cl-modal-open');
+  const creditBar = document.getElementById('callFormCreditBar');
+  if (creditBar) creditBar.style.display = 'block';
   document.getElementById('clPhone').focus();
 }
 
@@ -4423,6 +5442,7 @@ async function submitEditLog() {
     insurance: isNew   ? (document.getElementById('clInsurance')?.value || '') : '',
     note:      isOther ? (document.getElementById('clNote')?.value || '') : ''
   });
+  if (isOther) saveNoteToHistory(document.getElementById('clNote')?.value || '');
   try {
     await fetch(CALL_LOG_API_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' });
     closeCallForm();
@@ -4516,7 +5536,6 @@ function buildAndDownloadExcel() {
 
   const BORDER_THIN  = { style: 'thin',   color: { rgb: 'C9D2E0' } };
   const BORDER_MED   = { style: 'medium', color: { rgb: '9AA7C2' } };
-  const FULL_BORDER  = { top: BORDER_THIN, bottom: BORDER_THIN, left: BORDER_THIN, right: BORDER_THIN };
 
   function headerStyle(accent) {
     return {
@@ -4574,7 +5593,16 @@ function buildAndDownloadExcel() {
     ];
 
     const ws = XLSX.utils.aoa_to_sheet(aoa);
-    ws['!cols'] = tab.widths.map(w => ({ wch: w }));
+
+    // Auto-widen the comment/concern column if the longest note needs more room
+    const commentColIdx = tab.cols.findIndex(c => c === 'Comments' || c === 'Concern');
+    const colWidths = tab.widths.slice();
+    if (commentColIdx !== -1) {
+      const longest = rows.reduce((max, r) => Math.max(max, String(r[commentColIdx] || '').length), 0);
+      const neededWidth = Math.min(90, Math.max(colWidths[commentColIdx], Math.ceil(longest * 0.95) + 4));
+      colWidths[commentColIdx] = neededWidth;
+    }
+    ws['!cols'] = colWidths.map(w => ({ wch: w }));
 
     // Merge the title + meta rows across all columns
     ws['!merges'] = [
@@ -4582,7 +5610,7 @@ function buildAndDownloadExcel() {
       { s: { r: 1, c: 0 }, e: { r: 1, c: nCols - 1 } }
     ];
 
-    // Style title band + meta strip (full-width color fill, not just row 1 text)
+    // Style title band + meta strip (full-width color fill)
     for (let c = 0; c < nCols; c++) {
       const r0 = XLSX.utils.encode_cell({ r: 0, c });
       const r1 = XLSX.utils.encode_cell({ r: 1, c });
@@ -4598,7 +5626,7 @@ function buildAndDownloadExcel() {
       if (ws[ref]) ws[ref].s = headerStyle(tab.accent);
     });
 
-    // Style data rows with alternating tint + compute auto row height + outer frame
+    // Style data rows with alternating tint + auto row height + outer frame
     const rowHeights = [{ hpt: 30 }, { hpt: 18 }, { hpt: 6 }, { hpt: 26 }];
     rows.forEach((row, ri) => {
       const stripe = ri % 2 === 1;
@@ -4614,7 +5642,7 @@ function buildAndDownloadExcel() {
           bottom: isLastRow
         });
         if (val) {
-          const charsPerLine = Math.max(tab.widths[ci] - 2, 5);
+          const charsPerLine = Math.max(colWidths[ci] - 2, 5);
           const linesNeeded = Math.ceil(String(val).length / charsPerLine);
           if (linesNeeded > maxLines) maxLines = linesNeeded;
         }
@@ -4706,22 +5734,36 @@ function buildAndDownloadExcel() {
   }
 }
 
+// ── Auth boot: require daily work-email session before using the tool ──
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    if (typeof authEnsureSession === 'function') {
+      authEnsureSession();
+    }
+  } catch (e) {}
+});
+
 // ── Silently preload Call Log data 2s after page load ──
 setTimeout(() => {
   if (typeof CALL_LOG_API_URL === 'undefined' || CALL_LOG_API_URL.includes('PASTE_YOUR')) return;
+  if (typeof authEnsureSession === 'function' && !authReadSession()) return;
+  const _s = typeof authReadSession === 'function' ? authReadSession() : null;
+  if (_s && _s.loginDate !== authChicagoDate()) return;
   fetch(CALL_LOG_API_URL + '?action=get')
     .then(r => r.json())
     .then(data => {
-      clAllEntries = data;
+      if (!Array.isArray(data)) return;
+      mergeMainData(data);
       clLastFetched = Date.now();
       try {
-        localStorage.setItem('cl_cachedEntries', JSON.stringify(data));
+        localStorage.setItem('cl_cachedEntries', JSON.stringify(clAllEntries.filter(e => e.deleted !== 'trash')));
         localStorage.setItem('cl_cacheTs', String(clLastFetched));
       } catch(e) {}
     }).catch(() => {});
 }, 2000);
 
 </script>
-<footer style="text-align:center;padding:10px;font-size:11px;color:var(--chrome-sub-text);background:var(--chrome-2);border-top:1px solid var(--chrome-border);">Created by Khizar Babar - ID: 1531</footer>
+<!-- Credit bar: only visible while Add/Edit call form is open -->
+<footer id="callFormCreditBar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10000;height:28px;line-height:28px;text-align:center;font-size:11px;color:#94A3B8;background:#0A121F;border-top:1px solid #1E2C41;overflow:hidden;font-family:Inter,sans-serif;">Created by Khizar Babar - ID: 1531</footer>
 </body>
 </html>
